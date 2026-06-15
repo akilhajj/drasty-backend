@@ -241,11 +241,34 @@
                 </div>
             </div>
 
-            <!-- الشاشة 4: مدير مناهج سوريا PDF لتغذية الـ AI -->
+                        <!-- الشاشة 4: مدير مناهج سوريا PDF لتغذية الـ AI للـ 7 مواد كاملة -->
             <div id="page-curriculum" class="page-content">
                 <div class="header-title">إدارة مناهج الجمهورية العربية السورية PDF</div>
-                <div class="header-subtitle">رفع الكتب المدرسية ودمجها تلقائياً بمحرك الـ RAG والذكاء الاصطناعي الصوتي بدون VPN</div>
+                <div class="header-subtitle">رفع وتحديث الكتب المدرسية ودمجها تلقائياً بمحرك الـ RAG والذكاء الاصطناعي الصوتي بدون VPN داخل سوريا</div>
+                <div class="data-section" style="max-width: 650px;">
+                    <div class="section-title">رفع مراجع المنهج (تدعم ملفات السكان والممسوحة ضوئياً OCR)</div>
+                    
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">اختر المادة التعليمية المحددة:</label>
+                    <select class="input-premium" id="subject-selector-ai">
+                        <option value="1">المادة 1: العلوم العامة (الفيزياء والكيمياء والعلوم)</option>
+                        <option value="2">المادة 2: اللغة العربية</option>
+                        <option value="3">المادة 3: اللغة الفرنسية</option>
+                        <option value="4">المادة 4: الرياضيات</option>
+                        <option value="5">المادة 5: اللغة الإنكليزية</option>
+                        <option value="6">المادة 6: الاجتماعيات (التاريخ والجغرافيا)</option>
+                        <option value="7">المادة 7: التربية الدينية (تفتح بعد تفعيل حساب الطالب)</option>
+                    </select>
+                    
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">عنوان الكتاب أو المرجع (مثال: كتاب الأنشطة، كتاب الطالب الهام):</label>
+                    <input type="text" id="book-title-ai" placeholder="أدخل اسم المرجع المرفوع هنا..." class="input-premium">
+
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">اختر ملف المنهج PDF من جهازك أو رابط خارجي سحابي سريع:</label>
+                    <input type="file" class="input-premium" id="pdf-file-input">
+                    
+                    <button class="btn-action btn-approve" style="padding: 14px 24px; width: 100%; font-size: 14px; margin-top: 10px;" onclick="uploadSyrianCurriculum()">بدء الرفع والتحليل الضوئي السحابي الذكي ✨</button>
+                </div>
             </div>
+
 
             <!-- الشاشة 5: إعدادات الشعار والهوية الديناميكية للموقع والتطبيق -->
             <div id="page-settings" class="page-content">
