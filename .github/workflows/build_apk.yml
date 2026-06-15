@@ -1,0 +1,33 @@
+name: Build Drasty App APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout
+        name: Checkout repository
+        uses: actions/checkout@v4
+
+      - id: setup-flutter
+        name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - id: build-apk
+        name: Build APK
+        run: |
+          # تجميع واجهات التطبيق الموحدة واستخراج ملف التثبيت مجاناً وسحابياً بالكامل
+          flutter build apk --release
+
+      - id: upload-artifact
+        name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: drasty-app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
