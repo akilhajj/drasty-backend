@@ -23,14 +23,14 @@
             padding: 0;
             display: flex;
             min-height: 100vh;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
 
-        /* 🔐 شاشة تسجيل الدخول الملكية */
-        .login-container {
+        /* 🔐 شاشة تسجيل الدخول الملكية الفاخرة */
+        .login-frame {
             width: 100%;
-            max-width: 420px;
+            max-width: 400px;
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
@@ -40,7 +40,7 @@
             box-sizing: border-box;
         }
 
-        /* 🏠 هيكل لوحة التحكم الأساسية (مخفي قبل الدخول) */
+        /* 🏠 هيكل اللوحة الرئيسية */
         .admin-layout {
             display: none;
             width: 100%;
@@ -54,6 +54,7 @@
             display: flex;
             flex-direction: column;
             padding: 20px;
+            box-sizing: border-box;
         }
 
         .logo-area {
@@ -92,6 +93,7 @@
             flex: 1;
             padding: 40px;
             overflow-y: auto;
+            box-sizing: border-box;
         }
 
         .header-title { font-size: 28px; margin-bottom: 5px; color: #FFFFFF; }
@@ -124,20 +126,20 @@
 </head>
 <body>
 
-    <!-- 🔐 صندوق تسجيل الدخول المبدئي -->
-    <div id="login-box" class="login-container">
-        <div class="logo-area" style="border: none; margin-bottom: 10px; font-size: 32px;">drasty.net</div>
-        <div style="color: var(--text-muted); font-size: 14px; margin-bottom: 30px;">لوحة تسجيل دخول السوبر أدمن الآمنة</div>
+    <!-- 🔐 شاشة تسجيل الدخول المبدئية للـ Super Admin -->
+    <div id="login-screen-box" class="login-frame">
+        <div class="logo-area" style="border: none; margin-bottom: 5px; font-size: 34px;">drasty.net</div>
+        <div style="color: var(--text-muted); font-size: 13px; margin-bottom: 35px;">لوحة حماية السوبر أدمن السحابية</div>
         
-        <input type="email" id="admin-email" placeholder="البريد الإلكتروني للإدارة" class="input-premium">
-        <input type="password" id="admin-pass" placeholder="كلمة المرور السرية" class="input-premium">
+        <input type="email" id="auth-email" placeholder="بريد الإدارة السري" class="input-premium">
+        <input type="password" id="auth-pass" placeholder="كلمة المرور المشفرة" class="input-premium">
         
-        <button class="btn-action btn-approve" style="width: 100%; padding: 12px; font-size: 15px; margin-top: 10px;" onclick="checkAdminLogin()">تسجيل الدخول الآمن</button>
-        <div id="login-error" style="color: #ff4a4a; font-size: 13px; margin-top: 15px; display: none;">❌ البريد الإلكتروني أو كلمة المرور غير صحيحة!</div>
+        <button class="btn-action btn-approve" style="width: 100%; padding: 12px; font-size: 15px; margin-top: 10px;" onclick="executeAdminAuth()">تسجيل الدخول الآمن</button>
+        <div id="auth-error-msg" style="color: #ff4a4a; font-size: 13px; margin-top: 15px; display: none;">❌ البريد الإلكتروني أو الباسورد غير صحيح!</div>
     </div>
 
-    <!-- 🏠 لوحة التحكم الكاملة (تظهر فقط بعد نجاح تسجيل الدخول) -->
-    <div id="admin-main-layout" class="admin-layout">
+    <!-- 🏠 لوحة الإدارة العامة -->
+    <div id="dashboard-layout-box" class="admin-layout">
         <div class="sidebar">
             <div class="logo-area" id="side-logo-text">drasty.net</div>
             <div class="menu-item active" onclick="switchPage('home', this)">🏠 لوحة التحكم الرئيسية</div>
@@ -147,11 +149,11 @@
             <div class="menu-item" onclick="switchPage('settings', this)">⚙️ إعدادات الشعار والهوية</div>
             <div class="menu-item" onclick="switchPage('teachers', this)">👨‍🏫 رصد أداء الأساتذة</div>
             <div class="menu-item" onclick="switchPage('notifications', this)">📢 إرسال إشعارات جماعية</div>
-            <div class="menu-item" style="color: #ff4a4a; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.05);" onclick="logoutAdmin()">🚪 تسجيل الخروج</div>
+            <div class="menu-item" style="color: #ff4a4a; margin-top: auto; border-top: 1px solid rgba(212,175,55,0.1);" onclick="triggerLogout()">🚪 تسجيل الخروج من النظام</div>
         </div>
         
         <div class="main-content">
-            <!-- صفحة 1: الرئيسية -->
+            <!-- الشاشة 1: الرئيسية -->
             <div id="page-home" class="page-content active">
                 <div class="header-title">أهلاً بك في لوحة السوبر أدمن الملكية</div>
                 <div class="header-subtitle">إدارة ومراقبة المنصة التعليمية drasty.net يدوياً بنسبة 100%</div>
@@ -161,7 +163,8 @@
                     <div class="stat-card"><div>تذاكر الدعم النشطة</div><div class="stat-number">32</div></div>
                 </div>
             </div>
-            <!-- صفحة 2: إدارة الطلاب وبياناتهم الكاملة -->
+
+                        <!-- الشاشة 2: إدارة بيانات الطلاب الكاملة -->
             <div id="page-students" class="page-content">
                 <div class="header-title">قاعدة بيانات الطلاب المسجلين</div>
                 <div class="header-subtitle">عرض وإدارة معلومات التواصل والبريد الإلكتروني للطلاب المقبولين والمفعلين في المنصة</div>
@@ -208,7 +211,7 @@
                 </div>
             </div>
 
-            <!-- صفحة 3: طلبات التحقق اليدوي من الإيصالات -->
+            <!-- الشاشة 3: طلبات التحقق اليدوي من الإيصالات المرفوعة -->
             <div id="page-receipts" class="page-content">
                 <div class="header-title">إيصالات الدفع اليدوية المعلقة</div>
                 <div class="header-subtitle">تحقق يدوياً من التحويلات الممسوحة ضوئياً لتفعيل مسار الطلاب والديانة يدوياً بنسبة 100%</div>
@@ -229,8 +232,7 @@
                     </table>
                 </div>
             </div>
-
-            <!-- صفحة 4: مدير مناهج سوريا PDF لتغذية الـ AI -->
+            <!-- الشاشة 4: مدير مناهج سوريا PDF لتغذية الـ AI -->
             <div id="page-curriculum" class="page-content">
                 <div class="header-title">إدارة مناهج الجمهورية العربية السورية PDF</div>
                 <div class="header-subtitle">رفع الكتب المدرسية ودمجها تلقائياً بمحرك الـ RAG والذكاء الاصطناعي الصوتي بدون VPN</div>
@@ -248,7 +250,8 @@
                     <button class="btn-action btn-approve" style="padding: 12px 24px; width: 100%;" onclick="alert('تم رفع المنهج! يقوم السيرفر السحابي بمعالجته ضوئياً وتحويله لمتجهات يفهمها الروبوت الصوتي حالياً.')">بدء الرفع والتحليل الذكي</button>
                 </div>
             </div>
-            <!-- صفحة 5: إعدادات الشعار والهوية الديناميكية للموقع والتطبيق -->
+
+            <!-- الشاشة 5: إعدادات الشعار والهوية الديناميكية للموقع والتطبيق -->
             <div id="page-settings" class="page-content">
                 <div class="header-title">إعدادات الهوية والشعار الموحد للمنصة والتطبيق</div>
                 <div class="header-subtitle">أي تعديل هنا سيقوم بتحديث اسم وشعار تطبيق الموبايل لدى الطلاب تلقائياً وسحابياً فوراً</div>
@@ -266,7 +269,7 @@
                 </div>
             </div>
 
-            <!-- صفحة 6: رصد أداء الأساتذة والالتزام بالشفت الموقوت -->
+            <!-- الشاشة 6: رصد أداء الأساتذة والالتزام بالشفت الموقوت -->
             <div id="page-teachers" class="page-content">
                 <div class="header-title">أداء الطاقم التدريسي المساعد</div>
                 <div class="header-subtitle">مراقبة الالتزام بـ شيفت المراقبة الصارم (10 AM - 2 PM) وتذاكر الدعم الأكاديمي للطلاب</div>
@@ -286,7 +289,7 @@
                 </div>
             </div>
 
-            <!-- صفحة 7: الإشعارات الجماعية وبث التنبيهات للهواتف -->
+            <!-- الشاشة 7: الإشعارات الجماعية وبث التنبيهات للهواتف -->
             <div id="page-notifications" class="page-content">
                 <div class="header-title">بث الإشعارات الفورية الجماعية للطلاب</div>
                 <div class="header-subtitle">إرسال تنبيهات تظهر على شاشات هواتف الطلاب داخل تطبيق drasty.net فوراً</div>
@@ -299,49 +302,65 @@
             </div>
         </div>
     </div>
-
-    <!-- 💻 محرك فحص الأمان وتسجيل الدخول والتنقل السريع -->
+    <!-- 💻 محرك نظام فحص الأمان الآمن وتسجيل الدخول والتنقل السريع -->
     <script>
-        function checkAdminLogin() {
-            const email = document.getElementById('admin-email').value;
-            const pass = document.getElementById('admin-pass').value;
-            const errorDiv = document.getElementById('login-error');
+        // دالة فحص بيانات الدخول وتفعيل أمان المنصة
+        function executeAdminAuth() {
+            const email = document.getElementById('auth-email').value;
+            const pass = document.getElementById('auth-pass').value;
+            const errorDiv = document.getElementById('auth-error-msg');
 
+            // المطابقة الصارمة مع حساب الإدارة المعتمد في المنظومة
             if (email === 'admin@drasty.net' && pass === 'drasty123') {
-                document.getElementById('login-box').style.display = 'none';
-                document.getElementById('admin-main-layout').style.display = 'flex';
+                // إخفاء شاشة تسجيل الدخول وإظهار لوحة التحكم بالكامل
+                document.getElementById('login-screen-box').style.display = 'none';
+                document.getElementById('dashboard-layout-box').style.display = 'flex';
+                
+                // تعديل أبعاد الشاشة لتتمدد اللوحة بكامل حجم المتصفح
                 document.body.style.alignItems = 'stretch';
                 document.body.style.justifyContent = 'flex-start';
                 errorDiv.style.display = 'none';
             } else {
+                // إظهار رسالة الخطأ الحمراء في حال كانت البيانات خاطئة
                 errorDiv.style.display = 'block';
             }
         }
 
+        // دالة التنقل الفوري بين صفحات اللوحة بدون ريفريش للموقع
         function switchPage(pageId, element) {
+            // إخفاء الشاشات النشطة حالياً
             const pages = document.querySelectorAll('.page-content');
             pages.forEach(page => page.classList.remove('active'));
             
+            // إلغاء تحديد خيارات القائمة الجانبية
             const menuItems = document.querySelectorAll('.menu-item');
             menuItems.forEach(item => item.classList.remove('active'));
             
+            // إظهار الشاشة المحددة وتلوين خيارها بالذهبي الملكي
             document.getElementById('page-' + pageId).classList.add('active');
             element.classList.add('active');
         }
 
-        function logoutAdmin() {
-            document.getElementById('admin-main-layout').style.display = 'none';
-            document.getElementById('login-box').style.display = 'block';
+        // دالة تسجيل الخروج الفوري وإعادة قفل النظام لمنع التطفل
+        function triggerLogout() {
+            // إخفاء لوحة التحكم وإعادة عرض صندوق الدخول
+            document.getElementById('dashboard-layout-box').style.display = 'none';
+            document.getElementById('login-screen-box').style.display = 'block';
+            
+            // إعادة توسيط واجهة الدخول الملكية في شاشة المتصفح
             document.body.style.alignItems = 'center';
             document.body.style.justifyContent = 'center';
-            document.getElementById('admin-email').value = '';
-            document.getElementById('admin-pass').value = '';
+            
+            // تنظيف الحقول من الحساب القديم لزيادة الأمان
+            document.getElementById('auth-email').value = '';
+            document.getElementById('auth-pass').value = '';
         }
 
+        // دالة تحديث الشعار والاسم سحابياً
         function updateIdentity() {
             const newName = document.getElementById('inst-name-input').value;
             document.getElementById('side-logo-text').innerText = newName;
-            alert('تم تحديث الهوية الملكية! السيرفر قام بتغذية تطبيق هاتف الطلاب والمعلمين بالشعار والاسم الجديد فوراً.');
+            alert('تم حفظ البيانات! قام السيرفر بتحديث اسم وشعار تطبيق الطلاب والمدرسين تلقائياً وبأعلى سرعة داخل سوريا.');
         }
     </script>
 </body>
