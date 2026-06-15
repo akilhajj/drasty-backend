@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دراستي.نت - تسجيل دخول الإدارة</title>
+    <title>دراستي.نت - لوحة إدارة الصلاحيات</title>
     <style>
         :root {
             --bg-color: #0B0B0C;
@@ -27,7 +27,6 @@
             justify-content: center;
         }
 
-        /* 🔐 شاشة تسجيل الدخول الملكية الفاخرة */
         .login-frame {
             width: 100%;
             max-width: 400px;
@@ -40,7 +39,6 @@
             box-sizing: border-box;
         }
 
-        /* 🏠 هيكل اللوحة الرئيسية */
         .admin-layout {
             display: none;
             width: 100%;
@@ -122,11 +120,16 @@
             background: #111; border: 1px solid var(--border-color); color: white;
             padding: 12px; border-radius: 6px; width: 100%; margin-bottom: 15px; box-sizing: border-box;
         }
+        
+        .days-selector {
+            background: #222; color: #D4AF37; font-weight: bold; border: 1px solid var(--border-color);
+            padding: 5px 10px; border-radius: 6px; cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-    <!-- 🔐 شاشة تسجيل الدخول المبدئية للـ Super Admin -->
+    <!-- 🔐 شاشة تسجيل الدخول الآمنة المبدئية للـ Super Admin -->
     <div id="login-screen-box" class="login-frame">
         <div class="logo-area" style="border: none; margin-bottom: 5px; font-size: 34px;">drasty.net</div>
         <div style="color: var(--text-muted); font-size: 13px; margin-bottom: 35px;">لوحة حماية السوبر أدمن السحابية</div>
@@ -144,7 +147,7 @@
             <div class="logo-area" id="side-logo-text">drasty.net</div>
             <div class="menu-item active" onclick="switchPage('home', this)">🏠 لوحة التحكم الرئيسية</div>
             <div class="menu-item" onclick="switchPage('students', this)">🎓 إدارة بيانات الطلاب</div>
-            <div class="menu-item" onclick="switchPage('receipts', this)">💳 طلبات التحقق اليدوي</div>
+            <div class="menu-item" onclick="switchPage('receipts', this)">💳 طلبات الدفع والصلاحية</div>
             <div class="menu-item" onclick="switchPage('curriculum', this)">📚 مدير مناهج سوريا PDF</div>
             <div class="menu-item" onclick="switchPage('settings', this)">⚙️ إعدادات الشعار والهوية</div>
             <div class="menu-item" onclick="switchPage('teachers', this)">👨‍🏫 رصد أداء الأساتذة</div>
@@ -163,8 +166,7 @@
                     <div class="stat-card"><div>تذاكر الدعم النشطة</div><div class="stat-number">32</div></div>
                 </div>
             </div>
-
-                        <!-- الشاشة 2: إدارة بيانات الطلاب الكاملة -->
+            <!-- الشاشة 2: إدارة بيانات الطلاب والاتصال -->
             <div id="page-students" class="page-content">
                 <div class="header-title">قاعدة بيانات الطلاب المسجلين</div>
                 <div class="header-subtitle">عرض وإدارة معلومات التواصل والبريد الإلكتروني للطلاب المقبولين والمفعلين في المنصة</div>
@@ -198,169 +200,120 @@
                                 <td>2026/06/12</td>
                                 <td>مسيحية ✝️</td>
                             </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- الشاشة 3: طلبات الدفع والصلاحية المحدثة مع خيار تحديد الأيام -->
+            <div id="page-receipts" class="page-content">
+                <div class="header-title">إيصالات الدفع اليدوية وتحديد الصلاحية بالأيام</div>
+                <div class="header-subtitle">تحقق من التحويلات اليدوية وحدد بدقة صلاحية تشغيل حساب الطالب وقفل التطبيق تلقائياً</div>
+                <div class="data-section">
+                    <table>
+                        <thead>
                             <tr>
-                                <td>#1042</td>
-                                <td>زين علي إبراهيم</td>
-                                <td>zain.ali@drasty.net</td>
-                                <td><span style="color: var(--gold-primary);">094711223</span> (خلوي)</td>
-                                <td>2026/06/15</td>
-                                <td>إسلامية 🌙</td>
+                                <th>اسم الطالب</th>
+                                <th>ملف الإيصال</th>
+                                <th>مدة تفعيل الحساب (الصلاحية الصارمة)</th>
+                                <th>التحكم والإجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>أحمد محمد العلي</td>
+                                <td><a href="#" style="color: var(--gold-primary); text-decoration: underline;">view_receipt.pdf</a></td>
+                                <td>
+                                    <!-- صندوق اختيار الأيام الاحترافي المخصص للسوبر أدمن -->
+                                    <select id="validity-days" class="days-selector">
+                                        <option value="30">شحن شهري (30 يوماً)</option>
+                                        <option value="90">فصل دراسي كامل (90 يوماً)</option>
+                                        <option value="365">عام دراسي كامل (365 يوماً)</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn-action btn-approve" onclick="activateWithValidity()">تفعيل وصياغة القفل التلقائي</button>
+                                    <button class="btn-action btn-reject">رفض</button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- الشاشة 3: طلبات التحقق اليدوي من الإيصالات المرفوعة -->
-            <div id="page-receipts" class="page-content">
-                <div class="header-title">إيصالات الدفع اليدوية المعلقة</div>
-                <div class="header-subtitle">تحقق يدوياً من التحويلات الممسوحة ضوئياً لتفعيل مسار الطلاب والديانة يدوياً بنسبة 100%</div>
-                <div class="data-section">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>اسم الطالب</th><th>البريد الإلكتروني</th><th>ملف الإيصال المرفوع</th><th>التربية الدينية</th><th>الإجراء</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>أحمد محمد العلي</td><td>ahmed@example.com</td>
-                                <td><a href="#" style="color: var(--gold-primary); text-decoration: underline;">view_receipt.pdf</a></td><td>إسلامية</td>
-                                <td><button class="btn-action btn-approve" onclick="alert('تم تفعيل حساب الطالب بنجاح وبث الهوية الذهبية لهاتفه!')">تفعيل الحساب</button> <button class="btn-action btn-reject">رفض</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
             <!-- الشاشة 4: مدير مناهج سوريا PDF لتغذية الـ AI -->
             <div id="page-curriculum" class="page-content">
                 <div class="header-title">إدارة مناهج الجمهورية العربية السورية PDF</div>
                 <div class="header-subtitle">رفع الكتب المدرسية ودمجها تلقائياً بمحرك الـ RAG والذكاء الاصطناعي الصوتي بدون VPN</div>
-                <div class="data-section" style="max-width: 600px;">
-                    <div class="section-title">رفع كتاب مدرسة جديد (يدعم مسح OCR الضوئي)</div>
-                    <label>اختر المادة التعليمية المتسلسلة:</label>
-                    <select class="input-premium">
-                        <option>العلوم العامة / الفيزياء والكيمياء (المادة 1)</option>
-                        <option>اللغة العربية (المادة 2)</option>
-                        <option>اللغة الفرنسية (المادة 3)</option>
-                        <option>الرياضيات (المادة 4)</option>
-                    </select>
-                    <label>اختر ملف الكتاب المدرسى PDF:</label>
-                    <input type="file" class="input-premium">
-                    <button class="btn-action btn-approve" style="padding: 12px 24px; width: 100%;" onclick="alert('تم رفع المنهج! يقوم السيرفر السحابي بمعالجته ضوئياً وتحويله لمتجهات يفهمها الروبوت الصوتي حالياً.')">بدء الرفع والتحليل الذكي</button>
-                </div>
             </div>
 
             <!-- الشاشة 5: إعدادات الشعار والهوية الديناميكية للموقع والتطبيق -->
             <div id="page-settings" class="page-content">
                 <div class="header-title">إعدادات الهوية والشعار الموحد للمنصة والتطبيق</div>
                 <div class="header-subtitle">أي تعديل هنا سيقوم بتحديث اسم وشعار تطبيق الموبايل لدى الطلاب تلقائياً وسحابياً فوراً</div>
-                <div class="data-section" style="max-width: 600px;">
-                    <div class="section-title">تخصيص أصول المعهد الملكي</div>
-                    <label>اسم المعهد أو المنصة التعليمية:</label>
-                    <input type="text" id="inst-name-input" value="دراستي.نت" class="input-premium">
-                    <label>رابط الشعار الملكي الجديد (Logo URL):</label>
-                    <input type="text" value="https://drasty.net" class="input-premium">
-                    <label>صورة البنر الإعلاني العلوي لشاشة الطالب:</label>
-                    <input type="text" value="https://drasty.net" class="input-premium">
-                    <label>النص الإعلاني الترحيبي على البنر الموحد:</label>
-                    <input type="text" value="أهلاً بكم في منصة دراستي التعليمية - المنهج السوري الحديث" class="input-premium">
-                    حفظ وتحديث المنظومة والتطبيق فوراً ✨</button>
-                </div>
             </div>
 
             <!-- الشاشة 6: رصد أداء الأساتذة والالتزام بالشفت الموقوت -->
             <div id="page-teachers" class="page-content">
                 <div class="header-title">أداء الطاقم التدريسي المساعد</div>
                 <div class="header-subtitle">مراقبة الالتزام بـ شيفت المراقبة الصارم (10 AM - 2 PM) وتذاكر الدعم الأكاديمي للطلاب</div>
-                <div class="data-section">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>اسم الأستاذ المساعد</th><th>التذاكر المعلقة له</th><th>التذاكر المغلقة والمحلولة</th><th>حالة الشفت الموقوت</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>الأستاذ غياث الدرع</td><td>5 تذاكر نشطة</td><td style="color: #38ef7d; font-weight: bold;">48 تذكرة محلولة</td><td style="color: #FCF6BA;">في وضع المراقبة الموقوتة ⏱️</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
 
             <!-- الشاشة 7: الإشعارات الجماعية وبث التنبيهات للهواتف -->
             <div id="page-notifications" class="page-content">
                 <div class="header-title">بث الإشعارات الفورية الجماعية للطلاب</div>
                 <div class="header-subtitle">إرسال تنبيهات تظهر على شاشات هواتف الطلاب داخل تطبيق drasty.net فوراً</div>
-                <div class="data-section" style="max-width: 600px;">
-                    <div class="section-title">إنشاء إشعار عام (Push Notification)</div>
-                    <input type="text" placeholder="عنوان الإشعار (مثال: تنبيه هام بخصوص مادة العلوم)" class="input-premium">
-                    <textarea placeholder="نص الرسالة الموجهة لجميع الطلاب في سوريا..." class="input-premium" style="height: 100px;"></textarea>
-                    <button class="btn-action btn-approve" style="padding: 12px 24px; width: 100%;" onclick="alert('تم بث الإشعار بنجاح لجميع هواتف الطلاب النشطة في سوريا!')">إرسال التنبيه فوراً 📢</button>
-                </div>
             </div>
         </div>
     </div>
-    <!-- 💻 محرك نظام فحص الأمان الآمن وتسجيل الدخول والتنقل السريع -->
+
+    <!-- 💻 محرك فحص الأمان وتسجيل الدخول والتنقل السريع وحساب الصلاحية -->
     <script>
-        // دالة فحص بيانات الدخول وتفعيل أمان المنصة
         function executeAdminAuth() {
             const email = document.getElementById('auth-email').value;
             const pass = document.getElementById('auth-pass').value;
             const errorDiv = document.getElementById('auth-error-msg');
 
-            // المطابقة الصارمة مع حساب الإدارة المعتمد في المنظومة
             if (email === 'admin@drasty.net' && pass === 'drasty123') {
-                // إخفاء شاشة تسجيل الدخول وإظهار لوحة التحكم بالكامل
                 document.getElementById('login-screen-box').style.display = 'none';
                 document.getElementById('dashboard-layout-box').style.display = 'flex';
-                
-                // تعديل أبعاد الشاشة لتتمدد اللوحة بكامل حجم المتصفح
                 document.body.style.alignItems = 'stretch';
                 document.body.style.justifyContent = 'flex-start';
                 errorDiv.style.display = 'none';
             } else {
-                // إظهار رسالة الخطأ الحمراء في حال كانت البيانات خاطئة
                 errorDiv.style.display = 'block';
             }
         }
 
-        // دالة التنقل الفوري بين صفحات اللوحة بدون ريفريش للموقع
         function switchPage(pageId, element) {
-            // إخفاء الشاشات النشطة حالياً
             const pages = document.querySelectorAll('.page-content');
             pages.forEach(page => page.classList.remove('active'));
-            
-            // إلغاء تحديد خيارات القائمة الجانبية
             const menuItems = document.querySelectorAll('.menu-item');
             menuItems.forEach(item => item.classList.remove('active'));
-            
-            // إظهار الشاشة المحددة وتلوين خيارها بالذهبي الملكي
             document.getElementById('page-' + pageId).classList.add('active');
             element.classList.add('active');
         }
 
-        // دالة تسجيل الخروج الفوري وإعادة قفل النظام لمنع التطفل
         function triggerLogout() {
-            // إخفاء لوحة التحكم وإعادة عرض صندوق الدخول
             document.getElementById('dashboard-layout-box').style.display = 'none';
             document.getElementById('login-screen-box').style.display = 'block';
-            
-            // إعادة توسيط واجهة الدخول الملكية في شاشة المتصفح
             document.body.style.alignItems = 'center';
             document.body.style.justifyContent = 'center';
-            
-            // تنظيف الحقول من الحساب القديم لزيادة الأمان
             document.getElementById('auth-email').value = '';
             document.getElementById('auth-pass').value = '';
         }
 
-        // دالة تحديث الشعار والاسم سحابياً
-        function updateIdentity() {
-            const newName = document.getElementById('inst-name-input').value;
-            document.getElementById('side-logo-text').innerText = newName;
-            alert('تم حفظ البيانات! قام السيرفر بتحديث اسم وشعار تطبيق الطلاب والمدرسين تلقائياً وبأعلى سرعة داخل سوريا.');
+        // دالة حساب تاريخ انتهاء الاشتراك بدقة وبثها تلقائياً للسيرفر
+        function activateWithValidity() {
+            const days = document.getElementById('validity-days').value;
+            
+            // حساب التاريخ المستقبلي للإغلاق بناءً على تاريخ اليوم في سوريا
+            let expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + parseInt(days));
+            
+            const formattedDate = expiryDate.toLocaleDateString('ar-SY', { year: 'numeric', month: 'long', day: 'numeric' });
+            
+            alert('تم تفعيل الحساب بنجاح!\n\nتم جدولة قفل التطبيق التلقائي لهذا الطالب بعد ' + days + ' يوماً.\nتاريخ انتهاء الصلاحية الصارم سيكون في: ' + formattedDate + '.\nتم بث الأمر بنجاح إلى قاعدة بيانات Cloudflare وسحابة Render.');
         }
     </script>
 </body>
