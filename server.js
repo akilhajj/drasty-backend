@@ -129,3 +129,4 @@ app.post('/api/ai/chat', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Drasty Platform Server running on port ${PORT}`));
+
