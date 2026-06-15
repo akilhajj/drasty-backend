@@ -121,6 +121,25 @@
             margin-bottom: 20px;
         }
 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        th {
+            color: var(--gold-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+        }
+
         .btn-action {
             padding: 8px 18px;
             border-radius: 6px;
@@ -132,6 +151,7 @@
         }
 
         .btn-approve { background: var(--gold-gradient); color: #000; }
+        .btn-reject { background-color: #331111; color: #ff4a4a; border: 1px solid #551111; }
         .btn-action:hover { opacity: 0.9; transform: translateY(-1px); }
 
         .page-content { display: none; }
@@ -148,6 +168,7 @@
     <div class="sidebar">
         <div class="logo-area" id="side-logo-text">drasty.net</div>
         <div class="menu-item active" onclick="switchPage('home', this)">🏠 لوحة التحكم الرئيسية</div>
+        <div class="menu-item" onclick="switchPage('students', this)">🎓 إدارة بيانات الطلاب</div>
         <div class="menu-item" onclick="switchPage('receipts', this)">💳 طلبات التحقق اليدوي</div>
         <div class="menu-item" onclick="switchPage('curriculum', this)">📚 مدير مناهج سوريا PDF</div>
         <div class="menu-item" onclick="switchPage('settings', this)">⚙️ إعدادات الشعار والهوية</div>
@@ -167,56 +188,147 @@
                 <div class="stat-card"><div>تذاكر الدعم النشطة</div><div class="stat-number">32</div></div>
             </div>
         </div>
+        <!-- صفحة 2: إدارة الطلاب وبياناتهم الكاملة -->
+        <div id="page-students" class="page-content">
+            <div class="header-title">قاعدة بيانات الطلاب المسجلين</div>
+            <div class="header-subtitle">عرض وإدارة معلومات التواصل والبريد الإلكتروني للطلاب المقبولين والمفعلين في المنصة</div>
+            <div class="data-section">
+                <div class="section-title">قائمة الطلاب المعتمدين</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الرقم التعريفي (ID)</th>
+                            <th>اسم الطالب الكامل</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>رقم الهاتف (سوريا)</th>
+                            <th>تاريخ التسجيل</th>
+                            <th>مادة الديانة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#1040</td>
+                            <td>محمد عبد الله المحمد</td>
+                            <td>mohammed.sy@gmail.com</td>
+                            <td><span style="color: var(--gold-primary);">099123456</span> (سيريتل)</td>
+                            <td>2026/06/10</td>
+                            <td>إسلامية 🌙</td>
+                        </tr>
+                        <tr>
+                            <td>#1041</td>
+                            <td>ميريام جوزيف الخوري</td>
+                            <td>miriam.k@hotmail.com</td>
+                            <td><span style="color: var(--gold-primary);">093456789</span> (إم تي إن)</td>
+                            <td>2026/06/12</td>
+                            <td>مسيحية ✝️</td>
+                        </tr>
+                        <tr>
+                            <td>#1042</td>
+                            <td>زين علي إبراهيم</td>
+                            <td>zain.ali@drasty.net</td>
+                            <td><span style="color: var(--gold-primary);">094711223</span> (خلوي)</td>
+                            <td>2026/06/15</td>
+                            <td>إسلامية 🌙</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-        <!-- صفحة 2: طلبات التحقق اليدوي -->
+        <!-- صفحة 3: طلبات التحقق اليدوي من الإيصالات -->
         <div id="page-receipts" class="page-content">
             <div class="header-title">إيصالات الدفع اليدوية المعلقة</div>
-            <div class="header-subtitle">تحقق يدوياً من التحويلات الممسوحة ضوئياً لتفعيل مسار الطلاب والديانة</div>
+            <div class="header-subtitle">تحقق يدوياً من التحويلات الممسوحة ضوئياً لتفعيل مسار الطلاب والديانة يدوياً بنسبة 100%</div>
+            <div class="data-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم الطالب</th><th>البريد الإلكتروني</th><th>ملف الإيصال المرفوع</th><th>التربية الدينية</th><th>الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>أحمد محمد العلي</td><td>ahmed@example.com</td>
+                            <td><a href="#" style="color: var(--gold-primary); text-decoration: underline;">view_receipt.pdf</a></td><td>إسلامية</td>
+                            <td><button class="btn-action btn-approve" onclick="alert('تم تفعيل حساب الطالب بنجاح وبث الهوية الذهبية لهاتفه!')">تفعيل الحساب</button> <button class="btn-action btn-reject">رفض</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- صفحة 3: مدير المناهج سوريا PDF -->
+        <!-- صفحة 4: مدير مناهج سوريا PDF لتغذية الـ AI -->
         <div id="page-curriculum" class="page-content">
             <div class="header-title">إدارة مناهج الجمهورية العربية السورية PDF</div>
-            <div class="header-subtitle">رفع الكتب المدرسية ودمجها تلقائياً بمحرك الـ RAG والذكاء الاصطناعي الصوتي</div>
+            <div class="header-subtitle">رفع الكتب المدرسية ودمجها تلقائياً بمحرك الـ RAG والذكاء الاصطناعي الصوتي بدون VPN</div>
+            <div class="data-section" style="max-width: 600px;">
+                <div class="section-title">رفع كتاب مدرسة جديد (يدعم مسح OCR الضوئي)</div>
+                <label>اختر المادة التعليمية المتسلسلة:</label>
+                <select class="input-premium">
+                    <option>العلوم العامة / الفيزياء والكيمياء (المادة 1)</option>
+                    <option>اللغة العربية (المادة 2)</option>
+                    <option>اللغة الفرنسية (المادة 3)</option>
+                    <option>الرياضيات (المادة 4)</option>
+                </select>
+                <label>اختر ملف الكتاب المدرسى PDF:</label>
+                <input type="file" class="input-premium">
+                <button class="btn-action btn-approve" style="padding: 12px 24px; width: 100%;" onclick="alert('تم رفع المنهج! يقوم السيرفر السحابي بمعالجته ضوئياً وتحويله لمتجهات يفهمها الروبوت الصوتي حالياً.')">بدء الرفع والتحليل الذكي</button>
+            </div>
         </div>
 
-        <!-- صفحة 4: شاشة إعدادات الشعار والهوية الديناميكية (الجديدة) -->
+        <!-- صفحة 5: إعدادات الشعار والهوية الديناميكية للموقع والتطبيق -->
         <div id="page-settings" class="page-content">
             <div class="header-title">إعدادات الهوية والشعار الموحد للمنصة والتطبيق</div>
             <div class="header-subtitle">أي تعديل هنا سيقوم بتحديث اسم وشعار تطبيق الموبايل لدى الطلاب تلقائياً وسحابياً فوراً</div>
             <div class="data-section" style="max-width: 600px;">
-                <div class="section-title">تخصيص أصول المعهد (Platform Customization)</div>
-                
+                <div class="section-title">تخصيص أصول المعهد الملكي</div>
                 <label>اسم المعهد أو المنصة التعليمية:</label>
                 <input type="text" id="inst-name-input" value="دراستي.نت" class="input-premium">
-                
-                <label>رابط أو ملف الشعار الملكي الجديد (Logo):</label>
-                <input type="text" placeholder="https://drasty.net" class="input-premium">
-                
-                <label>صورة البنر الإعلاني العلوي لشاشة الطالب (Main Banner):</label>
-                <input type="text" placeholder="https://drasty.net" class="input-premium">
-                
-                <label>النص الإعلاني المتحرك على البنر:</label>
-                <input type="text" id="banner-text-input" value="أهلاً بكم في منصة دراستي التعليمية - المنهج السوري الحديث" class="input-premium">
-                
+                <label>رابط الشعار الملكي الجديد (Logo URL):</label>
+                <input type="text" value="https://drasty.net" class="input-premium">
+                <label>صورة البنر الإعلاني العلوي لشاشة الطالب:</label>
+                <input type="text" value="https://drasty.net" class="input-premium">
+                <label>النص الإعلاني الترحيبي على البنر الموحد:</label>
+                <input type="text" value="أهلاً بكم في منصة دراستي التعليمية - المنهج السوري الحديث" class="input-premium">
                 حفظ وتحديث المنظومة والتطبيق فوراً ✨</button>
             </div>
         </div>
 
-        <!-- صفحة 5: رصد أداء الأساتذة -->
+        <!-- صفحة 6: رصد أداء الأساتذة والالتزام بالشفت الموقوت -->
         <div id="page-teachers" class="page-content">
             <div class="header-title">أداء الطاقم التدريسي المساعد</div>
-            <div class="header-subtitle">مراقبة الالتزام بـ شيفت المراقبة وتذاكر الدعم الأكاديمي</div>
+            <div class="header-subtitle">مراقبة الالتزام بـ شيفت المراقبة الصارم (10 AM - 2 PM) وتذاكر الدعم الأكاديمي للطلاب</div>
+            <div class="data-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم الأستاذ المساعد</th><th>التذاكر المعلقة له</th><th>التذاكر المغلقة والمحلولة</th><th>حالة الشفت الموقوت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>الأستاذ غياث الدرع</td><td>5 تذاكر نشطة</td><td style="color: #38ef7d; font-weight: bold;">48 تذكرة محلولة</td><td style="color: #FCF6BA;">في وضع المراقبة الموقوتة ⏱️</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- صفحة 6: الإشعارات الجماعية -->
+        <!-- صفحة 7: الإشعارات الجماعية وبث التنبيهات للهواتف -->
         <div id="page-notifications" class="page-content">
             <div class="header-title">بث الإشعارات الفورية الجماعية للطلاب</div>
-            <div class="header-subtitle">إرسال تنبيهات تظهر على شاشات هواتف الطلاب فوراً</div>
+            <div class="header-subtitle">إرسال تنبيهات تظهر على شاشات هواتف الطلاب داخل تطبيق drasty.net فوراً</div>
+            <div class="data-section" style="max-width: 600px;">
+                <div class="section-title">إنشاء إشعار عام (Push Notification)</div>
+                <input type="text" placeholder="عنوان الإشعار (مثال: تنبيه هام بخصوص مادة العلوم)" class="input-premium">
+                <textarea placeholder="نص الرسالة الموجهة لجميع الطلاب في سوريا..." class="input-premium" style="height: 100px;"></textarea>
+                <button class="btn-action btn-approve" style="padding: 12px 24px; width: 100%;" onclick="alert('تم بث الإشعار بنجاح لجميع هواتف الطلاب النشطة في سوريا!')">إرسال التنبيه فوراً 📢</button>
+            </div>
         </div>
 
     </div>
 
+    <!-- 💻 محرك نظام التنقل السريع والذكي وتغيير الهوية تلقائياً -->
     <script>
         function switchPage(pageId, element) {
             const pages = document.querySelectorAll('.page-content');
@@ -230,7 +342,7 @@
         function updateIdentity() {
             const newName = document.getElementById('inst-name-input').value;
             document.getElementById('side-logo-text').innerText = newName;
-            alert('تم تحديث الهوية بنجاح! السيرفر السحابي قام ببث الشعار والاسم الجديد لتطبيق هاتف الطلاب والمعلمين الآن بنجاح وبدون حظر.');
+            alert('تم تحديث الهوية الملكية! السيرفر قام بتغذية تطبيق هاتف الطلاب والمعلمين بالشعار والاسم الجديد فوراً.');
         }
     </script>
 </body>
