@@ -327,3 +327,194 @@ class TeacherDashboard extends StatelessWidget {
     );
   }
 }
+// 📚 2. واجهة خريطة مسار الطالب المتسلسلة والذكاء الاصطناعي الصوتي الهجين (RAG)
+class StudentDashboard extends StatefulWidget {
+  const StudentDashboard({Key? key}) : super(key: key);
+
+  @override
+  _StudentDashboardState createState() => _StudentDashboardState();
+}
+
+class _StudentDashboardState extends State<StudentDashboard> {
+  final List<String> subjects = const [
+    'العلوم العامة (الفيزياء والكيمياء والعلوم)',
+    'اللغة العربية',
+    'اللغة الفرنسية',
+    'الرياضيات',
+    'اللغة الإنكليزية',
+    'الاجتماعيات (التاريخ والجغرافيا)',
+    'التربية الدينية (تفتح بعد التفعيل اليدوي)'
+  ];
+
+  String _aiResponseText = "اضغط على الميكروفون الذهبي بالأسفل واسألني أي سؤال في مناهج سوريا الـ PDF!";
+  bool _isListening = false;
+
+  void _askHybridAI(String studentQuestion) async {
+    setState(() => _isListening = true);
+    try {
+      final response = await http.post(
+        Uri.parse('https://onrender.com'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'question': studentQuestion,
+          'isVoice': true 
+        }),
+      );
+
+      final data = jsonDecode(response.body);
+      setState(() {
+        _aiResponseText = data['answerText'] ?? "عذراً يا بطل، لم أستطع معالجة السؤال حالياً.";
+        _isListening = false;
+      });
+
+      if (data['success'] == true && data['mode'] == 'voice') {
+        _showNotificationToast("جاري تشغيل الإجابة الصوتية الملكية عبر مكبر الهاتف... 🔊");
+      }
+    } catch (e) {
+      setState(() => _isListening = false);
+      _showNotificationToast("خطأ في الاتصال بمحرك الذكاء الاصطناعي السحابي لمنصة دراستي");
+    }
+  }
+
+  void _showNotificationToast(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), duration: const Duration(seconds: 3)));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('دراستي - المسار الأكاديمي الملكي', style: TextStyle(color: Color(0xFFD4AF37), fontWeight: FontWeight.bold)),
+        backgroundColor: const Color(0xFF0B0B0C),
+        elevation: 0,
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: const Color(0xFF19191B),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.25)),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.auto_awesome, color: Color(0xFFD4AF37), size: 24),
+                    const SizedBox(width: 10),
+                    Text(_isListening ? "جاري قراءة المناهج والتحليل ضوئياً... 🧠" : "روبوت المحادثة الصوتي المباشر (RAG AI)", style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFD4AF37))),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Text(_aiResponseText, style: const TextStyle(fontSize: 14, height: 1.5, color: Colors.white70), textAlign: TextAlign.center),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () => _askHybridAI("ما هي وظيفة الجسيمات الطرفية في درس مادة العلوم للبكالوريا؟"),
+                  child: CircleAvatar(
+                    radius: 28,
+                    backgroundColor: _isListening ? Colors.redAccent : const Color(0xFFD4AF37),
+                    child: Icon(_isListening ? Icons.graphic_eq : Icons.keyboard_voice, color: Colors.black, size: 26),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(children: [Text("خريطة المناهج السبعة المتسلسلة (التلعيب الصارم):", style: TextStyle(fontSize: 12, color: Colors.grey))]),
+          ),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(20),
+              itemCount: subjects.length,
+              itemBuilder: (context, index) {
+                bool isLocked = index > 0;
+                return Container(
+                  // 🛠️ هنا تم إصلاح الخطأ الإملائي القياسي بنجاح طبقاً لقوانين دارت الصارمة
+                  margin: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    color: isLocked ? const Color(0xFF19191B).withOpacity(0.4) : const Color(0xFF19191B),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: isLocked ? Colors.transparent : const Color(0xFFD4AF37).withOpacity(0.35)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('المادة 0${index + 1}', style: TextStyle(color: isLocked ? Colors.grey : const Color(0xFFD4AF37), fontSize: 11)),
+                          const SizedBox(height: 4),
+                          Text(subjects[index], style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: isLocked ? Colors.grey : Colors.white)),
+                        ],
+                      ),
+                      Icon(isLocked ? Icons.lock_outline : Icons.play_arrow_sharp, color: isLocked ? Colors.grey : const Color(0xFFD4AF37), size: 24)
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// 👨‍🏫 3. واجهة الأستاذ المساعد وجدول Mراقبة وقفل الوقت الصارم لـ drasty.net
+class TeacherDashboard extends StatelessWidget {
+  const TeacherDashboard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('لوحة المعلم والمراقب الأكاديمي', style: TextStyle(color: Color(0xFFD4AF37))),
+        backgroundColor: const Color(0xFF0B0B0C),
+        elevation: 0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('تذاكر الطلاب النشطة للدعم البشري (24/7)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 15),
+            Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(color: const Color(0xFF19191B), borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.15))),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('الطالبة رنا: أحتاج لتوضيح في قاعدة فرنسي صـ 12', style: TextStyle(fontSize: 13, color: Colors.white70)),
+                  Text('دخول الغرفة 💬', style: TextStyle(color: Color(0xFFD4AF37), fontWeight: FontWeight.bold, fontSize: 13)),
+                ],
+              ),
+            ),
+            const SizedBox(height: 40),
+            const Text('نظام تتبع الغش والامتحانات (موقوت وصارم)', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 15),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(25),
+              decoration: BoxDecoration(color: Colors.red.withOpacity(0.04), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.red.withOpacity(0.25))),
+              child: const Column(
+                children: [
+                  Icon(Icons.lock_clock, color: Colors.red, size: 38),
+                  SizedBox(height: 12),
+                  Text('الشيفت مغلق / نظام المراقبة مقفل تلقائياً', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 15)),
+                  SizedBox(height: 6),
+                  Text('لا يمكنك دخول لوحة تتبع الطلاب خارج أوقات الدوام الرسمي المحددة من 10:00 صباحاً وحتى 2:00 ظهراً بتوقيت سوريا.', style: TextStyle(color: Colors.grey, fontSize: 12), textAlign: TextAlign.center),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
