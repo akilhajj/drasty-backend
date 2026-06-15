@@ -13,15 +13,15 @@ class DrastyApp extends StatelessWidget {
       title: 'منصة دراستي التعليمية',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color(0xFF0B0B0C), // أسود مطفي فاخر
-        primaryColor: const Color(0xFFD4AF37), // ذهبي ملكي
+        scaffoldBackgroundColor: const Color(0xFF0B0B0C), // أسود مطفي فاخر لـ drasty.net
+        primaryColor: const Color(0xFFD4AF37), // ذهبي ملكي ناصع
       ),
       home: const UnifiedLoginScreen(),
     );
   }
 }
 
-// 🔐 واجهة الدخول الموحدة الفاخرة لـ drasty.net (توجيه تلقائي للأدوار)
+// 🔐 واجهة الدخول الموحدة الفاخرة لـ drasty.net (توجيه تلقائي للأدوار بـ API حقيقي)
 class UnifiedLoginScreen extends StatefulWidget {
   const UnifiedLoginScreen({Key? key}) : super(key: key);
 
@@ -34,7 +34,7 @@ class _UnifiedLoginScreenState extends State<UnifiedLoginScreen> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
 
-  // دالة تسجيل الدخول المتصلة حياً بسيرفر Render الخاص بك
+  // دالة تسجيل الدخول الآمنة المتصلة حياً برابط سيرفر Render الخاص بك
   void _executeSecureAuth() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) return;
     setState(() => _isLoading = true);
@@ -53,7 +53,7 @@ class _UnifiedLoginScreenState extends State<UnifiedLoginScreen> {
       setState(() => _isLoading = false);
 
       if (response.statusCode == 200) {
-        // فحص الدور القادم من قاعدة بيانات كلواد فلير وتوجيهه تلقائياً لشاشته الملكية
+        // فحص دور المستخدم القادم من قاعدة بيانات كلواد فلير وتوجيهه تلقائياً لشاشته الفاخرة
         if (data['role'] == 'teacher') {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const TeacherDashboard()));
         } else {
@@ -64,12 +64,15 @@ class _UnifiedLoginScreenState extends State<UnifiedLoginScreen> {
       }
     } catch (e) {
       setState(() => _isLoading = false);
-      _showSnackBar('تأكد من اتصال السيرفر بالإنترنت السحابي');
+      _showSnackBar('تأكد من اتصال السيرفر بالإنترنت السحابي السوري');
     }
   }
 
   void _showSnackBar(String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), backgroundColor: Colors.red.withOpacity(0.8)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(msg, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold)),
+      backgroundColor: Colors.redAccent.withOpacity(0.85)
+    ));
   }
 
   @override
@@ -83,7 +86,7 @@ class _UnifiedLoginScreenState extends State<UnifiedLoginScreen> {
             decoration: BoxDecoration(
               color: const Color(0xFF19191B), // كرت زجاجي داكن
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.2)), // حواف ذهبية نحيفة
+              border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.2)), // حواف ذهبية نحيفة ونظيفة
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -107,7 +110,31 @@ class _UnifiedLoginScreenState extends State<UnifiedLoginScreen> {
                   decoration: const InputDecoration(
                     labelText: 'كلمة المرور المشفرة',
                     labelStyle: TextStyle(color: Color(0xFFD4AF37)),
-                    focusedBorder: UnderlineInputBorder(borde// 📚 2. واجهة خريطة مسار الطالب المتسلسلة والذكاء الاصطناعي الصوتي الهجين (RAG)
+                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color(0xFFD4AF37))),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                _isLoading
+                    ? const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFD4AF37)))
+                    : ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFD4AF37),
+                          foregroundColor: Colors.black,
+                          minimumSize: const Size(double.infinity, 52),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                        onPressed: _executeSecureAuth,
+                        child: const Text('تسجيل الدخول الموحد', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+// 📚 2. واجهة خريطة مسار الطالب المتسلسلة والذكاء الاصطناعي الصوتي الهجين (RAG)
 class StudentDashboard extends StatefulWidget {
   const StudentDashboard({Key? key}) : super(key: key);
 
@@ -117,19 +144,19 @@ class StudentDashboard extends StatefulWidget {
 
 class _StudentDashboardState extends State<StudentDashboard> {
   final List<String> subjects = const [
-    'العلوم العامة (الفيزياء والكيمياء)',
+    'العلوم العامة (الفيزياء والكيمياء والعلوم)',
     'اللغة العربية',
     'اللغة الفرنسية',
     'الرياضيات',
     'اللغة الإنكليزية',
     'الاجتماعيات (التاريخ والجغرافيا)',
-    'التربية الدينية (تفتح يدويًا)'
+    'التربية الدينية (تفتح بعد التفعيل اليدوي)'
   ];
 
-  String _aiResponseText = "اضغط على الميكروفون بالأسفل واسألني أي سؤال في المنهج السوري!";
+  String _aiResponseText = "اضغط على الميكروفون الذهبي بالأسفل واسألني أي سؤال في مناهج سوريا الـ PDF!";
   bool _isListening = false;
 
-  // دالة إرسال السؤال الصوتي والنصي إلى محرك الـ AI وسيرفر Render حياً
+  // دالة إرسال السؤال الصوتي والنصي الهجين إلى سيرفر Render حياً بدون VPN
   void _askHybridAI(String studentQuestion) async {
     setState(() => _isListening = true);
     try {
@@ -138,89 +165,91 @@ class _StudentDashboardState extends State<StudentDashboard> {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'question': studentQuestion,
-          'isVoice': true // تفعيل النطق الصوتي التلقائي والرد الصوتي
+          'isVoice': true // طلب النطق الصوتي التلقائي والرد الصوتي (Voice-to-Voice)
         }),
       );
 
       final data = jsonDecode(response.body);
       setState(() {
-        _aiResponseText = data['answerText'] ?? "عذراً يا بطل، تكرر المحاولة.";
+        _aiResponseText = data['answerText'] ?? "عذراً يا بطل، لم أستطع معالجة السؤال حالياً.";
         _isListening = false;
       });
 
-      // تنبيه الطالب بنجاح نطق الإجابة صوتياً عبر التطبيق
       if (data['success'] == true && data['mode'] == 'voice') {
-        _showNativeToast("جاري تشغيل الإجابة الصوتية الفاخرة... 🔊");
+        _showNotificationToast("جاري تشغيل الإجابة الصوتية الملكية عبر مكبر الهاتف... 🔊");
       }
     } catch (e) {
       setState(() => _isListening = false);
-      _showNativeToast("خطأ في الاتصال بمحرك الذكاء الاصطناعي السحابي");
+      _showNotificationToast("خطأ في الاتصال بمحرك الذكاء الاصطناعي السحابي لمنصة دراستي");
     }
   }
 
-  void _showNativeToast(String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), duration: const Duration(seconds: 2)));
+  void _showNotificationToast(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), duration: const Duration(seconds: 3)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('منصة دراستي - المسار الملكي', style: TextStyle(color: Color(0xFFD4AF37), fontWeight: FontWeight.bold)),
+        title: const Text('دراستي - المسار الأكاديمي الملكي', style: TextStyle(color: Color(0xFFD4AF37), fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFF0B0B0C),
         elevation: 0,
         centerTitle: true,
       ),
       body: Column(
         children: [
-          // 🤖 نافذة المساعد الأكاديمي الصوتي المدمجة (Ultra-Premium Card)
+          // 🤖 كرت المساعد الأكاديمي الصوتي المدمج (Ultra-Premium Card)
           Container(
             margin: const EdgeInsets.all(20),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: const Color(0xFF19191B),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.3)),
+              border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.25)),
             ),
             child: Column(
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.psychology, color: Color(0xFFD4AF37), size: 28),
+                    const Icon(Icons.auto_awesome, color: Color(0xFFD4AF37), size: 24),
                     const SizedBox(width: 10),
-                    Text(_isListening ? "جاري التفكير وقراءة كتب المنهج... 🧠" : "مساعدك الصوتي الذكي (RAG AI)", style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFD4AF37))),
+                    Text(_isListening ? "جاري قراءة المناهج والتحليل ضوئياً... 🧠" : "روبوت المحادثة الصوتي المباشر (RAG AI)", style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFD4AF37))),
                   ],
                 ),
                 const SizedBox(height: 15),
-                Text(_aiResponseText, style: const TextStyle(fontSize: 14, height: 1.5), textAlign: TextAlign.center),
+                Text(_aiResponseText, style: const TextStyle(fontSize: 14, height: 1.5, color: Colors.white70), textAlign: TextAlign.center),
                 const SizedBox(height: 20),
-                // زر الميكروفون الذهبي التفاعلي المشابه لدولينجو الفاخر
+                // زر الميكروفون الذهبي التفاعلي المشابه لأسلوب دولينجو في نطق البصمات الصوتية
                 GestureDetector(
-                  onTap: () => _askHybridAI("اشرح لي أهمية درس العصبونات في كتاب العلوم للثالث الثانوي العلمي"),
+                  onTap: () => _askHybridAI("ما هي وظيفة الجسيمات الطرفية في درس مادة العلوم للبكالوريا؟"),
                   child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: _isListening ? Colors.red : const Color(0xFFD4AF37),
-                    child: Icon(_isListening ? Icons.graphic_eq : Icons.mic, color: Colors.black, size: 28),
+                    radius: 28,
+                    backgroundColor: _isListening ? Colors.redAccent : const Color(0xFFD4AF37),
+                    child: Icon(_isListening ? Icons.graphic_eq : Icons.keyboard_voice, color: Colors.black, size: 26),
                   ),
                 ),
               ],
             ),
           ),
-          const Divider(color: Colors.white10),
-          // 📚 قائمة المواد السبعة المتسلسلة تتابعياً بدقة
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(children: [Text("خريطة المناهج السبعة المتسلسلة (التلعيب الصارم):", style: TextStyle(fontSize: 12, color: Colors.grey))]),
+          ),
+          // 📚 قائمة المواد السبعة بالتتابع الخطي لدولينجو
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(20),
               itemCount: subjects.length,
               itemBuilder: (context, index) {
-                bool isLocked = index > 0; // محاكاة تفعيل المادة الأولى فقط (العلوم) بقفل 3D صلب
+                bool isLocked = index > 0; // محاكاة فتح المادة الأولى فقط (العلوم) بقفل صلب لحين إنهاء الاختبارات
                 return Container(
-                  margin: const EdgeInsets.bottom(15),
+                  margin: const EdgeInsets.bottom(12),
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
                     color: isLocked ? const Color(0xFF19191B).withOpacity(0.4) : const Color(0xFF19191B),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: isLocked ? Colors.transparent : const Color(0xFFD4AF37).withOpacity(0.4)),
+                    border: Border.all(color: isLocked ? Colors.transparent : const Color(0xFFD4AF37).withOpacity(0.35)),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -233,7 +262,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
                           Text(subjects[index], style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: isLocked ? Colors.grey : Colors.white)),
                         ],
                       ),
-                      Icon(isLocked ? Icons.lock_clock_outlined : Icons.play_circle_filled, color: isLocked ? Colors.grey : const Color(0xFFD4AF37), size: 26)
+                      Icon(isLocked ? Icons.lock_outline : Icons.play_arrow_sharp, color: isLocked ? Colors.grey : const Color(0xFFD4AF37), size: 24)
                     ],
                   ),
                 );
@@ -245,7 +274,6 @@ class _StudentDashboardState extends State<StudentDashboard> {
     );
   }
 }
-
 // 👨‍🏫 3. واجهة الأستاذ المساعد وجدول المراقبة وقفل الوقت الصارم لـ drasty.net
 class TeacherDashboard extends StatelessWidget {
   const TeacherDashboard({Key? key}) : super(key: key);
@@ -294,30 +322,6 @@ class TeacherDashboard extends StatelessWidget {
               ),
             )
           ],
-        ),
-      ),
-    );
-  }
-}
-rSide: BorderSide(color: Color(0xFFD4AF37))),
-                  ),
-                ),
-                const SizedBox(height: 40),
-                _isLoading
-                    ? const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFD4AF37)))
-                    : ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFD4AF37),
-                          foregroundColor: Colors.black,
-                          minimumSize: const Size(double.infinity, 52),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        ),
-                        onPressed: _executeSecureAuth,
-                        child: const Text('تسجيل الدخول الموحد', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                      ),
-              ],
-            ),
-          ),
         ),
       ),
     );
