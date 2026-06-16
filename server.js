@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { GoogleGenAI } = require('@google/genai'); // محرك الذكاء الاصطناعي الصوتي المتطور
+const { GoogleGenAI } = require('@google/genai');
 
 const app = express();
 app.use(cors());
