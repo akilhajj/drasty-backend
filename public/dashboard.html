@@ -156,18 +156,18 @@
                     { full_name: "رنا غياث الدرع", email: "rana.prep@gmail.com", role: "student", status: "pending" }
                 ];
 
-                usersList.forEach(u => {
+                              usersList.forEach(u => {
                     if (u.status === 'pending' || u.role === 'student') {
-                        tbody.innerHTML += `
-                            <tr>
-                                <td><b>\${u.full_name}</b></td>
-                                <td>\${u.email}</td>
-                                <td><span class="badge badge-bac">\${u.email.includes('prep') ? 'تاسع إعدادي' : 'بكالوريا ثانوية'}</span></td>
-                                <td><span class="badge badge-pending">في الانتظار</span></td>
-                                <td><button class="btn-activate" onclick="approveStudent(this)">✅ موافقة وتفعيل</button></td>
-                            </tr>
-                        `;
+                        tbody.innerHTML += "<tr>" +
+                            "<td><b>" + u.full_name + "</b></td>" +
+                            "<td>" + u.email + "</td>" +
+                            "<td><span class='badge badge-bac'>" + (u.email.includes('prep') ? 'تاسع إعدادي' : 'بكالوريا ثانوية') + "</span></td>" +
+                            "<td><span class='badge badge-pending'>في الانتظار</span></td>" +
+                            "<td><button class='btn-activate' onclick='approveStudent(this)'>✅ موافقة وتفعيل</button></td>" +
+                        "</tr>";
                     }
+                });
+
                 });
             } catch (e) {
                 console.log("خطأ في المزامنة السحابية...");
