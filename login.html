@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول وإنشاء الحساب - Drasty</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root { --primary: #c5a85c; --primary-hover: #aa8f46; --dark: #0f172a; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: #f1f5f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .auth-card { background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 100%; max-width: 420px; text-align: center; }
+        .auth-card img { height: 80px; margin-bottom: 15px; }
+        .tab-buttons { display: flex; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; }
+        .tab-buttons button { flex: 1; padding: 10px; background: none; border: none; font-size: 16px; font-weight: bold; cursor: pointer; color: #64748b; }
+        .tab-buttons button.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        .form-group { margin-bottom: 15px; text-align: right; }
+        label { display: block; margin-bottom: 5px; color: #334155; font-size: 14px; }
+        input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; }
+        .btn-submit { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 10px; }
+        .btn-submit:hover { background: var(--primary-hover); }
+        .msg { margin-top: 10px; font-size: 14px; display: none; }
+        .error-msg { color: #ef4444; }
+        .success-msg { color: #22c55e; }
+    </style>
+</head>
+<body>
+
+<div class="auth-card">
+    <img src="https://ibb.co" alt="Drasty Logo">
+    
+    <div class="tab-buttons">
+        <button id="tabLogin" class="active" onclick="switchTab('login')">تسجيل الدخول</button>
+        <button id="tabRegister" onclick="switchTab('register')">إنشاء حساب طالب</button>
+    </div>
+
+    <form id="loginForm" class="auth-form active">
+        <div class="form-group">
+            <label>اسم المستخدم</label>
+            <input type="text" id="loginUser" required placeholder="ادخل اسم المستخدم">
+        </div>
+        <div class="form-group">
+            <label>كلمة المرور</label>
+            <input type="password" id="loginPass" required placeholder="ادخل كلمة المرور">
+        </div>
+        <button type="submit" class="btn-submit">دخول للمنصة</button>
+        <div id="loginError" class="msg error-msg">بيانات الدخول غير صحيحة!</div>
+    </form>
+
+    <form id="registerForm" class="auth-form">
+        <div class="form-group">
+            <label>اسم الطالب الثلاثي</label>
+            <input type="text" id="regName" required placeholder="مثال: أحمد محمد علي">
+        </div>
+        <div class="form-group">
+            <label>اختر اسم مستخدم بالإنجليزية</label>
+            <input type="text" id="regUser" required placeholder="مثال: khaled12">
+        </div>
+        <div class="form-group">
+            <label>كلمة المرور</label>
+            <input type="password" id="regPass" required placeholder="اختر كلمة مرور">
+        </div>
+        <button type="submit" class="btn-submit">تسجيل الحساب الجديد</button>
+        <div id="regError" class="msg error-msg">اسم المستخدم هذا مسجل مسبقاً!</div>
+        <div id="regSuccess" class="msg success-msg">تم إنشاء حسابك بنجاح! يمكنك الدخول الآن.</div>
+    </form>
+</div>
+
+<script>
+    function switchTab(type) {
+        document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+        document.querySelectorAll('.tab-buttons button').forEach(b => b.classList.remove('active'));
+        document.getElementById('loginError').style.display = 'none';
+        document.getElementById('regError').style.display = 'none';
+        document.getElementById('regSuccess').style.display = 'none';
+
+        if(type === 'login') {
+            document.getElementById('loginForm').classList.add('active');
+            document.getElementById('tabLogin').classList.add('active');
+        } else {
+            document.getElementById('registerForm').classList.add('active');
+            document.getElementById('tabRegister').classList.add('active');
+        }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const user = document.getElementById('loginUser').value.trim();
+        const pass = document.getElementById('loginPass').value;
+
+        if(user === 'admin' && pass === 'drasty2026') {
+            sessionStorage.setItem('drasty_authenticated', 'true');
+            window.location.href = 'dashboard.html';
+            return;
+        }
+
+        let studentsList = JSON.parse(localStorage.getItem('drasty_registered_students')) || [];
+        let foundStudent = studentsList.find(s => s.username === user && s.password === pass);
+
+        if(foundStudent) {
+            sessionStorage.setItem('student_logged_in', 'true');
+            sessionStorage.setItem('student_name', foundStudent.name);
+            window.location.href = 'index.html';
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('regName').value.trim();
+        const user = document.getElementById('regUser').value.trim().toLowerCase();
+        const pass = document.getElementById('regPass').value;
+        
+        let studentsList = JSON.parse(localStorage.getItem('drasty_registered_students')) || [];
+        
+        if(studentsList.some(s => s.username === user) || user === 'admin') {
+            document.getElementById('regError').style.display = 'block';
+            return;
+        }
+
+        studentsList.push({ name: name, username: user, password: pass });
+        localStorage.setItem('drasty_registered_students', JSON.stringify(studentsList));
+        
+        document.getElementById('regError').style.display = 'none';
+        document.getElementById('regSuccess').style.display = 'block';
+        this.reset();
+        setTimeout(() => { switchTab('login'); }, 1500);
+    });
+</script>
+</body>
+</html>
