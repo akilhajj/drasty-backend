@@ -1,12 +1,8 @@
 {
   "name": "drasty-backend",
-  "main": "index.js",
   "compatibility_date": "2024-03-01",
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "drasty_db",
-      "database_id": "951edde9-e1f2-4f87-8e89-e75679fb12c1"
-    }
-  ]
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  }
 }
