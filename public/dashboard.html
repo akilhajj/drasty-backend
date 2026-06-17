@@ -156,7 +156,7 @@
                     { full_name: "رنا غياث الدرع", email: "rana.prep@gmail.com", role: "student", status: "pending" }
                 ];
 
-                              usersList.forEach(u => {
+                                            usersList.forEach(u => {
                     if (u.status === 'pending' || u.role === 'student') {
                         tbody.innerHTML += "<tr>" +
                             "<td><b>" + u.full_name + "</b></td>" +
@@ -167,6 +167,7 @@
                         "</tr>";
                     }
                 });
+
 
                 });
             } catch (e) {
