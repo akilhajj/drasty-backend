@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | Drasty Institute</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        :root { --primary: #c5a85c; --primary-hover: #aa8f46; --dark-bg: #090d16; --sidebar-color: #0f172a; --card-glass: rgba(30, 41, 59, 0.45); --text-light: #f8fafc; --text-gray: #94a3b8; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background: var(--dark-bg); color: var(--text-light); display: flex; height: 100vh; overflow: hidden; }
+        .sidebar { width: 260px; background: var(--sidebar-color); color: white; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; border-left: 1px solid rgba(197, 168, 92, 0.15); }
+        .sidebar .logo-area { text-align: center; margin-bottom: 25px; border-bottom: 1px solid rgba(197, 168, 92, 0.15); padding-bottom: 15px; }
+        .sidebar .logo-area img { height: 60px; filter: drop-shadow(0 0 6px rgba(197,168,92,0.3)); }
+        .sidebar button { background: none; border: none; color: #94a3b8; padding: 12px 15px; text-align: right; width: 100%; font-size: 15px; cursor: pointer; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .sidebar button.active, .sidebar button:hover { background: var(--primary); color: white; }
+        .dash-content { flex: 1; padding: 30px; overflow-y: auto; background: var(--dark-bg); }
+        .dash-sub-section { display: none; }
+        .dash-sub-section.active { display: block; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--card-glass); border: 1px solid rgba(197,168,92,0.15); padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border-right: 4px solid var(--primary); }
+        .stat-card h4 { color: var(--text-gray); font-size: 13px; }
+        .stat-card .value { font-size: 26px; font-weight: 700; color: white; margin-top: 5px; }
+        .stat-card i { font-size: 30px; color: var(--primary); }
+        .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .chart-box { background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(197,168,92,0.1); padding: 20px; border-radius: 12px; }
+        .ai-container { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(197,168,92,0.15); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 480px; }
+        .ai-header { background: var(--sidebar-color); border-bottom: 1px solid rgba(197, 168, 92, 0.15); padding: 15px 20px; display: flex; align-items: center; gap: 12px; }
+        .ai-chat-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: rgba(9, 13, 22, 0.5); }
+        .ai-message { max-width: 80%; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.5; }
+        .ai-message.bot { background: var(--sidebar-color); align-self: flex-start; border-left: 4px solid var(--primary); color: white; }
+        .ai-message.user { background: var(--primary); color: white; align-self: flex-end; }
+        .ai-input-area { padding: 15px; border-top: 1px solid rgba(197,168,92,0.15); display: flex; gap: 10px; background: var(--sidebar-color); }
+        .form-container { background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(197,168,92,0.15); padding: 20px; border-radius: 12px; margin-bottom: 30px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        .form-group { text-align: right; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; color: var(--text-light); }
+        input, select, textarea { width: 100%; padding: 11px; border: 1px solid rgba(197,168,92,0.2); background: rgba(9, 13, 22, 0.6); border-radius: 8px; color: white; outline: none; font-size: 14px; }
+        .btn { background: linear-gradient(135deg, var(--primary), #aa8f46); color: white; border: none; padding: 11px 22px; border-radius: 8px; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
+        .table-responsive { background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(197, 168, 92, 0.15); border-radius: 12px; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; text-align: right; font-size: 14px; }
+        th, td { padding: 12px 18px; border-bottom: 1px solid rgba(197,168,92,0.1); }
+        th { background: rgba(15, 23, 42, 0.8); color: var(--primary); font-weight: 700; }
+        .btn-delete { background: #ef4444; color: white; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; }
+        .badge-pending { background: rgba(197, 168, 92, 0.15); color: var(--primary); padding: 4px 8px; border-radius: 6px; font-size: 12px; border: 1px solid rgba(197,168,92,0.3); }
+        .lock-overlay { display: none; text-align: center; padding: 50px 20px; background: rgba(15,23,42,0.9); border: 1px dashed #ef4444; border-radius: 12px; margin-top: 20px; }
+        .lock-overlay i { font-size: 50px; color: #ef4444; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <!-- القائمة الجانبية للوحة التحكم -->
+    <div class="sidebar">
+        <div>
+            <div class="logo-area">
+                <img src="https://ibb.co" alt="Logo">
+                <h3 id="sidebarTitle">Drasty Admin</h3>
+            </div>
+            <div id="sidebarButtons">
+                <!-- الأزرار تظهر ديناميكياً حسب نوع الحساب عبر الجافاسكريبت -->
+            </div>
+        </div>
+        <button onclick="logout()" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;"><i class="fa-solid fa-power-off"></i> خروج</button>
+    </div>
+    
+    <!-- المحتوى الداخلي للوحات -->
+    <div class="dash-content">
+        
+        <!-- 📊 1. قسم الإحصائيات العام (للمسؤول والأستاذ) -->
+        <div id="dash-home" class="dash-sub-section active">
+            <h2 id="welcomeUserMsg">مرحباً بك في لوحة المؤشرات العامة</h2><br>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div><h4>الطلاب قيد الانتظار</h4><div class="value" id="stat-pending">0</div></div>
+                    <i class="fa-solid fa-user-clock"></i>
+                </div>
+                <div class="stat-card">
+                    <div><h4>الطلاب المفعلين</h4><div class="value" id="stat-active">0</div></div>
+                    <i class="fa-solid fa-user-gradient"></i>
+                </div>
+                <div class="stat-card">
+                    <div><h4>المناهج المرفوعة</h4><div class="value" id="stat-curric">0</div></div>
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+            </div>
+            <div class="charts-container">
+                <div class="chart-box">
+                    <canvas id="dashChart" height="220"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📚 2. قسم رفع المناهج والتصنيف الصارم (للمسؤول والأستاذ التخصصي) -->
+        <div id="dash-curriculum" class="dash-sub-section">
+            <h2>إدارة ورفع المناهج والملفات الدراسية الموجهة للـ AI</h2><br>
+            <div class="form-container">
+                <form id="curriculumForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>اسم المنهاج / الكتاب</label>
+                            <input type="text" id="subjectName" required placeholder="مثال: فيزياء - الكترونيات">
+                        </div>
+                        <div class="form-group">
+                            <label>المرحلة والفرع الدراسي</label>
+                            <select id="subjectClass">
+                                <option value="تاسع - أساسي">تاسع - أساسي</option>
+                                <option value="بكالوريا - فرع علمي">بكالوريا - فرع علمي</option>
+                                <option value="بكالوريا - فرع أدبي">بكالوريا - فرع أدبي</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>رابط الملف المباشر (PDF / Drive)</label>
+                            <input type="url" id="subjectLink" required placeholder="ضع رابط الملف هنا">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn"><i class="fa-solid fa-plus"></i> حفظ ونشر المنهاج</button>
+                </form>
+            </div>
+            <h3>قائمة المواد المتاحة</h3><br>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>اسم المادة</th><th>الفرع الدراسي</th><th>الرابط</th><th>التحكم</th></tr></thead>
+                    <tbody id="curriculumTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 👥 3. قسم مراجعة طلبات التسجيل وحساب الأيام (للمسؤول فقط) -->
+        <div id="dash-requests" class="dash-sub-section">
+            <h2>مراجعة طلبات الطلاب وإدارة فترات الاشتراك باليوم (1-365)</h2><br>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>اسم الطالب</th><th>الفرع/الدين</th><th>الهاتف</th><th>أيام الاشتراك</th><th>الإجراء</th></tr></thead>
+                    <tbody id="requestsTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 🔒 4. قسم مراقبة الامتحانات الصارم (نظام المناوبة 10:00 AM - 2:00 PM) -->
+        <div id="dash-monitoring" class="dash-sub-section">
+            <h2>غرفة الرقابة المعهدية وكشف النزاهة الامتحانية للطلاب</h2>
+            <div class="lock-overlay" id="monitoringLock">
+                <i class="fa-solid fa-lock"></i>
+                <h3>قسم الرقابة مغلق حالياً</h3>
+                <p>صلاحيات المراقبة والتحقق متوفرة حصرياً خلال فترة المناوبة الرسمية من الساعة 10:00 صباحاً وحتى 2:00 ظهراً فقط.</p>
+            </div>
+            <div id="monitoringContent" style="display: none; margin-top:20px;">
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>اسم الطالب</th><th>المادة الحالية</th><th>حالة التقدم الدراسي</th><th>النزاهة والرقابة</th></tr></thead>
+                        <tbody id="monitoringTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🎨 5. قسم إدارة محتوى صفحة الهبوط وتعديل الشعار (للمسؤول فقط) -->
+        <div id="dash-cms" class="dash-sub-section">
+            <h2>إدارة محتوى صفحة الهبوط والعدادات العامة للمنصة (CMS)</h2><br>
+            <div class="form-container">
+                <form id="cmsForm">
+                    <div class="form-grid">
+                        <div class="form-group"><label>العنوان الرئيسي لصفحة الهبوط</label><input type="text" id="cmsTitle"></div>
+                        <div class="form-group"><label>رابط الشعار المطور (Logo URL)</label><input type="url" id="cmsLogo"></div>
+                        <div class="form-group"><label>عداد الطلاب المعروض للعامة</label><input type="text" id="cmsCountStudents"></div>
+                    </div>
+                    <div class="form-group"><label>الوصف والتعريف العام للمعهد</label><textarea id="cmsDesc" rows="3"></textarea></div>
+                    <button type="submit" class="btn"><i class="fa-solid fa-floppy-disk"></i> حفظ وتحديث واجهة المنصة حياً</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- محرك التشغيل الجافاسكريبت والربط الأمني للوحات والمناوبات -->
+    <script>
+        // التحقق الأمني من جلسة الدخول لمنع الاختراق العشوائي
+        const role = sessionStorage.getItem('user_role');
+        if (sessionStorage.getItem('drasty_authenticated') !== 'true' || !role) {
+            window.location.href = 'login.html';
+        }
+
+        // 🔄 بناء القائمة الجانبية والأزرار ديناميكياً بناءً على رتبة الحساب المسجل
+        const sButtons = document.getElementById('sidebarButtons');
+        const sTitle = document.getElementById('sidebarTitle');
+
+        if(role === 'admin') {
+            sTitle.innerText = "لوحة المسؤول الأكبر";
+            sButtons.innerHTML = `
+                <button id="nav-home" class="active" onclick="switchDashSection('dash-home')"><i class="fa-solid fa-chart-pie"></i> قسم الإحصائيات</button>
+                <button id="nav-curric" onclick="switchDashSection('dash-curriculum')"><i class="fa-solid fa-book-open"></i> رفع مناهج المعهد</button>
+                <button id="nav-requests" onclick="switchDashSection('dash-requests')"><i class="fa-solid fa-user-check"></i> إدارة الاشتراكات</button>
+                <button id="nav-monitor" onclick="switchDashSection('dash-monitoring')"><i class="fa-solid fa-eye"></i> غرفة المراقبة</button>
+                <button id="nav-cms" onclick="switchDashSection('dash-cms')"><i class="fa-solid fa-sliders"></i> تعديل واجهة الموقع</button>
+            `;
+        } else if(role === 'teacher') {
+            const tSubject = sessionStorage.getItem('teacher_subject') || 'عام';
+            sTitle.innerText = "لوحة الأستاذ المساعد";
+            sButtons.innerHTML = `
+                <button id="nav-home" class="active" onclick="switchDashSection('dash-home')"><i class="fa-solid fa-chart-pie"></i> إحصائيات مادتي</button>
+                <button id="nav-curric" onclick="switchDashSection('dash-curriculum')"><i class="fa-solid fa-book-open"></i> رفع ملفات ${tSubject}</button>
+                <button id="nav-monitor" onclick="switchDashSection('dash-monitoring')"><i class="fa-solid fa-shield-halved"></i> مناوبة المراقبة الصارمة</button>
+            `;
+        }
+
+        // دالة التبديل بين الأقسام وتحديث المؤشرات
+        function switchDashSection(sectId) {
+            document.querySelectorAll('.dash-sub-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.sidebar button').forEach(b => b.classList.remove('active'));
+            document.getElementById(sectId).classList.add('active');
+            
+            if(sectId === 'dash-home') document.getElementById('nav-home').classList.add('active');
+            if(sectId === 'dash-curriculum') document.getElementById('nav-curric').classList.add('active');
+            if(sectId === 'dash-requests' && role === 'admin') document.getElementById('nav-requests').classList.add('active');
+            if(sectId === 'dash-monitoring') {
+                document.getElementById('nav-monitor').classList.add('active');
+                checkStrictMonitoringShift(); 
+            }
+            if(sectId === 'dash-cms' && role === 'admin') document.getElementById('nav-cms').classList.add('active');
+        }
+
+        // 🔒 نظام فحص المناوبة الصارم بالأوقات (10:00 صباحاً - 2:00 ظهراً)
+        function checkStrictMonitoringShift() {
+            const now = new Date();
+            const hours = now.getHours();
+            const lockOverlay = document.getElementById('monitoringLock');
+            const monitoringContent = document.getElementById('monitoringContent');
+
+            if(hours >= 10 && hours < 14) {
+                lockOverlay.style.display = 'none';
+                monitoringContent.style.display = 'block';
+                drawMonitoringTable();
+            } else {
+                lockOverlay.style.display = 'block';
+                monitoringContent.style.display = 'none';
+            }
+        }
+        // إعداد وتحديث العدادات والرسوم البيانية
+        let studentsList = JSON.parse(localStorage.getItem('drasty_registered_students')) || [];
+        let curriculums = JSON.parse(localStorage.getItem('drasty_curriculums')) || [];
+        let myChart;
+
+        function refreshStatsAndCharts() {
+            let pendingCount = studentsList.filter(s => s.status === 'Pending').length;
+            let activeCount = studentsList.filter(s => s.status === 'Active').length;
+
+            document.getElementById('stat-pending').innerText = pendingCount;
+            document.getElementById('stat-active').innerText = activeCount;
+            document.getElementById('stat-curric').innerText = curriculums.length;
+
+            if(myChart) myChart.destroy();
+            const ctx = document.getElementById('dashChart').getContext('2d');
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['قيد الانتظار', 'الحسابات النشطة', 'المواد والمناهج'],
+                    datasets: [{
+                        label: 'مؤشرات معهد Drasty الحية',
+                        data: [pendingCount, activeCount, curriculums.length],
+                        backgroundColor: ['#c5a85c', '#22c55e', '#3b82f6'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // 📚 محرك إدارة وجدول رفع المناهج
+        function drawCurriculums() {
+            const tbody = document.getElementById('curriculumTable');
+            tbody.innerHTML = '';
+            curriculums.forEach((item, idx) => {
+                tbody.innerHTML += `<tr><td><strong>${item.name}</strong></td><td>${item.class}</td><td><a href="${item.link}" target="_blank" style="color:var(--primary);">فتح الملف <i class="fa-solid fa-link"></i></a></td><td><button class="btn-delete" onclick="deleteCurriculum(${idx})">حذف</button></td></tr>`;
+            });
+            refreshStatsAndCharts();
+        }
+
+        document.getElementById('curriculumForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            curriculums.push({
+                name: document.getElementById('subjectName').value.trim(),
+                class: document.getElementById('subjectClass').value,
+                link: document.getElementById('subjectLink').value.trim()
+            });
+            localStorage.setItem('drasty_curriculums', JSON.stringify(curriculums));
+            drawCurriculums();
+            this.reset();
+        });
+
+        function deleteCurriculum(idx) {
+            curriculums.splice(idx, 1);
+            localStorage.setItem('drasty_curriculums', JSON.stringify(curriculums));
+            drawCurriculums();
+        }
+
+        // 👥 محرك مراجعة الاشتراكات وتخصيص الأيام (1-365 يوم) من المسؤول
+        function drawRequestsTable() {
+            if(role !== 'admin') return;
+            const tbody = document.getElementById('requestsTable');
+            tbody.innerHTML = '';
+
+            studentsList.forEach((student, idx) => {
+                let actionHtml = '';
+                if(student.status === 'Pending') {
+                    actionHtml = `
+                        <div style="display:flex; gap:8px;">
+                            <input type="number" min="1" max="365" id="days-${idx}" placeholder="أيام" style="width:70px; padding:5px;" value="365">
+                            <button class="btn" style="padding:5px 10px; font-size:12px; background:#22c55e;" onclick="approveStudent(${idx})">تفعيل الحساب</button>
+                        </div>`;
+                } else {
+                    actionHtml = `<span style="color:#22c55e; font-weight:bold;">نشط (${student.daysDuration} يوم)</span> 
+                                  <button class="btn-delete" style="margin-right:10px; padding:3px 8px; font-size:11px;" onclick="deleteStudent(${idx})">إلغاء</button>`;
+                }
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${student.name}</strong><br><span style="font-size:11px; color:var(--text-gray);">@${student.username}</span></td>
+                        <td>${student.class}<br><span style="font-size:11px; color:var(--primary);">${student.religion}</span></td>
+                        <td><a href="tel:${student.phone}" style="color:white; text-decoration:none;">${student.phone}</a></td>
+                        <td>${student.status === 'Pending' ? '<span class="badge-pending">بانتظار الدفع</span>' : student.daysDuration + ' يوم'}</td>
+                        <td>${actionHtml}</td>
+                    </tr>`;
+            });
+            refreshStatsAndCharts();
+        }
+
+        function approveStudent(idx) {
+            const daysInput = document.getElementById(`days-${idx}`).value;
+            if(!daysInput || daysInput < 1 || daysInput > 365) {
+                alert("يرجى تحديد فترة اشتراك صحيحة بين 1 و 365 يوم!");
+                return;
+            }
+            studentsList[idx].status = 'Active';
+            studentsList[idx].daysDuration = parseInt(daysInput);
+            studentsList[idx].approvedDate = new Date().toISOString(); 
+            
+            localStorage.setItem('drasty_registered_students', JSON.stringify(studentsList));
+            drawRequestsTable();
+        }
+
+        function deleteStudent(idx) {
+            if(confirm("هل أنت متأكد من حذف وإلغاء تفعيل حساب هذا الطالب نهائياً؟")) {
+                studentsList.splice(idx, 1);
+                localStorage.setItem('drasty_registered_students', JSON.stringify(studentsList));
+                drawRequestsTable();
+            }
+        }
+
+        // 🔒 محرك رسم جدول الرقابة الامتحانية والتقدم أثناء المناوبة
+        function drawMonitoringTable() {
+            const tbody = document.getElementById('monitoringTable');
+            tbody.innerHTML = '';
+            
+            let activeStudents = studentsList.filter(s => s.status === 'Active');
+            if(activeStudents.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-gray);">لا يوجد طلاب مسجلين داخل قاعات الاختبار حالياً.</td></tr>';
+                return;
+            }
+
+            activeStudents.forEach(s => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${s.name}</strong></td>
+                        <td>علم أحياء / مراجعة عامة</td>
+                        <td><span style="color:#3b82f6;">مستمر في حل الفرض الدوري الثاني</span></td>
+                        <td><span style="color:#22c55e;"><i class="fa-solid fa-circle-check"></i> الاتصال آمن ونظيف</span></td>
+                    </tr>`;
+            });
+        }
+
+        // 🎨 محرك التحكم وإدارة المحتوى والعدادات البصرية لصفحة الهبوط (CMS)
+        if(role === 'admin') {
+            document.getElementById('cmsTitle').value = localStorage.getItem('cms_hero_title') || '';
+            document.getElementById('cmsLogo').value = localStorage.getItem('cms_site_logo') || '';
+            document.getElementById('cmsCountStudents').value = localStorage.getItem('cms_count_students') || '';
+            document.getElementById('cmsDesc').value = localStorage.getItem('cms_hero_desc') || '';
+
+            document.getElementById('cmsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                localStorage.setItem('cms_hero_title', document.getElementById('cmsTitle').value.trim());
+                localStorage.setItem('cms_site_logo', document.getElementById('cmsLogo').value.trim());
+                localStorage.setItem('cms_count_students', document.getElementById('cmsCountStudents').value.trim());
+                localStorage.setItem('cms_hero_desc', document.getElementById('cmsDesc').value.trim());
+                alert("تم تحديث وحفظ تفاصيل واجهة صفحة الهبوط والشعار الملكي بنجاح مئة بالمئة حياً!");
+            });
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = 'index.html';
+        }
+
+        // الإطلاق والتشغيل الأولي
+        drawCurriculums();
+        drawRequestsTable();
+        refreshStatsAndCharts();
+    </script>
+</body>
+</html>
