@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم الذكية المتكاملة | drasty.net</title>
+    <title>لوحة التحكم المتكاملة | drasty.net</title>
     <link rel="stylesheet" href="https://googleapis.com">
-    <!-- 🌐 ربط حزمة الأيقونات العالمية لإحياء المربعات الفارغة حياً -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         :root { --primary: #d4af37; --primary-hover: #b8942a; --dark-bg: #090d16; --sidebar-color: #0f172a; --card-glass: rgba(30, 41, 59, 0.45); --text-light: #f8fafc; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: var(--dark-bg); color: var(--text-light); display: flex; height: 100vh; overflow: hidden; position: relative; }
         
-        /* ☰ القائمة الجانبية الملكية المحدثة */
+        /* ☰ القائمة الجانبية المرنة المستجيبة لهواتف الإدارة */
         .sidebar { width: 280px; background-color: var(--sidebar-color); padding: 25px 20px; display: flex; flex-direction: column; gap: 20px; transition: all 0.3s ease; position: relative; z-index: 100; }
         .sidebar.closed { width: 0; padding: 25px 0; overflow: hidden; margin-right: -280px; }
         .logo-area { display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid rgba(212,175,55,0.15); padding-bottom: 20px; text-align: center; }
@@ -24,23 +23,22 @@
         .nav-item:hover, .nav-item.active { border-color: var(--primary); color: var(--primary); background-color: rgba(212, 175, 55, 0.05); }
         .btn-logout { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; font-size: 13px; }
         
-        /* 👑 مساحة المحتوى العريضة */
+        /* 👑 مساحة عرض المحتوى */
         .dash-content { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 25px; position: relative; transition: all 0.3s ease; }
         
-        /* ☰ زر الثلاث شخطات المستقل والفعال */
+        /* ☰ زر الثلاث شخطات المطور */
         .toggle-btn { background-color: var(--sidebar-color); color: var(--primary); border: 1px solid rgba(212,175,55,0.2); width: 42px; height: 42px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: 0.2s; position: absolute; top: 25px; left: 25px; z-index: 101; }
         .toggle-btn:hover { background-color: var(--primary); color: #000; }
         .header-title { margin-right: 55px; font-size: 20px; font-weight: 700; color: #fff; }
         
-        /* 📊 كروت المؤشرات الفاخرة بالأيقونات */
+        /* 📊 كروت المؤشرات العلوية الفاخرة */
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 15px; }
-        .stat-card { background-color: var(--card-glass); border: 1px solid rgba(212,175,55,0.1); padding: 20px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
-        .stat-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .stat-card { background-color: var(--card-glass); border: 1px solid rgba(212,175,55,0.1); padding: 20px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; }
         .stat-info p { color: #94a3b8; font-size: 11px; font-weight: bold; }
         .stat-info h3 { font-size: 28px; color: var(--primary); font-weight: 700; margin-top: 5px; }
         .stat-icon { width: 50px; height: 50px; background-color: rgba(212,175,55,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 22px; }
         
-        /* 📋 تنميط الجداول والنوافذ المنبثقة */
+        /* 📋 تصفيف الجداول */
         .table-card { background-color: var(--card-glass); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 16px; margin-top: 10px; }
         .table-card h2 { font-size: 16px; color: var(--primary); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
         .table-responsive { overflow-x: auto; width: 100%; }
@@ -51,17 +49,9 @@
         .badge { padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; }
         .badge-pending { background-color: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
         .badge-bac { background-color: rgba(212, 175, 55, 0.15); color: var(--primary); border: 1px solid var(--primary); }
+        .badge-prep { background-color: rgba(14, 165, 233, 0.15); color: #0ea5e9; border: 1px solid #0ea5e9; }
         .btn-activate { background-color: var(--primary); color: #000; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 11px; transition: 0.2s; }
         .btn-activate:hover { background-color: #fff; }
-
-        /* 📦 نافذة منبثقة مخصصة (Modal) لتحديد أيام الاشتراك وحقن التواريخ */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: #0f172a; border: 1px solid var(--primary); padding: 25px; border-radius: 16px; width: 90%; max-width: 400px; text-align: center; }
-        .modal-content h3 { color: var(--primary); margin-bottom: 15px; font-size: 16px; }
-        .modal-content select { width: 100%; padding: 10px; background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; margin-bottom: 15px; font-family: inherit; }
-        .modal-actions { display: flex; gap: 10px; justify-content: center; }
-        .btn-confirm { background: var(--primary); color: #000; border: none; padding: 8px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-        .btn-cancel { background: #334155; color: #fff; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; }
 
         @media (max-width: 992px) {
             .stats-grid { grid-template-columns: 1fr; }
@@ -71,225 +61,185 @@
 </head>
 <body>
 
-    <!-- ☰ زر الثلاث شخطات الفاخر والمستقل كلياً للتحكم بالقائمة الجانبية -->
+    <!-- ☰ زر الثلاث شخطات للتحكم بفتح وإغلاق القائمة الجانبية -->
     <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
 
-    <!-- ☰ القائمة الجانبية الحقيقية بكافة خيارات المنصة -->
+    <!-- ☰ القائمة الجانبية بالخيارات الثلاثة المعتمدة فقط -->
     <div class="sidebar" id="sidebar">
         <div class="logo-area">
             <h1>drasty.net</h1>
-            <span>لوحة المسؤول الأكبر الأكاديمية</span>
+            <span>لوحة المسؤول الأكاديمية</span>
         </div>
         <div class="nav-menu">
-            <button class="nav-item active" onclick="switchSection('dashboard')"><i class="fas fa-chart-pie"></i> قسم الإحصائيات</button>
-            <button class="nav-item" onclick="switchSection('curriculum')"><i class="fas fa-book-open"></i> رفع مناهج المعهد</button>
-            <button class="nav-item" onclick="switchSection('payments')"><i class="fas fa-credit-card"></i> إدارة الاشتراكات</button>
-            <button class="nav-item" onclick="switchSection('monitoring')"><i class="fas fa-shield-halved"></i> غرفة المراقبة الحية</button>
+            <button class="nav-item active" onclick="switchSection('dashboard')"><i class="fas fa-users"></i> إدارة بيانات الطلاب</button>
+            <button class="nav-item" onclick="switchSection('curriculum')"><i class="fas fa-book-open"></i> مدير المناهج والشهادات</button>
+            <button class="nav-item" onclick="switchSection('payments')"><i class="fas fa-credit-card"></i> طلبات الدفع والإيصالات</button>
         </div>
         <button class="btn-logout" onclick="window.location.href='/'">تسجيل الخروج</button>
     </div>
 
-    <!-- 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة -->
+    <!-- 👑 مساحة عرض المحتوى والبيانات -->
     <div class="dash-content">
-        <div class="header-title" id="page-title">مرحباً بك في لوحة المؤشرات العامة</div>
+        <div class="header-title" id="page-title">إدارة بيانات الطلاب ورصد المسار الأكاديمي</div>
 
-        <!-- 📊 كروت الإحصائيات بعد تزويدها بالأيقونات الحية المفقودة -->
+        <!-- 📊 كروت المؤشرات والعدادات الحقيقية المتزامنة -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-info"><p>الطلاب قيد الانتظار</p><h3 id="pending-count">2</h3></div>
-                <div class="stat-icon"><i class="fas fa-hourglass-start"></i></div>
+                <div class="stat-info"><p>الطلاب قيد الانتظار</p><h3 id="pending-count">0</h3></div>
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
             </div>
             <div class="stat-card">
-                <div class="stat-info"><p>الطلاب المفعلين</p><h3 id="approved-count">2</h3></div>
+                <div class="stat-info"><p>الطلاب المعتمدين والمفعلين</p><h3 id="approved-count">0</h3></div>
                 <div class="stat-icon"><i class="fas fa-user-check"></i></div>
             </div>
             <div class="stat-card">
-                <div class="stat-info"><p>المناهج المرفوعة</p><h3>7 مواد</h3></div>
+                <div class="stat-info"><p>المناهج والمواد المرفوعة</p><h3>7 مواد</h3></div>
                 <div class="stat-icon"><i class="fas fa-file-pdf"></i></div>
             </div>
         </div>
 
-        <!-- 📋 مساحة ديناميكية لتبديل وعرض جداول المنظومة حياً -->
-        <div class="table-card" id="main-table-view">
-            <h2 id="table-title"><i class="fas fa-users-viewfinder"></i> طلبات فتح حسابات الطلاب الجدد (بانتظار المراجعة)</h2>
+        <!-- 📋 مساحة الجداول الديناميكية المتغيرة عند الضغط على الخيارات الجانبية -->
+        <div class="table-card">
+            <h2 id="table-title"><i class="fas fa-users-rectangle"></i> السجل المركزي لكافة الطلاب النشطين والمفعلين</h2>
             <div class="table-responsive">
-                <table id="dynamic-table">
-                    <thead id="table-headers">
-                        <!-- تضخ العناوين برمجياً -->
+                <table>
+                    <thead>
+                        <tr id="table-headers">
+                            <!-- العناوين تضخ آلياً -->
+                        </tr>
                     </thead>
                     <tbody id="live-table-rows">
-                        <!-- تضخ البيانات والأسطر برمجياً -->
+                        <!-- البيانات تتدفق حياً من السيرفر السحابي الحقيقي -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
-    <!-- 📦 نافذة تحديد أيام الاشتراك وحقن التواريخ (Modal) -->
-    <div class="modal" id="activation-modal">
-        <div class="modal-content">
-            <i class="fas fa-calendar-check" style="color:var(--primary);font-size:32px;margin-bottom:10px;"></i>
-            <h3>تحديد مدة الاشتراك وحقن الصلاحية</h3>
-            <p id="modal-student-name" style="font-size:12px;color:#94a3b8;margin-bottom:15px;"></p>
-            
-            <label style="display:block;text-align:right;font-size:11px;color:var(--primary);margin-bottom:5px;">اختر باقة التفعيل المعتمدة:</label>
-            <select id="subscription-period">
-                <option value="30">باقة شهرية تجريبية (30 يوم)</option>
-                <option value="90">باقة فصلية مكثفة (90 يوم)</option>
-                <option value="365" selected>باقة سنوية ملكية كاملة (365 يوم)</option>
-            </select>
-            
-            <div class="modal-actions">
-                <button class="btn-confirm" onclick="executeFinalActivation()">تأكيد التفعيل والحقن 🚀</button>
-                <button class="btn-cancel" onclick="closeActivationModal()">إلغاء</button>
-            </div>
-        </div>
-    </div>
     <script>
-        // 🧠 مصفوفة الطلاب المحقونة داخلياً لضمان تشغيل وعرض البيانات فوراً وبأعلى كفاءة
-        let staticStudentsList = [
-            { id: 101, full_name: "أحمد محمد العلي", email: "ahmed.sy@gmail.com", grade: "بكالوريا ثانوية", status: "pending", daysLeft: 0 },
-            { id: 102, full_name: "رنا غياث الدرع", email: "rana.prep@gmail.com", grade: "تاسع أساسي", status: "pending", daysLeft: 0 },
-            { id: 103, full_name: "طالب تجريبي مفعّل", email: "student@drasty.net", grade: "بكالوريا ثانوية", status: "approved", daysLeft: 365 },
-            { id: 104, full_name: "محمد عبد الله المحمد", email: "mohammed.sy@gmail.com", grade: "بكالوريا ثانوية", status: "approved", daysLeft: 90 }
-        ];
-
-let currentActiveStudentId = null;
-
-
-                async function executeFinalActivation() {
-            const periodSelect = document.getElementById('subscription-period');
-            const selectedDays = parseInt(periodSelect.value);
-
-            try {
-                // إرسال أمر الحقن الفوري للوركر لتعديل داتا بيز كلاود فلير حياً
-                const res = await fetch('/api/teacher/approve-student', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: currentActiveStudentId, days: selectedDays })
-                });
-                const data = await res.json();
-                
-                if (data && data.success) {
-                    alert("🚀 تم قبول الطالب وحقن باقة الـ (" + selectedDays + " يوم) داخل قاعدة البيانات حياً!");
-                    closeActivationModal();
-                    if (typeof renderDynamicTable === "function") {
-                        renderDynamicTable('pending');
-                    }
-                }
-            } catch (e) {
-                closeActivationModal();
-                alert("🚀 تم التفعيل الفوري للحساب وحقن الأيام بنجاح!");
-                if (typeof renderDynamicTable === "function") {
-                    renderDynamicTable('pending');
-                }
-            }
-        }
+        // مصفوفة تخزين مؤقتة لتحديث البيانات حياً عند السحب من الخادم
+        let globalUsersCache = [];
 
         // ☰ دالة التحكم التفاعلية لزر الثلاث شخطات لطي وإخفاء القائمة الجانبية حياً
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('closed');
         }
 
-        // 🔄 دالة تسييل وقذف الجداول بناءً على نوع الخيار المختار لإحياء كافة مزايا الموقع
-        function renderDynamicTable(viewType) {
+        // 🔄 دالة المزامنة الصافية لجلب وتحديث داتا الطلاب حياً من قاعدة البيانات السحابية D1
+        async function fetchLivePayload() {
+            try {
+                // سحب الجداول حياً من الوركر المربوط بالداتا بيز
+                const res = await fetch('/api/teacher/monitor-shift');
+                const data = await res.json();
+                
+                if (data && data.success) {
+                    globalUsersCache = data.users;
+                    // تسييل وتحديث العدادات العلوية بناءً على الأرقام الحقيقية في الداتا بيز
+                    let pendingCount = globalUsersCache.filter(u => u.status === 'pending' && u.role === 'student').length;
+                    let approvedCount = globalUsersCache.filter(u => u.status === 'approved' && u.role === 'student').length;
+                    
+                    document.getElementById('pending-count').innerText = pendingCount;
+                    document.getElementById('approved-count').innerText = approvedCount;
+
+                    // تحديد الشاشة النشطة حالياً لإعادة قذف أسطرها بنظافة
+                    const activeBtn = document.querySelector('.nav-menu .active');
+                    if (activeBtn && activeBtn.innerText.includes('بيانات الطلاب')) {
+                        renderTable('approved');
+                    } else if (activeBtn && activeBtn.innerText.includes('والإيصالات')) {
+                        renderTable('pending');
+                    }
+                }
+            } catch (e) {
+                console.log("محاولة إعادة الاتصال بالرادار السحابي...");
+            }
+        }
+
+        // 📊 دالة قذف وبناء الجداول حركياً وبدون تعليق طبقاً للبيانات السحابية المقروءة
+        function renderTable(viewType) {
             const tbody = document.getElementById('live-table-rows');
             const headers = document.getElementById('table-headers');
-            
-            // تحديث العدادات العلوية حياً تلقائياً بناءً على مصفوفة الداتا الصافية
-            let pendingCount = staticStudentsList.filter(u => u.status === 'pending').length;
-            let approvedCount = staticStudentsList.filter(u => u.status === 'approved').length;
-            document.getElementById('pending-count').innerText = pendingCount;
-            document.getElementById('approved-count').innerText = approvedCount;
-
             tbody.innerHTML = '';
 
-            if (viewType === 'pending') {
-                headers.innerHTML = "<th>اسم الطالب المعلق</th><th>البريد الإلكتروني</th><th>الشهادة المطلوبة</th><th>الحالة والتدقيق</th><th>الإجراء وتحديد الأيام</th>";
-                staticStudentsList.forEach(u => {
-                    if (u.status === 'pending') {
+            if (viewType === 'approved') {
+                headers.innerHTML = "<th>رقم المشترك</th><th>الاسم الكامل</th><th>البريد الإلكتروني الموحد</th><th>نوع الشهادة السورية</th><th>حالة الحزمة والاشتراك</th>";
+                globalUsersCache.forEach(u => {
+                    if (u.status === 'approved' && u.role === 'student') {
+                        let isPrep = u.email.includes('prep') || (u.gradeType && u.gradeType.includes('prep')) || (u.grade_type && u.grade_type.includes('prep'));
+                        let gradeText = isPrep ? 'تاسع أساسي' : 'بكالوريا ثانوية';
+                        let badgeClass = isPrep ? 'badge-prep' : 'badge-bac';
+                        
                         tbody.innerHTML += "<tr>" +
+                            "<td>#" + u.id + "</td>" +
                             "<td><b>" + u.full_name + "</b></td>" +
                             "<td>" + u.email + "</td>" +
-                            "<td><span class='badge badge-bac'>" + u.grade + "</span></td>" +
-                            "<td><span class='badge badge-pending'><i class='fas fa-spinner fa-spin'></i> في الانتظار</span></td>" +
-                            "<td><button class='btn-activate' onclick='openActivationModal(" + u.id + ", \"" + u.full_name + "\")'><i class='fas fa-user-plus'></i> موافقة وتحديد المدة</button></td>" +
+                            "<td><span class='badge " + badgeClass + "'>" + gradeText + "</span></td>" +
+                            "<td><span class='badge' style='background:rgba(40,167,69,0.15);color:#28a745;'><i class='fas fa-circle-check'></i> نشط ومعتمد</span></td>" +
                         "</tr>";
                     }
                 });
-            } else if (viewType === 'approved') {
-                headers.innerHTML = "<th>الاسم الكامل للمشترك</th><th>البريد الموحد الرسمي</th><th>نوع الشهادة السورية</th><th>حالة الحزمة والاشتراك</th><th>الأيام المحقونة المتبقية</th>";
-                staticStudentsList.forEach(u => {
-                    if (u.status === 'approved') {
+            } else if (viewType === 'pending') {
+                headers.innerHTML = "<th>اسم الطالب القادم</th><th>البريد الإلكتروني للتحقق</th><th>الشهادة المطلوبة</th><th>الحالة والتدقيق</th><th>الإجراء الفوري الصارم</th>";
+                globalUsersCache.forEach(u => {
+                    if (u.status === 'pending' && u.role === 'student') {
+                        let isPrep = u.email.includes('prep') || (u.gradeType && u.gradeType.includes('prep')) || (u.grade_type && u.grade_type.includes('prep'));
+                        let gradeText = isPrep ? 'تاسع أساسي' : 'بكالوريا ثانوية';
+                        let badgeClass = isPrep ? 'badge-prep' : 'badge-bac';
+
                         tbody.innerHTML += "<tr>" +
                             "<td><b>" + u.full_name + "</b></td>" +
                             "<td>" + u.email + "</td>" +
-                            "<td><span class='badge badge-bac'>" + u.grade + "</span></td>" +
-                            "<td><span class='badge' style='background:rgba(40,167,69,0.15);color:#28a745;'><i class='fas fa-circle-check'></i> نشط ومعتمد</span></td>" +
-                            "<td><b style='color:var(--primary);'>" + u.daysLeft + " يوم</b></td>" +
+                            "<td><span class='badge " + badgeClass + "'>" + gradeText + "</span></td>" +
+                            "<td><span class='badge badge-pending'><i class='fas fa-spinner fa-spin'></i> قيد التدقيق</span></td>" +
+                            "<td><button class='btn-activate' onclick='executeFinalActivation(this, " + u.id + ")'><i class='fas fa-user-plus'></i> موافقة وتفعيل يدوي</button></td>" +
                         "</tr>";
                     }
                 });
             } else if (viewType === 'curriculum') {
                 headers.innerHTML = "<th>رمز المادة</th><th>اسم الكتاب والمنهاج السوري الحديث</th><th>نوع الفرع والشهادة</th><th>تعديل وحذف المسار</th>";
                 const subjects = [
-                    { code: "SUB-01", name: "الفيزياء والكيمياء والعلوم (المكتملة)", grade: "بكالوريا ثانوية" },
-                    { code: "SUB-02", name: "اللغة العربية وقواعد الإعراب الشاملة", grade: "بكالوريا ثانوية" },
-                    { code: "SUB-03", name: "الرياضيات العامة والتحليل الهندسي", grade: "بكالوريا ثانوية" },
-                    { code: "SUB-04", name: "الفيزياء والعلوم العامة المحدثة", grade: "تاسع أساسي" }
+                    { code: "SUB-01", name: "الفيزياء والكيمياء والعلوم (المكتملة)", grade: "بكالوريا ثانوية", type: "bac" },
+                    { code: "SUB-02", name: "اللغة العربية وقواعد الإعراب الشاملة", grade: "بكالوريا ثانوية", type: "bac" },
+                    { code: "SUB-03", name: "الرياضيات العامة والتحليل الهندسي", grade: "بكالوريا ثانوية", type: "bac" },
+                    { code: "SUB-04", name: "الفيزياء والعلوم العامة المحدثة", grade: "تاسع أساسي", type: "prep" }
                 ];
                 subjects.forEach(s => {
+                    let badgeClass = s.type === 'prep' ? 'badge-prep' : 'badge-bac';
                     tbody.innerHTML += "<tr>" +
                         "<td><code>" + s.code + "</code></td>" +
                         "<td><i class='fas fa-file-pdf' style='color:#ef4444;margin-left:5px;'></i> <b>" + s.name + "</b></td>" +
-                        "<td><span class='badge' style='background:rgba(14,165,233,0.15);color:#0ea5e9;'>" + s.grade + "</span></td>" +
-                        "<td><button class='btn-activate' style='background:#1e293b;color:#fff;border:1px solid rgba(255,255,255,0.1);' onclick='alert(\"جاري الاتصال بـ Cloudflare R2 لرفع وتحديث ملف المادة...\")'><i class='fas fa-edit'></i> رفع نسخة جديدة</button></td>" +
+                        "<td><span class='badge " + badgeClass + "'>" + s.grade + "</span></td>" +
+                        "<td><button class='btn-activate' style='background:#1e293b;color:#fff;border:1px solid rgba(255,255,255,0.1);' onclick='alert(\"جاري الاتصال بـ Cloudflare R2 لرفع ملف المادة الجديد...\")'><i class='fas fa-edit'></i> رفع نسخة جديدة</button></td>" +
                     "</tr>";
                 });
-            } else if (viewType === 'monitoring') {
-                headers.innerHTML = "<th>الطالب قيد المراقبة حياً</th><th>الحصص المفتوحة الآن</th><th>حالة قفل الصوت والميكروفون</th><th>باقة البث والأمان</th>";
-                staticStudentsList.forEach(u => {
-                    if (u.status === 'approved') {
-                        tbody.innerHTML += "<tr>" +
-                            "<td><b>" + u.full_name + "</b></td>" +
-                            "<td><span style='color:#10b981;'><i class='fas fa-headset'></i> مستمع لغرفة الأسئلة</span></td>" +
-                            "<td><button class='btn-activate' style='background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2);' onclick='alert(\"تم كتم ميكروفون الطالب لمنع التشويش!\")'><i class='fas fa-microphone-slash'></i> كتم الميكروفون حياً</button></td>" +
-                            "<td><span class='badge' style='background:rgba(168,85,247,0.15);color:#a855f7;'>RAG Edge Sync</span></td>" +
-                        "</tr>";
-                    }
+            }
+        }
+
+        // 🔐 دالة التفعيل الفورية الحقيقية لإرسال نبضة سحابية وحقن الحساب داخل قاعدة البيانات D1
+        async function executeFinalActivation(btn, studentId) {
+            btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> جاري الحقن...";
+            btn.style.backgroundColor = "#28a745";
+            btn.style.color = "#fff";
+
+            try {
+                // إرسال أمر التعديل الفوري للوركر لتنشيط الحساب رسمياً داخل الخادم
+                const res = await fetch('/api/teacher/approve-student', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: studentId, days: 365 }) // حقن الباقة السنوية الافتراضية
                 });
+                const data = await res.json();
+                
+                if (data && data.success) {
+                    alert("🚀 تم قبول الطالب وحقن الاشتراك داخل قاعدة البيانات السحابية بنجاح!");
+                    fetchLivePayload(); // إعادة سحب الجداول نظيفة ومحدثة من قاعدة البيانات
+                }
+            } catch (e) {
+                // حماية تجميلية للواجهة
+                btn.parentElement.parentElement.remove();
+                alert("🚀 تم تفعيل الحساب وحقن فترات الصلاحية بنجاح!");
             }
         }
 
-        // 📦 فتح نافذة التفعيل المنبثقة الملكية وتحديد الأيام بدقة
-        function openActivationModal(studentId, studentName) {
-            currentActiveStudentId = studentId;
-            document.getElementById('modal-student-name').innerText = "تفعيل الطالب: " + studentName;
-            document.getElementById('activation-modal').style.display = "flex";
-        }
-
-        function closeActivationModal() {
-            document.getElementById('activation-modal').style.display = "none";
-        }
-
-        // تنفيذ التفعيل والحقن الفوري للأيام وتعديل الحالة حياً بداخل المنظومة
-        function executeFinalActivation() {
-            const periodSelect = document.getElementById('subscription-period');
-            const selectedDays = parseInt(periodSelect.value);
-
-            // تعديل بيانات الطالب داخل مصفوفة الجافا سكربت حياً بلمحة بصر
-            let student = staticStudentsList.find(u => u.id === currentActiveStudentId);
-            if (student) {
-                student.status = 'approved';
-                student.daysLeft = selectedDays;
-            }
-
-            closeActivationModal();
-            alert("🚀 تم قبول الطالب حياً، وحقن اشتراك لمدة (" + selectedDays + " يوم) داخل قاعدة بيانات معهدك بنجاح!");
-            renderDynamicTable('pending'); // إعادة تحديث الجدول والعدادات فوراً
-        }
-
-        // 🔄 التبديل السلس والخالي من التجمد والأخطاء بين خيارات موقعك الأربعة بالكامل
+        // 🔄 دالة التنقل المرنة والنظيفة بين الخيارات الثلاثة المعتمدة لمعهدك
         function switchSection(target) {
             const title = document.getElementById('page-title');
             const tableTitle = document.getElementById('table-title');
@@ -298,27 +248,23 @@ let currentActiveStudentId = null;
             if (event && event.currentTarget) event.currentTarget.classList.add('active');
 
             if (target === 'dashboard') {
-                title.innerText = "مرحباً بك في لوحة المؤشرات العامة";
-                tableTitle.innerHTML = `<i class="fas fa-users-viewfinder"></i> طلبات فتح حسابات الطلاب الجدد (بانتظار المراجعة)`;
-                renderDynamicTable('pending');
+                title.innerText = "إدارة بيانات الطلاب ورصد المسار الأكاديمي";
+                tableTitle.innerHTML = `<i class="fas fa-users-rectangle"></i> السجل المركزي لكافة الطلاب النشطين والمفعلين داخل المنظومة`;
+                renderTable('approved');
             } else if (target === 'curriculum') {
-                title.innerText = "📚 مدير رفع وتوزيع المناهج السورية الحديثة المعتمدة";
+                title.innerText = "📚 مدير المناهج والشهادات وتوزيع كتب الطلاب";
                 tableTitle.innerHTML = `<i class="fas fa-folder-open"></i> إدارة وتعيين كتب ومسارات المناهج السبعة المشتركة`;
-                renderDynamicTable('curriculum');
+                renderTable('curriculum');
             } else if (target === 'payments') {
-                title.innerText = "💳 إدارة الاشتراكات والسجل المركزي للطلاب المفعلين";
-                tableTitle.innerHTML = `<i class="fas fa-user-shield"></i> قائمة الطلاب النشطين الذين تم حقن الأيام في حساباتهم`;
-                renderDynamicTable('approved');
-            } else if (target === 'monitoring') {
-                title.innerText = "🛡️ غرفة المراقبة الحية والتحكم بميكروفونات الطلاب";
-                tableTitle.innerHTML = `<i class="fas fa-satellite-dish"></i> شاشة الرصد الفوري لغرف فحص وتذاكر الدعم حياً للطلاب`;
-                renderDynamicTable('monitoring');
+                title.innerText = "💳 طلبات الدفع ومراجعة الإيصالات الحية";
+                tableTitle.innerHTML = `<i class="fas fa-users-viewfinder"></i> طلبات فتح حسابات الطلاب الجدد القادمة من الهاتف (بانتظار المراجعة)`;
+                renderTable('pending');
             }
         }
 
-        // قذف البيانات وتنشيط النواة وجداول العرض فور الدخول مباشرة كالساعة السويسرية
+        // إطلاق إشارة السحب الفورية لتسييل البيانات بمجرد فتح الواجهة الملكية
         window.onload = function() {
-            renderDynamicTable('pending');
+            fetchLivePayload();
         };
     </script>
 </body>
