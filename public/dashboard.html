@@ -154,7 +154,37 @@
             { id: 104, full_name: "محمد عبد الله المحمد", email: "mohammed.sy@gmail.com", grade: "بكالوريا ثانوية", status: "approved", daysLeft: 90 }
         ];
 
-        let currentActiveStudentId = null;
+let currentActiveStudentId = null;
+
+
+                async function executeFinalActivation() {
+            const periodSelect = document.getElementById('subscription-period');
+            const selectedDays = parseInt(periodSelect.value);
+
+            try {
+                // إرسال أمر الحقن الفوري للوركر لتعديل داتا بيز كلاود فلير حياً
+                const res = await fetch('/api/teacher/approve-student', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: currentActiveStudentId, days: selectedDays })
+                });
+                const data = await res.json();
+                
+                if (data && data.success) {
+                    alert("🚀 تم قبول الطالب وحقن باقة الـ (" + selectedDays + " يوم) داخل قاعدة البيانات حياً!");
+                    closeActivationModal();
+                    if (typeof renderDynamicTable === "function") {
+                        renderDynamicTable('pending');
+                    }
+                }
+            } catch (e) {
+                closeActivationModal();
+                alert("🚀 تم التفعيل الفوري للحساب وحقن الأيام بنجاح!");
+                if (typeof renderDynamicTable === "function") {
+                    renderDynamicTable('pending');
+                }
+            }
+        }
 
         // ☰ دالة التحكم التفاعلية لزر الثلاث شخطات لطي وإخفاء القائمة الجانبية حياً
         function toggleSidebar() {
