@@ -1,14 +1,18 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "drasty-backend",
-  "compatibility_date": "2026-06-17",
+  "main": "server.js",
+  "compatibility_date": "2024-03-01",
+  "site": {
+    "bucket": "./public"
+  },
   "observability": {
     "enabled": true
   },
-  "assets": {
-    "directory": "."
-  },
-  "compatibility_flags": [
-    "nodejs_compat"
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "drasty_db",
+      "database_id": "36129ae2322698c8a400e6f2571b581c"
+    }
   ]
 }
