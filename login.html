@@ -165,10 +165,12 @@
     </form>
 </div>
 <script>
+    // تحديث الشعار ديناميكياً من لوحة الأدمن في حال تم تعديله
     if(localStorage.getItem('cms_site_logo')) {
         document.getElementById('loginLogo').src = localStorage.getItem('cms_site_logo');
     }
 
+    // دالة التبديل بين التبويبات بالأنيميشن
     function switchAuthTab(type) {
         document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
         document.querySelectorAll('.tab-buttons button').forEach(b => b.classList.remove('active'));
@@ -185,6 +187,7 @@
         }
     }
 
+    // دالة تحديث نص الملف المرفوع عند اختيار إيصال الدفع اليدوي
     function updateFileName(input) {
         const textLabel = document.getElementById('fileUploadText');
         if(input.files.length > 0) {
@@ -193,12 +196,14 @@
         }
     }
 
+    // 🔄 محرك تسجيل الدخول الموحد والفرز الأمني التلقائي للأدوار والاشتراكات باليوم
     document.getElementById('unifiedLoginForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const user = document.getElementById('loginUser').value.trim();
         const pass = document.getElementById('loginPass').value;
         const errorMsg = document.getElementById('loginError');
 
+        // 👑 1. التحقق من حساب المسؤول (Super Admin)
         if(user === 'admin' && pass === 'drasty2026') {
             sessionStorage.setItem('drasty_authenticated', 'true');
             sessionStorage.setItem('user_role', 'admin');
@@ -206,6 +211,7 @@
             return;
         }
 
+        // 👨‍🏫 2. التحقق من حسابات الأساتذة البشريين (تخصصات الـ 7 مواد)
         let teachersList = JSON.parse(localStorage.getItem('drasty_teachers')) || [];
         let foundTeacher = teachersList.find(t => t.username === user && t.password === pass);
         if(foundTeacher) {
@@ -217,38 +223,43 @@
             return;
         }
 
+        // 🎓 3. التحقق من حسابات الطلاب المفعلة بعدد أيام محدد (1 إلى 365)
         let studentsList = JSON.parse(localStorage.getItem('drasty_registered_students')) || [];
         let foundStudent = studentsList.find(s => s.username === user && s.password === pass);
 
         if(foundStudent) {
+            // التحقق إذا كان الحساب معلقاً ولم يتم مراجعته بعد
             if(foundStudent.status === 'Pending') {
-                errorMsg.innerText = "حسابك قيد المراجعة، يرجى الانتظار لحين تأكيد إيصال الدفع من الإدارة.";
+                errorMsg.innerText = "حسابك قيد المراجعة، يرجى الانتظار لحين تأكيد إيصال الدفع اليدوي من الإدارة.";
                 errorMsg.style.display = 'block';
                 return;
             }
             
+            // ⏳ فحص ومعالجة نظام انتهاء صلاحية الأيام التلقائي (من 1 إلى 365 يوم)
             const approvedDate = foundStudent.approvedDate || Date.now();
             const daysAllowed = parseInt(foundStudent.daysDuration || 0);
             const msPassed = Date.now() - new Date(approvedDate).getTime();
             const daysPassed = Math.floor(msPassed / (1000 * 60 * 60 * 24));
 
             if(daysPassed >= daysAllowed) {
-                errorMsg.innerText = "انتهت فترة اشتراكك المحددة بالمنصة (" + daysAllowed + " يوم). يرجى مراجعة الإدارة.";
+                errorMsg.innerText = "انتهت فترة اشتراكك المحددة بالمنصة (" + daysAllowed + " يوم). يرجى مراجعة الإدارة للتجديد.";
                 errorMsg.style.display = 'block';
                 return;
             }
 
+            // تفعيل جلسة دخول الطالب وتوجيه محتواه الأكاديمي والـ AI
             sessionStorage.setItem('student_logged_in', 'true');
             sessionStorage.setItem('student_name', foundStudent.name);
             sessionStorage.setItem('student_class', foundStudent.class);
             sessionStorage.setItem('student_religion', foundStudent.religion);
             window.location.href = 'index.html';
         } else {
-            errorMsg.innerText = "بيانات الدخول غير صحيحة، يرجى التأكد من الحساب أو مراجعة الإدارة.";
+            errorMsg.innerText = "بيانات الدخول غير صحيحة، يرجى التأكد من الحساب أو مراجعة إدارة المعهد.";
             errorMsg.style.display = 'block';
         }
     });
 
+    // 🔄 محرك معالجة طلبات الطلاب الجدد وحفظها بوضع معلق (Pending)
     document.getElementById('studentRegisterForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const name = document.getElementById('regName').value.trim();
