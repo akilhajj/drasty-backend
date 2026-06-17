@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة Drasty التعليمية</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        :root {
+            --primary: #c5a85c; 
+            --primary-hover: #aa8f46;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
+        header { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
+        .logo-img { height: 60px; width: auto; object-fit: contain; }
+        nav a { margin: 0 15px; text-decoration: none; color: var(--dark); }
+        nav a:hover { color: var(--primary); }
+        .btn-login { background: var(--primary); color: white; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: background 0.3s; display: inline-block; }
+        .btn-login:hover { background: var(--primary-hover); }
+        .hero { max-width: 1200px; margin: 0 auto; padding: 60px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px; }
+        .hero-text { flex: 1; min-width: 300px; }
+        .hero-text h1 { font-size: 42px; margin-bottom: 20px; color: var(--dark); }
+        .hero-text p { color: var(--gray); font-size: 18px; margin-bottom: 30px; }
+        .hero-image { flex: 1; min-width: 300px; text-align: center; }
+        .hero-image img { max-width: 100%; max-height: 400px; }
+        section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 32px; margin-bottom: 40px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .feature-card { background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .feature-card i { font-size: 40px; color: var(--primary); margin-bottom: 20px; }
+        .contact-info { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 20px; }
+        .contact-item { background: white; padding: 20px 40px; border-radius: 12px; text-decoration: none; color: var(--dark); box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; align-items: center; gap: 15px; font-size: 18px; transition: all 0.3s; }
+        .contact-item:hover { background: var(--primary); color: white; }
+        .privacy-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        footer { background: var(--dark); color: white; text-align: center; padding: 20px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html">
+                <img src="https://ibb.co" class="logo-img" alt="Drasty Logo">
+            </a>
+            <nav>
+                <a href="#features">المميزات</a>
+                <a href="#privacy">الخصوصية</a>
+                <a href="#contact">تواصل معنا</a>
+            </nav>
+            <a href="login.html" class="btn-login"><i class="fa-solid fa-right-to-bracket"></i> دخول الإدارة</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-text">
+                <h1>منصتك التعليمية المتكاملة للدراسة والمناهج</h1>
+                <p>تابع دروسك، تصفح المناهج المرفوعة، وابق على تواصل مستمر مع الإدارة والطلاب في موقع ويب سريع ومستقر بديل كامل للتطبيق.</p>
+                <a href="login.html" class="btn-login" style="padding: 15px 35px; font-size: 18px;">دخول لوحة التحكم</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://ibb.co" alt="Drasty Emblem">
+            </div>
+        </section>
+
+        <section id="features">
+            <h2 class="section-title">مميزات المنصة الأساسية</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>رفع وتصفح المناهج</h3>
+                    <p>الوصول إلى كافة المواد والكتب المرفوعة من الإدارة بروابط مباشرة مصلحة بنسبة 100%.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-users"></i>
+                    <h3>إدارة شؤون الطلاب</h3>
+                    <p>متابعة بيانات الطلاب، صفوفهم الدراسية، والتحكم في تواجدهم داخل النظام بشكل فوري.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-bolt"></i>
+                    <h3>سرعة فائقة</h3>
+                    <p>تصفح خفيف ومحمي يضمن عمل اللوائح التعليمية دون مواجهة الأخطاء السابقة للتطبيق.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="privacy">
+            <h2 class="section-title">سياسة الخصوصية</h2>
+            <div class="privacy-box">
+                <p>نحن في <strong>Drasty Institute</strong> نلتزم بأعلى معايير الأمان وحماية البيانات الشخصية للطلاب والمعلمين. لا نقوم بمشاركة أي بيانات خاصة أو سجلات دراسية مع أي أطراف خارجية، وجميع البيانات المرفوعة آمنة تماماً لضمان تجربة تعليمية موثوقة.</p>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2 class="section-title">تواصل معنا</h2>
+            <div class="contact-info">
+                <a href="https://instagram.com" target="_blank" class="contact-item">
+                    <i class="fa-brands fa-instagram" style="color: #e1306c; font-size: 24px;"></i>
+                    <span>@drasty_net</span>
+                </a>
+                <a href="https://wa.me" target="_blank" class="contact-item">
+                    <i class="fa-solid fa-phone" style="color: #25d366; font-size: 24px;"></i>
+                    <span>+963980302155</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer><p>&copy; 2026 Drasty Institute. جميع الحقوق محفوظة.</p></footer>
+
+</body>
+</html>
