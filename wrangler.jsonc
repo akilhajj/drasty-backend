@@ -1,10 +1,7 @@
 {
   "name": "drasty-backend",
-  "main": "server.js",
   "compatibility_date": "2024-03-01",
-  "site": {
-    "bucket": "./public"
-  },
+  "pages_build_output_dir": "./public",
   "observability": {
     "enabled": true
   },
