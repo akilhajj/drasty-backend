@@ -7,21 +7,15 @@
     <link href="https://googleapis.com" rel="stylesheet">
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        :root {
-            --primary: #c5a85c; 
-            --primary-hover: #aa8f46;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --gray: #64748b;
-        }
+        :root { --primary: #c5a85c; --primary-hover: #aa8f46; --dark: #0f172a; --light: #f8fafc; --gray: #64748b; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
         header { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
-        .logo-img { height: 60px; width: auto; object-fit: contain; }
+        .logo-img { height: 60px; width: auto; }
         nav a { margin: 0 15px; text-decoration: none; color: var(--dark); }
         nav a:hover { color: var(--primary); }
-        .btn-login { background: var(--primary); color: white; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: background 0.3s; display: inline-block; }
+        .btn-login { background: var(--primary); color: white; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: background 0.3s; display: inline-block; border: none; cursor: pointer; }
         .btn-login:hover { background: var(--primary-hover); }
         .hero { max-width: 1200px; margin: 0 auto; padding: 60px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px; }
         .hero-text { flex: 1; min-width: 300px; }
@@ -31,12 +25,15 @@
         .hero-image img { max-width: 100%; max-height: 400px; }
         section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
         .section-title { text-align: center; font-size: 32px; margin-bottom: 40px; }
+        .student-section { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: none; }
+        .curriculum-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 25px; }
+        .curriculum-card { border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .curriculum-card a { background: var(--primary); color: white; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; }
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .feature-card { background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .feature-card i { font-size: 40px; color: var(--primary); margin-bottom: 20px; }
         .contact-info { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 20px; }
-        .contact-item { background: white; padding: 20px 40px; border-radius: 12px; text-decoration: none; color: var(--dark); box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; align-items: center; gap: 15px; font-size: 18px; transition: all 0.3s; }
-        .contact-item:hover { background: var(--primary); color: white; }
+        .contact-item { background: white; padding: 20px 40px; border-radius: 12px; text-decoration: none; color: var(--dark); box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; align-items: center; gap: 15px; font-size: 18px; }
         .privacy-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         footer { background: var(--dark); color: white; text-align: center; padding: 20px; }
     </style>
@@ -53,16 +50,24 @@
                 <a href="#privacy">الخصوصية</a>
                 <a href="#contact">تواصل معنا</a>
             </nav>
-            <a href="login.html" class="btn-login"><i class="fa-solid fa-right-to-bracket"></i> دخول الإدارة</a>
+            <div id="authArea">
+                <a href="login.html" class="btn-login" id="navBtn"><i class="fa-solid fa-right-to-bracket"></i> دخول / تسجيل</a>
+            </div>
         </div>
     </header>
 
     <main>
+        <section id="studentArea" class="student-section">
+            <h2 style="color: var(--primary);" id="welcomeMsg">أهلاً بك يا طالبنا العزيز!</h2>
+            <p>إليك المناهج والمواد المرفوعة من قبل إدارة المعهد لك حصرياً للتحميل والدراسة:</p>
+            <div class="curriculum-list" id="studentCurriculums"></div>
+        </section>
+
         <section class="hero">
             <div class="hero-text">
                 <h1>منصتك التعليمية المتكاملة للدراسة والمناهج</h1>
-                <p>تابع دروسك، تصفح المناهج المرفوعة، وابق على تواصل مستمر مع الإدارة والطلاب في موقع ويب سريع ومستقر بديل كامل للتطبيق.</p>
-                <a href="login.html" class="btn-login" style="padding: 15px 35px; font-size: 18px;">دخول لوحة التحكم</a>
+                <p>قم بإنشاء حسابك الخاص كطالب لتتمكن من تصفح المناهج المرفوعة بشكل سلس وآمن بديل كامل ومتطور للتطبيق الأول.</p>
+                <a href="login.html" class="btn-login" id="heroBtn" style="padding: 15px 35px; font-size: 18px;">ابدأ تسجيل حسابك الآن</a>
             </div>
             <div class="hero-image">
                 <img src="https://ibb.co" alt="Drasty Emblem">
@@ -73,19 +78,19 @@
             <h2 class="section-title">مميزات المنصة الأساسية</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <i class="fa-solid fa-book-open"></i>
-                    <h3>رفع وتصفح المناهج</h3>
-                    <p>الوصول إلى كافة المواد والكتب المرفوعة من الإدارة بروابط مباشرة مصلحة بنسبة 100%.</p>
+                    <i class="fa-solid fa-user-lock"></i>
+                    <h3>حسابات خاصة للطلاب</h3>
+                    <p>نظام تسجيل حسابات ذاتي للطلاب لتأمين خصوصية المناهج وحفظ البيانات الشخصية.</p>
                 </div>
                 <div class="feature-card">
-                    <i class="fa-solid fa-users"></i>
-                    <h3>إدارة شؤون الطلاب</h3>
-                    <p>متابعة بيانات الطلاب، صفوفهم الدراسية، والتحكم في تواجدهم داخل النظام بشكل فوري.</p>
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>تصفح فوري للمناهج</h3>
+                    <p>بمجرد دخولك كطالب ستظهر لك لوحة تحميل الكتب والمواد بروابط مصلحة وسريعة.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fa-solid fa-bolt"></i>
-                    <h3>سرعة فائقة</h3>
-                    <p>تصفح خفيف ومحمي يضمن عمل اللوائح التعليمية دون مواجهة الأخطاء السابقة للتطبيق.</p>
+                    <h3>مستقر وسريع</h3>
+                    <p>يعمل على جميع الأجهزة بكفاءة عالية وبدون مشاكل برمجية أو انقطاع.</p>
                 </div>
             </div>
         </section>
@@ -93,7 +98,7 @@
         <section id="privacy">
             <h2 class="section-title">سياسة الخصوصية</h2>
             <div class="privacy-box">
-                <p>نحن في <strong>Drasty Institute</strong> نلتزم بأعلى معايير الأمان وحماية البيانات الشخصية للطلاب والمعلمين. لا نقوم بمشاركة أي بيانات خاصة أو سجلات دراسية مع أي أطراف خارجية، وجميع البيانات المرفوعة آمنة تماماً لضمان تجربة تعليمية موثوقة.</p>
+                <p>نحن في <strong>Drasty Institute</strong> نلتزم بأعلى معايير الأمان وحماية البيانات الشخصية لطلابنا. حسابك وكلمة مرورك مشفرة ومحفوظة بشكل آمن تماماً لضمان حماية مسيرتك التعليمية.</p>
             </div>
         </section>
 
@@ -114,5 +119,37 @@
 
     <footer><p>&copy; 2026 Drasty Institute. جميع الحقوق محفوظة.</p></footer>
 
+    <script>
+        const isStudentIn = sessionStorage.getItem('student_logged_in') === 'true';
+        const studentName = sessionStorage.getItem('student_name');
+
+        if(isStudentIn) {
+            document.getElementById('studentArea').style.display = 'block';
+            document.getElementById('welcomeMsg').innerHTML = `أهلاً بك يا ${studentName} في لوحتك الدراسية 👋`;
+            document.getElementById('authArea').innerHTML = `<button onclick="studentLogout()" class="btn-login" style="background:#ef4444;"><i class="fa-solid fa-power-off"></i> خروج</button>`;
+            document.getElementById('heroBtn').style.display = 'none';
+
+            let curriculums = JSON.parse(localStorage.getItem('drasty_curriculums')) || [];
+            const listDiv = document.getElementById('studentCurriculums');
+            
+            if(curriculums.length === 0) {
+                listDiv.innerHTML = '<p style="color:#64748b;">لا توجد مناهج مرفوعة حالياً من قبل الإدارة.</p>';
+            } else {
+                curriculums.forEach(item => {
+                    listDiv.innerHTML += `
+                        <div class="curriculum-card">
+                            <span><i class="fa-solid fa-file-pdf" style="color:#ef4444; margin-left:10px;"></i> <strong>${item.name}</strong></span>
+                            <a href="${item.link}" target="_blank">تحميل / عرض <i class="fa-solid fa-download"></i></a>
+                        </div>`;
+                });
+            }
+        }
+
+        function studentLogout() {
+            sessionStorage.removeItem('student_logged_in');
+            sessionStorage.removeItem('student_name');
+            window.location.reload();
+        }
+    </script>
 </body>
 </html>
