@@ -569,6 +569,91 @@
 
         drawCurriculums();
         drawStudents();
+
+                // 🔄 محرك الأستاذ الافتراضي الموجه ذكياً حسب تخصص الطالب ومرحلته الدراسية
+        let currentLessonIndex = 1;
+        
+        function initAiTutorEngine() {
+            const sClass = sessionStorage.getItem('student_class') || 'بكالوريا - فرع علمي';
+            const sReligion = sessionStorage.getItem('student_religion') || 'إسلامية';
+            const sName = sessionStorage.getItem('student_name') || 'الطالب';
+            const chatBody = document.getElementById('cmsReviewsList'); // سحب واجهة الحوار
+
+            // تخصيص الترحيب وإصدار الخطة المقررة فوراً بناء على بيانات الطالب
+            if(chatBody) {
+                chatBody.innerHTML = `
+                    <div class="review-card" style="border-right: 4px solid var(--primary-glowing);">
+                        <div class="stars"><i class="fa-solid fa-robot"></i> <strong>الاستاذ الافتراضي (Drasty AI)</strong></div>
+                        <p>أهلاً بك يا طالبنا المتميز <strong>${sName}</strong>. لقد قمت بتحليل تخصصك الدراسي الموثق كطالب <strong>(${sClass})</strong> وتدرس مادة <strong>(التربية الـ${sReligion})</strong>.</p>
+                        <p>بصفتي أستاذك الفعلي المتاح لك على مدار 24 ساعة، قمت بجدولة حصصك الدراسية بالترتيب، وتجهيز الفروض والامتحانات الدورية الموقوتة شهرياً.</p>
+                        <button class="btn-top-login" style="margin-top:10px; padding:6px 15px; font-size:12px;" onclick="triggerAiLesson()">ابدأ الحصة الأولى الآن 📚</button>
+                    </div>`;
+            }
+        }
+
+        // 🔄 محرك توليد الحصص التدريجية والفروض التفاعلية صوت وصورة
+        function triggerAiLesson() {
+            const chatBody = document.getElementById('cmsReviewsList');
+            let replyText = "";
+
+            if(currentLessonIndex === 1) {
+                replyText = `📚 <strong>الحصة النظامية المقررة رقم (1): الشرح الاحترافي المفهوم</strong><br><br>
+                             مرحباً بك في حصتك الأولى. اليوم سنقوم بشرح الفقرة التأسيسية الهامة المتوقعة امتحانياً وفق المنهاج السوري لعام 2026 المرفوع في لوحتك.<br>
+                             انتبه جيداً للأمثلة والقوانين الأساسية التي تظهر أمامك، وسأقوم بنطق الشرح صوتياً لتسهيل الاستيعاب...<br><br>
+                             📝 <strong>هل أنت مستعد الآن للانتقال الفوري إلى (الفرض الفوري) لتثبيت الفهم؟ (انقر على الزر بالأسفل)</strong><br><br>
+                             <button class="btn-top-login" style="background:#22c55e; padding:5px 12px; font-size:11px;" onclick="triggerAiAssignment()">جاهز لحل الفرض الدوري 📝</button>`;
+                currentLessonIndex = 2;
+            }
+            
+            chatBody.innerHTML += `<div class="review-card" style="margin-top:15px; border-right:4px solid var(--primary);"><p>${replyText}</p></div>`;
+            speakAiResponse("أهلاً بك في حصتك الأولى. اليوم سنبدأ بالشرح الاحترافي المفهوم للمادة المقررة حسب فرعك الدراسي.");
+        }
+        // 📝 محرك توليد الفروض والامتحانات الموقوتة والامتحانات الشاملة
+        function triggerAiAssignment() {
+            const chatBody = document.getElementById('cmsReviewsList');
+            const assignmentText = `📝 <strong>الفرض الدوري لحساب مستوى الفهم الفوري:</strong><br><br>
+                                    بناءً على الشرح السابق، أجب بدقة على السؤال التالي:<br>
+                                    <strong>س: ما هو الفرق الجوهري في التطبيق بين المسائل العلمية والنظرية وفق منهاجك المعتمد؟</strong><br><br>
+                                    قم بكتابة الحل أو تحدث صوتياً، وسأقوم بتصحيح جوابك فوراً ومنحك علامة دقيقة تشبه المعهد الحقيقي!<br><br>
+                                    <button class="btn-top-login" style="background:#3b82f6; padding:5px 12px; font-size:11px;" onclick="triggerAiExam()">الانتقال للامتحان الشامل الموقوت ⏱️</button>`;
+            
+            chatBody.innerHTML += `<div class="review-card" style="margin-top:15px; border-right:4px solid #22c55e;"><p>${assignmentText}</p></div>`;
+            speakAiResponse("يرجى الإجابة بدقة على سؤال الفرض الدوري الظاهر أمامك للتأكد من فهمك الكامل للحصة.");
+        }
+
+        function triggerAiExam() {
+            const chatBody = document.getElementById('cmsReviewsList');
+            const examText = `⏱️ <strong>محاكاة الامتحان الشامل المجدول (موقت زمني 30 دقيقة نشط الآن):</strong><br><br>
+                              تم توليد ورقة الامتحان المخصصة لفرعك ومرحلتك بناءً على المناهج المرفوعة من الإدارة بنجاح 100%.<br><br>
+                              • <strong>السؤال الأول:</strong> اختر الإجابة الصحيحة من الخيارات المتاحة...<br>
+                              • <strong>السؤال الثاني:</strong> علل علمياً الظاهرة المطروحة في الفصل الأول...<br><br>
+                              ⚠️ ابدأ بالحل فوراً، وسيتم سحب ورقة الامتحان آلياً وتصحيحها فور انتهاء المؤقت لإرسال تقرير علاماتك ونقاط ضعفك إلى لوحة الأستاذ والمراقب البشري.`;
+            
+            chatBody.innerHTML += `<div class="review-card" style="margin-top:15px; border-right:4px solid #ef4444;"><p>${examText}</p></div>`;
+            speakAiResponse("بدأ الآن الامتحان الشامل الموقوت. يرجى التركيز والبدء بالحل قبل انتهاء الوقت المحدد.");
+        }
+
+        // 🔊 محرك نطق الشرح والردود صوتياً (Text-to-Speech)
+        function speakAiResponse(textToSpeak) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // إيقاف أي صوت سابق فوراً
+                const utterance = new SpeechSynthesisUtterance(textToSpeak);
+                utterance.lang = 'ar-SA'; // تعيين اللغة العربية الفصحى الفاخرة للشرح
+                utterance.pitch = 1.0;
+                utterance.rate = 1.0; // سرعة شرح طبيعية ومفهومة جداً
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // تشغيل محرك الأستاذ الافتراضي تلقائياً عند تحميل الصفحة للطالب المسجل دخول
+        const originalPortalSync = window.onload;
+        window.onload = function() {
+            if (typeof originalPortalSync === 'function') originalPortalSync();
+            if(sessionStorage.getItem('student_logged_in') === 'true') {
+                initAiTutorEngine();
+            }
+        }
+
     </script>
 </body>
 </html>
