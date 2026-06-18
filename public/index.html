@@ -3,302 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drasty Institute | معهد دراستي الفاخر</title>
-    <!-- استدعاء خطوط وأيقونات لتصميم عصري وفاخر -->
-    <link href="https://googleapis.com" rel="stylesheet">
+    <title>أكاديمية دراستي التعليمية المتقدمة | Drasty.net</title>
+    
+    <!-- مكاتب cdnjs السحابية التابعة لكلاود فلير لضمان التشغيل داخل سوريا للأبد دون حجب -->
     <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
     <style>
+        /* استيراد خط القاهرة الرسمي المعتمد للمنصة لضمان التناسق البصري */
+        @import url('https://googleapis.com');
+
+        /* إعداد المتغيرات الثابتة للهوية البصرية الإمبراطورية للأكاديمية */
         :root {
-            --primary: #c5a85c; /* أصفر ملكي */
-            --primary-glowing: #ffd700; /* ذهبي لامع متوهج */
-            --dark-bg: #090d16; /* أسود ملكي عميق */
-            --card-glass: rgba(15, 23, 42, 0.6); /* زجاجي ضبابي فاخر */
-            --text-light: #f8fafc;
-            --text-gray: #94a3b8;
+            --bg-royal-black: #030508;
+            --bg-deep-blue: #091022;
+            --neon-gold: #d4af37;
+            --neon-gold-glow: rgba(212, 175, 55, 0.4);
+            --neon-success: #10b981;
+            --neon-emergency: #ef4444;
+            --glass-bg: rgba(9, 16, 34, 0.45);
+            --glass-border: rgba(212, 175, 55, 0.12);
+            --text-muted: #94a3b8;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
-        body { background-color: var(--dark-bg); color: var(--text-light); min-height: 100vh; overflow-x: hidden; padding-bottom: 80px; }
-        
-        /* الهيدر والقائمة العلوية للابتوب */
-        header { background: rgba(9, 13, 22, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(197, 168, 92, 0.15); position: sticky; top: 0; z-index: 100; }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
-        .logo-img { height: 65px; width: auto; filter: drop-shadow(0 0 8px rgba(197, 168, 92, 0.3)); }
-        nav.desktop-nav { display: flex; gap: 25px; }
-        nav.desktop-nav a { text-decoration: none; color: var(--text-gray); font-weight: 600; transition: color 0.3s, transform 0.3s; }
-        nav.desktop-nav a:hover { color: var(--primary-glowing); transform: translateY(-2px); }
-        .btn-top-login { background: linear-gradient(135deg, var(--primary), #aa8f46); color: white; padding: 8px 22px; border-radius: 8px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(197, 168, 92, 0.25); transition: all 0.3s ease; }
-        .btn-top-login:hover { box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4); transform: scale(1.03); }
-        
-        /* 📱 شريط التنقل السفلي الاحترافي للموبايل */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 68px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(197, 168, 92, 0.25); display: none; justify-content: space-around; align-items: center; z-index: 1000; border-radius: 20px 20px 0 0; box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6); }
-        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-gray); text-decoration: none; font-size: 11px; font-weight: 600; width: 65px; height: 100%; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .bottom-nav-item i { font-size: 22px; margin-bottom: 4px; transition: transform 0.3s ease; }
-        .bottom-nav-item.active { color: var(--primary-glowing); }
-        .bottom-nav-item.active i { transform: translateY(-6px); filter: drop-shadow(0 0 8px var(--primary-glowing)); }
-        
-        /* واجهات العرض والعدادات */
-        .hero-section { max-width: 1200px; margin: 40px auto; padding: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 40px; }
-        .hero-text { flex: 1; min-width: 300px; }
-        .hero-text h1 { font-size: 44px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; background: linear-gradient(120deg, #ffffff, var(--primary-glowing)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-text p { color: var(--text-gray); font-size: 17px; margin-bottom: 35px; line-height: 1.7; }
-        .hero-image { flex: 1; min-width: 300px; text-align: center; }
-        .hero-image img { max-width: 100%; height: auto; max-height: 400px; filter: drop-shadow(0 10px 25px rgba(197, 168, 92, 0.25)); animation: floatAnimation 4s ease-in-out infinite; }
-        @keyframes floatAnimation { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
-        
-        .counters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1200px; margin: 20px auto 40px auto; padding: 0 20px; }
-        .counter-card { background: linear-gradient(135deg, rgba(197, 168, 92, 0.08), rgba(0,0,0,0)); border: 1px solid rgba(197, 168, 92, 0.18); padding: 25px 20px; border-radius: 14px; text-align: center; backdrop-filter: blur(5px); }
-        .counter-card .num { font-size: 38px; font-weight: 700; color: var(--primary-glowing); text-shadow: 0 0 10px rgba(197, 168, 92, 0.2); }
-        .counter-card .label { font-size: 14px; color: var(--text-gray); margin-top: 6px; font-weight: 600; }
-        
-        section.main-wrapper { padding: 20px; max-width: 1200px; margin: 0 auto; }
-        .section-title { text-align: center; font-size: 32px; margin-bottom: 40px; color: white; font-weight: 700; }
-        .section-title span { color: var(--primary-glowing); }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .glass-card { background: var(--card-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(197, 168, 92, 0.12); padding: 30px; border-radius: 16px; text-align: center; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); transition: all 0.4s ease; }
-        .glass-card:hover { border-color: rgba(255, 215, 0, 0.35); transform: translateY(-6px); }
-        .glass-card i { font-size: 45px; color: var(--primary-glowing); margin-bottom: 20px; filter: drop-shadow(0 0 8px rgba(197, 168, 92, 0.35)); }
-        .glass-card h3 { font-size: 20px; margin-bottom: 12px; color: white; }
-        .glass-card p { color: var(--text-gray); font-size: 14px; line-height: 1.6; }
-        
-        .student-portal-section { background: rgba(15, 23, 42, 0.4); border: 1px dashed rgba(197, 168, 92, 0.25); border-radius: 16px; padding: 35px 25px; margin-bottom: 40px; display: none; }
-        .subject-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 25px; }
-        .subject-card { background: rgba(30, 41, 59, 0.45); border-radius: 12px; padding: 22px; border-right: 5px solid var(--primary); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .subject-card a { background: linear-gradient(135deg, var(--primary), #aa8f46); color: white; padding: 7px 16px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 13px; }
-        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
-        .review-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 14px; padding: 25px; }
-        .review-card .stars { color: var(--primary-glowing); margin-bottom: 12px; font-size: 14px; }
-        .review-card p { font-style: italic; color: var(--text-gray); font-size: 14px; line-height: 1.6; margin-bottom: 15px; }
-        .review-card .author { font-weight: 700; color: white; font-size: 13px; }
-        
-        .info-section { margin-top: 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-        .contact-box { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-        .contact-btn { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(197, 168, 92, 0.18); padding: 15px 25px; border-radius: 12px; display: flex; align-items: center; gap: 15px; color: white; text-decoration: none; font-size: 17px; font-weight: 600; transition: all 0.3s; }
-        .contact-btn:hover { border-color: var(--primary-glowing); transform: scale(1.02); background: rgba(197, 168, 92, 0.05); }
-        footer { background: #05070f; text-align: center; padding: 25px; color: var(--text-gray); font-size: 14px; border-top: 1px solid rgba(197, 168, 92, 0.08); margin-top: 60px; }
-        @media (max-width: 768px) { nav.desktop-nav, .btn-top-login { display: none; } .bottom-nav { display: flex; } .hero-text h1 { font-size: 32px; text-align: center; } .hero-text p { text-align: center; font-size: 15px; } .hero-section { flex-direction: column-reverse; margin: 15px auto; gap: 20px; } }
+
+        /* تصفير الهوامش الافتراضية وتثبيت نوع الخط وتنعيمه */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* إعداد الخلفية الكونية المتدرجة وعمق الشاشة الفيزيائي */
+        body {
+            background: radial-gradient(circle at center, var(--bg-deep-blue) 0%, var(--bg-royal-black) 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* محرك الإضاءة السحابية الخلفية لتوليد تأثير البعد الثالث والعمق الزجاجي */
+        .ambient-glow {
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulseGlow 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: translateX(-50%) scale(0.85); opacity: 0.5; }
+            100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+        }
+        /* 1️⃣ تنسيقات شريط التنقل المعلق والزجاجي المطور */
+        header {
+            position: fixed;
+            top: 25px;
+            left: 5%;
+            width: 90%;
+            z-index: 1000;
+            padding: 12px 45px;
+            background: rgba(3, 5, 8, 0.75);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.65), inset 0 1px 2px rgba(255,255,255,0.06);
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-nav {
+            height: 52px;
+            filter: drop-shadow(0 0 6px var(--neon-gold-glow));
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .logo-nav:hover {
+            transform: scale(1.1) rotate(-4deg);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+
+        nav ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 10px 22px;
+            border-radius: 35px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid transparent;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: #ffffff;
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            text-shadow: 0 0 10px var(--neon-gold);
+            box-shadow: inset 0 0 12px rgba(212, 175, 55, 0.05);
+        }
+
+        /* 2️⃣ إعدادات قسم الترحيب الإمبراطوري الصاعد */
+        .hero-section {
+            padding: 200px 5% 100px 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* الشعار المركزي الكبير طافي ومتحرك في الفراغ ثلاثي الأبعاد */
+        .logo-central {
+            max-width: 280px;
+            margin-bottom: 35px;
+            filter: drop-shadow(0 25px 35px rgba(0,0,0,0.85));
+            animation: float3D 6s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0px) rotate3d(0, 1, 0, 0deg); filter: drop-shadow(0 25px 35px rgba(0,0,0,0.85)); }
+            50% { transform: translateY(-25px) rotate3d(0, 1, 0, 15deg); filter: drop-shadow(0 35px 55px rgba(212,175,55,0.35)); }
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--neon-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8));
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 850px;
+            margin-bottom: 70px;
+            line-height: 1.9;
+        }
+
+        /* 3️⃣ شبكة الحاويات ثلاثية الأبعاد وعمق الكروت */
+        .portals-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 35px;
+            width: 100%;
+            max-width: 1250px;
+            perspective: 1500px; /* توليد العمق والمنظور للمتصفح */
+        }
+
+        .portal-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 50px 35px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.05);
+            text-decoration: none;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.6s, box-shadow 0.6s;
+        }
+
+        /* العلامة المائية للشعار الخلفي المدمج داخل الكرت */
+        .portal-watermark {
+            position: absolute;
+            bottom: -40px;
+            left: -40px;
+            width: 160px;
+            opacity: 0.03;
+            pointer-events: none;
+            transform: rotate(-20deg);
+            transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .portal-item:hover {
+            transform: translateY(-15px) rotateX(8deg) rotateY(-5deg);
+            border-color: var(--neon-gold);
+            box-shadow: 0 35px 70px rgba(212, 175, 55, 0.22), inset 0 0 25px rgba(212, 175, 55, 0.08);
+        }
+
+        .portal-item:hover .portal-watermark {
+            opacity: 0.15;
+            transform: scale(1.3) rotate(15deg) translateY(-15px);
+            filter: drop-shadow(0 0 10px var(--neon-gold-glow));
+        }
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background: rgba(212, 175, 55, 0.04);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            transform: translateZ(40px); /* دفع الأيقونة للأمام بالعمق الحقيقي */
+            transition: all 0.4s ease;
+        }
+
+        .portal-item:hover .icon-circle {
+            background: rgba(212, 175, 55, 0.18);
+            border-color: var(--neon-gold);
+            box-shadow: 0 0 25px var(--neon-gold-glow);
+        }
+
+        .icon-circle i {
+            font-size: 2rem;
+            color: var(--neon-gold);
+        }
+
+        .portal-name {
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #fcf6e8;
+            transform: translateZ(25px);
+        }
+
+        .portal-text {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            transform: translateZ(15px);
+        }
+
+        .badge-status {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 5px 16px;
+            border-radius: 25px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--neon-success);
+            border: 1px solid var(--neon-success);
+        }
+
+        /* 4️⃣ التنسيق الهيكلي للتذييل (Footer) */
+        footer {
+            background: rgba(3, 5, 8, 0.98);
+            border-top: 1px solid var(--glass-border);
+            padding: 70px 5% 45px 5%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-footer {
+            height: 70px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 8px var(--neon-gold-glow));
+            transition: transform 0.3s ease;
+        }
+
+        .logo-footer:hover {
+            transform: scale(1.06);
+        }
+
+        .footer-nav {
+            margin-bottom: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+        }
+
+        .footer-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: var(--neon-gold);
+            text-shadow: 0 0 10px var(--neon-gold);
+        }
+
+        .copy-text {
+            font-size: 0.9rem;
+            color: rgba(148, 163, 184, 0.4);
+        }
+
+        /* التجاوب والتوافق التام مع شاشات الهواتف المحمولة */
+        @media (max-width: 992px) {
+            header { flex-direction: column; gap: 18px; border-radius: 30px; padding: 25px; position: absolute; top: 15px; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 8px; }
+            .hero-section { padding-top: 260px; }
+            .hero-title { font-size: 2.3rem; }
+            .portals-container { grid-template-columns: 1fr; gap: 25px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- الهيدر واللوغو الملكي المطور لشاشات اللابتوب -->
+    <!-- محرك الإضاءة السحابية الخلفية المولد للعمق البصري المحيطي -->
+    <div class="ambient-glow"></div>
+
+    <!-- 🌟 الموقع الأول للشعار: الهيدر الزجاجي العلوي المعلق والمحمي داخل سوريا -->
     <header>
-        <div class="nav-container">
-            <a href="index.html">
-                <img id="siteLogo" src="https://i.ibb.co/7NJz4rgH/1781592192697-1-removebg-preview.png" class="logo-img" alt="Drasty Logo">
-            </a>
-            <nav class="desktop-nav">
-                <a href="#home">الرئيسية</a>
-                <a href="#features">المميزات</a>
-                <a href="#testimonials">آراء الطلاب</a>
-                <a href="#contact">تواصل معنا</a>
-            </nav>
-            <div id="authAreaDesktop">
-                <a href="login.html" class="btn-top-login"><i class="fa-solid fa-user-shield"></i> بوابة الدخول الموحدة</a>
-            </div>
+        <div class="logo-box">
+            <img src="https://ibb.co" alt="Drasty Logo" class="logo-nav">
         </div>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active"><i class="fa-solid fa-home"></i> الرئيسية</a></li>
+                <li><a href="student.html"><i class="fa-solid fa-user-graduate"></i> بوابة الطالب</a></li>
+                <li><a href="teacher.html"><i class="fa-solid fa-chalkboard-user"></i> لوحة الأستاذ</a></li>
+                <li><a href="reviews.html"><i class="fa-solid fa-star"></i> التقييمات</a></li>
+                <li><a href="contact.html"><i class="fa-solid fa-envelope"></i> اتصل بنا</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- 📱 شريط التنقل السفلي الاحترافي والمتأقلم والمتحرك بالكامل للموبايل -->
-    <div class="bottom-nav">
-        <a href="#home" class="bottom-nav-item active" onclick="setActiveNav(this)">
-            <i class="fa-solid fa-house"></i>
-            <span>الرئيسية</span>
-        </a>
-        <a href="#features" class="bottom-nav-item" onclick="setActiveNav(this)">
-            <i class="fa-solid fa-star"></i>
-            <span>المميزات</span>
-        </a>
-        <div id="authAreaMobile" style="display: inline-flex;">
-            <a href="login.html" class="bottom-nav-item">
-                <i class="fa-solid fa-key"></i>
-                <span>دخول</span>
+    <!-- بداية قسم الترحيب الإمبراطوري الحركي والمحتوى المركزي للمنصة -->
+    <section class="hero-section">
+        <!-- 🌟 الموقع الثاني للشعار: المركز الإمبراطوري المجسم والطافي والمدعوم بالتحريك ثلاثي الأبعاد -->
+        <img src="https://ibb.co" alt="Drasty Central Logo" class="logo-central animate__animated animate__zoomIn">
+        
+        <h1 class="hero-title animate__animated animate__fadeInUp">أكاديمية دراستي التعليمية المتقدمة</h1>
+        <p class="hero-subtitle animate__animated animate__fadeInUp">البيئة السحابية السيادية والذكية الأولى لطلاب البكالوريا في سوريا. مسارات متكاملة مبنية لتقديم حصص الـ 60 دقيقة التفاعلية، ورادار الاستجواب الصوتي بالفصحى، والامتحانات المؤتمتة المتوافقة مع تحديثات عام 2026.</p>
+
+        <!-- شبكة الروابط والبوابات الشاملة للمنصة مع تفعيل خصائص العمق والمنظور الفيزيائي -->
+        <div class="portals-container">
+            
+            <!-- بوابة الطالب الذكية -->
+            <a href="student.html" class="portal-item animate__animated animate__fadeInLeft">
+                <span class="badge-status">سحابي نشط</span>
+                <div class="icon-circle">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h3 class="portal-name">بوابة الطالب الذكية</h3>
+                <p class="portal-text">مركز الدروس التفاعلية للمواد السبعة، رادار المحادثة الفورية، وحقيبة كتب التأسيس مع بنك الامتحانات المؤتمتة.</p>
+                <!-- 🌟 الموقع الثالث للشعار: علامة مائية ذكية خفية بداخل خلفية بطاقة الطالب تظهر عند التمرير -->
+                <img src="https://ibb.co" class="portal-watermark" alt="Watermark Logo">
             </a>
-        </div>
-        <a href="#contact" class="bottom-nav-item" onclick="setActiveNav(this)">
-            <i class="fa-solid fa-headset"></i>
-            <span>تواصل</span>
-        </a>
-    </div>
 
-    <main id="home">
-        <!-- 🎓 قسم بوابة الطلاب المحمية (تظهر تلقائياً بعد تفعيل حساب الأيام المخصص) -->
-        <section class="main-wrapper" id="portalWrapper" style="padding-bottom: 0;">
-            <div class="student-portal-section" id="studentPortal">
-                <h2 style="color: var(--primary-glowing); margin-bottom: 8px;" id="welcomeStudentMsg">مرحباً بك يا طالبنا العزيز 👋</h2>
-                <p style="color: var(--text-gray); font-size:14px;">بناءً على تخصصك الدراسي الموثق، إليك المواد والمناهج المرفوعة لك من قبل الإدارة:</p>
-                <div class="subject-grid" id="studentSubjectsArea">
-                    <!-- المناهج المفطرة تظهر هنا تلقائياً بناء على صف الطالب وفرعه ودينه -->
+            <!-- لوحة التحكم للأستاذ والموجه -->
+            <a href="teacher.html" class="portal-item animate__animated animate__fadeInUp">
+                <span class="badge-status" style="color: var(--neon-gold); border-color: var(--neon-gold); background: rgba(212,175,55,0.08);">لوحة الإدارة</span>
+                <div class="icon-circle">
+                    <i class="fa-solid fa-sliders"></i>
                 </div>
-            </div>
-        </section>
-
-        <!-- الواجهة التعريفية الرئيسية للمعهد -->
-        <div class="hero-section">
-            <div class="hero-text">
-                <h1 id="heroTitle">معهد Drasty الرقمي المتكامل للشهادات السورية</h1>
-                <p id="heroDesc">مرحباً بك في الصرح التعليمي الأرقى. معهد متكامل يقدم خططاً دراسية ذكية لطلاب شهادتي التعليم الأساسي (التاسع) والثانوية العامة (البكالوريا) العلمي والأدبي مع تدريس تفاعلي واختبارات دورية دقيقة ومستقلة.</p>
-                <div style="text-align: center;" id="heroBtnContainer">
-                    <a href="login.html" class="btn-top-login" style="display:inline-block; padding:14px 40px; font-size:16px;">ابدأ مسيرتك التعليمية الآن</a>
+                <h3 class="portal-name">منصة الأستاذ والموجه</h3>
+                <p class="portal-text">أدوات حقن وإدارة المناهج والامتحانات الدورية المربوطة والمحفوظة مباشرة بداخل قاعدة بيانات D1 السحابية.</p>
+                <!-- 🌟 الموقع الرابع للشعار: علامة مائية ذكية خفية بداخل خلفية بطاقة المعلم تظهر عند التمرير -->
+                <img src="https://ibb.co" class="portal-watermark" alt="Watermark Logo">
+            </a>
+            <!-- جدار آراء الطلاب والتقييمات الحية -->
+            <a href="reviews.html" class="portal-item animate__animated animate__fadeInRight">
+                <span class="badge-status" style="color: #38bdf8; border-color: #38bdf8; background: rgba(56,189,248,0.08);">توثيق حي</span>
+                <div class="icon-circle">
+                    <i class="fa-solid fa-award"></i>
                 </div>
-            </div>
-            <div class="hero-image">
-                <img id="heroImg" src="https://ibb.co" alt="Mascot">
-            </div>
+                <h3 class="portal-name">جدار تقييمات الطلاب</h3>
+                <p class="portal-text">تجارب وقصص نجاح حقيقية لطلاب شهادة التعليم الثانوي في سوريا الذين تفوقوا عبر المناهج السحابية الذكية.</p>
+                <!-- 🌟 الموقع الخامس للشعار: علامة مائية ذكية خفية بداخل خلفية بطاقة التقييمات تظهر عند التمرير -->
+                <img src="https://ibb.co" class="portal-watermark" alt="Watermark Logo">
+            </a>
+
         </div>
+    </section> <!-- إغلاق قسم الـ hero-section بنجاح -->
 
-        <!-- العدادات الإحصائية الحية القابلة للتخصيص من الأدمن -->
-        <div class="counters-grid">
-            <div class="counter-card">
-                <div class="num" id="statStudents">850+</div>
-                <div class="label">الطلاب المسجلين بالمعهد</div>
-            </div>
-            <div class="counter-card">
-                <div class="num" id="statTeachers">24</div>
-                <div class="label">الأساتذة والمراقبين للمناوبات</div>
-            </div>
-            <div class="counter-card">
-                <div class="num" id="statLessons">1,200+</div>
-                <div class="label">الحصص والاختبارات المنجزة</div>
-            </div>
+    <!-- 🌟 الموقع السادس للشعار: الفوتر لتثبيت الأمان والبنية السحابية السيادية للأكاديمية -->
+    <footer>
+        <img src="https://ibb.co" alt="Drasty Footer Logo" class="logo-footer">
+        <div class="footer-nav">
+            <a href="privacy.html"><i class="fa-solid fa-shield-halved"></i> سياسة الخصوصية</a>
+            <a href="contact.html"><i class="fa-solid fa-headset"></i> الدعم الفني واتصل بنا</a>
         </div>
-    <script>
-        // دالة تحريك وتغيير العناصر النشطة في ناتف بار الموبايل السفلي بسلاسة
-        function setActiveNav(element) {
-            document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
-        }
+        <p class="copy-text">حقوق الطبع والنشر © 2026 محفوظة بالكامل لـ <a href="index.html" style="color: var(--neon-gold); text-decoration: none; font-weight: bold;">أكاديمية دراستي (Drasty.net)</a> - تعمل سحابياً بأمان عبر خوادم Cloudflare العالمية</p>
+    </footer>
 
-        let currentLessonIndex = 1;
-
-        // محرك قراءة ومزامنة البيانات الديناميكية من لوحة الأدمن حياً وتطبيق الفلترة للطلاب
-        function runCmsSynchronization() {
-            document.getElementById('statStudents').innerText = localStorage.getItem('cms_count_students') || '850+';
-            document.getElementById('statTeachers').innerText = localStorage.getItem('cms_count_teachers') || '24';
-            document.getElementById('statLessons').innerText = localStorage.getItem('cms_count_courses') || '1,200+';
-
-            if(localStorage.getItem('cms_hero_title')) document.getElementById('heroTitle').innerText = localStorage.getItem('cms_hero_title');
-            if(localStorage.getItem('cms_hero_desc')) document.getElementById('heroDesc').innerText = localStorage.getItem('cms_hero_desc');
-            if(localStorage.getItem('cms_site_logo')) {
-                document.getElementById('siteLogo').src = localStorage.getItem('cms_site_logo');
-                document.getElementById('heroImg').src = localStorage.getItem('cms_site_logo');
-            }
-
-            let reviews = JSON.parse(localStorage.getItem('cms_reviews')) || [
-                { name: "محمد العلي (بكالوريا علمي)", text: "المنصة غيرت مفهوم الدراسة عندي، والأستاذ الافتراضي يشرح الفيزياء بطريقة أسهل من المعهد الحقيقي." },
-                { name: "سارة الأحمد (شهادة تاسع)", text: "نظام التذاكر وسرعة استجابة الأساتذة في وقت المناوبة ساعدتني في حل كل الأسئلة الصعبة فوراً." }
-            ];
-            const revGrid = document.getElementById('cmsReviewsList');
-            revGrid.innerHTML = '';
-            reviews.forEach(r => {
-                revGrid.innerHTML += `
-                    <div class="review-card">
-                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p>"${r.text}"</p>
-                        <div class="author">${r.name}</div>
-                    </div>`;
-            });
-            const isStudentIn = sessionStorage.getItem('student_logged_in') === 'true';
-            if(isStudentIn) {
-                const sName = sessionStorage.getItem('student_name');
-                const sClass = sessionStorage.getItem('student_class');
-                const sReligion = sessionStorage.getItem('student_religion');
-
-                document.getElementById('studentPortal').style.display = 'block';
-                document.getElementById('welcomeStudentMsg').innerText = `أهلاً بك يا ${sName} في لوحتك الدراسية الذكية 👋`;
-                
-                const logoutBtnHtml = `<button onclick="studentLogout()" class="btn-top-login" style="background:#ef4444;"><i class="fa-solid fa-power-off"></i> خروج</button>`;
-                document.getElementById('authAreaDesktop').innerHTML = logoutBtnHtml;
-                document.getElementById('authAreaMobile').innerHTML = `<button onclick="studentLogout()" class="bottom-nav-item" style="background:none; border:none; color:#ef4444;"><i class="fa-solid fa-power-off"></i><span>خروج</span></button>`;
-                document.getElementById('heroBtnContainer').style.display = 'none';
-
-                let curriculums = JSON.parse(localStorage.getItem('drasty_curriculums')) || [];
-                const sArea = document.getElementById('studentSubjectsArea');
-                sArea.innerHTML = '';
-
-                let filtered = curriculums.filter(c => c.class === sClass);
-                
-                if(filtered.length === 0) {
-                    sArea.innerHTML = '<p style="color:var(--text-gray); font-size:14px;">لا توجد مواد مرفوعة لصفك الدراسي حالياً من قبل الإدارة.</p>';
-                } else {
-                    filtered.forEach(item => {
-                        if(item.name.includes('ديانة') || item.name.includes('التربية الدينية') || item.name.includes('التربية الإسلامية') || item.name.includes('التربية المسيحية')) {
-                            if(!item.name.includes(sReligion)) return; 
-                        }
-                        sArea.innerHTML += `
-                            <div class="subject-card">
-                                <span><i class="fa-solid fa-file-pdf" style="color:#ef4444; margin-left:10px;"></i> <strong>${item.name}</strong></span>
-                                <a href="${item.link}" target="_blank">تحميل / عرض <i class="fa-solid fa-download"></i></a>
-                            </div>`;
-                    });
-                }
-                initAiTutorEngine(sName, sClass, sReligion);
-            }
-        }
-
-        // 🤖 محرك الأستاذ الافتراضي الذكي المتكامل المدعوم بجدولة الحصص صوت ونص
-        function initAiTutorEngine(name, sClass, sReligion) {
-            const revGrid = document.getElementById('cmsReviewsList');
-            revGrid.innerHTML = `
-                <div class="review-card" style="border-right: 4px solid var(--primary-glowing); grid-column: 1 / -1;">
-                    <div class="stars"><i class="fa-solid fa-robot"></i> <strong>الأستاذ الافتراضي (Drasty AI)</strong></div>
-                    <p>أهلاً بك يا متميز <strong>${name}</strong>. لقد تم تحليل بياناتك الأكاديمية كطالب <strong>(${sClass})</strong> وتدرس مادة <strong>(التربية الـ${sReligion})</strong>.</p>
-                    <p>بصفتي أستاذك الفعلي المتاح لك 24 ساعة، قمت بجدولة حصصك الدراسية بالترتيب، وتجهيز الفروض والامتحانات الموقوتة بالدقيقة.</p>
-                    <button class="btn-top-login" style="margin-top:10px; padding:6px 15px; font-size:12px;" onclick="triggerAiLesson()">ابدأ الحصة الأولى الآن 📚</button>
-                </div>`;
-        }
-
-        function triggerAiLesson() {
-            const revGrid = document.getElementById('cmsReviewsList');
-            if(currentLessonIndex === 1) {
-                let reply = `📚 <strong>الحصة المجدولة رقم (1): الشرح الاحترافي المفهوم</strong><br><br>
-                             مرحباً بك في حصتك الأولى. اليوم سنقوم بشرح الفقرة التأسيسية الهامة المتوقعة امتحانياً وفق المنهاج السوري لعام 2026 المرفوع لك من الإدارة حياً.<br>
-                             انتبه جيداً للأمثلة والقوانين المطروحة، وسأقوم بنطق الشرح صوتياً لتسهيل الاستيعاب...<br><br>
-                             <button class="btn-top-login" style="background:#22c55e; padding:5px 12px; font-size:11px;" onclick="triggerAiAssignment()">جاهز لحل الفرض الدوري 📝</button>`;
-                revGrid.innerHTML += `<div class="review-card" style="border-right:4px solid var(--primary); grid-column: 1 / -1;"><p>${reply}</p></div>`;
-                speakAiResponse("أهلاً بك في حصتك الأولى. اليوم سنبدأ بالشرح الاحترافي المفهوم للمادة المقررة حسب فرعك الدراسي.");
-                currentLessonIndex = 2;
-            }
-        }
-
-        function triggerAiAssignment() {
-            const revGrid = document.getElementById('cmsReviewsList');
-            let reply = `📝 <strong>الفرض الدوري القصير لحساب مستوى الفهم الفوري:</strong><br><br>
-                         أجب بدقة على السؤال التالي:<br>
-                         <strong>س: ما هو الفرق الجوهري في التطبيق بين المسائل العلمية والنظرية وفق منهاجك المعتمد؟</strong><br><br>
-                         قم بكتابة الحل أو تحدث صوتياً، وسأقوم بتصحيح جوابك فوراً ومنحك علامة دقيقة تشبه المعهد الحقيقي!<br><br>
-                         <button class="btn-top-login" style="background:#3b82f6; padding:5px 12px; font-size:11px;" onclick="triggerAiExam()">الانتقال للامتحان الشامل الموقوت ⏱️</button>`;
-            revGrid.innerHTML += `<div class="review-card" style="border-right:4px solid #22c55e; grid-column: 1 / -1;"><p>${reply}</p></div>`;
-            speakAiResponse("يرجى الإجابة بدقة على سؤال الفرض الدوري الظاهر أمامك للتأكد من فهمك الكامل للحصة.");
-        }
-
-        function triggerAiExam() {
-            const revGrid = document.getElementById('cmsReviewsList');
-            let reply = `⏱️ <strong>محاكاة الامتحان الشامل المجدول (موقت زمني 30 دقيقة نشط الآن):</strong><br><br>
-                         تم توليد ورقة الامتحان المخصصة لفرعك ومرحلتك بناءً على المناهج المرفوعة من الإدارة بنجاح 100%.<br><br>
-                         • <strong>السؤال الأول:</strong> اختر الإجابة الصحيحة من الخيارات المتاحة...<br>
-                         • <strong>السؤال الثاني:</strong> علل علمياً الظاهرة المطروحة في الفصل الأول...<br><br>
-                         ⚠️ ابدأ بالحل فوراً، وسيتم سحب ورقة الامتحان آلياً وتصحيحها فور انتهاء المؤقت لإرسال تقرير علاماتك ونقاط ضعفك إلى لوحة الأستاذ والمراقب البشري.`;
-            revGrid.innerHTML += `<div class="review-card" style="border-right:4px solid #ef4444; grid-column: 1 / -1;"><p>${reply}</p></div>`;
-            speakAiResponse("بدأ الآن الامتحان الشامل الموقوت. يرجى التركيز والبدء بالحل قبل انتهاء الوقت المحدد.");
-        }
-
-        function speakAiResponse(textToSpeak) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(textToSpeak.replace(/<[^>]*>/g, ''));
-                utterance.lang = 'ar-SA';
-                utterance.pitch = 1.0;
-                utterance.rate = 1.0;
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-
-        function studentLogout() {
-            sessionStorage.clear();
-            window.location.reload();
-        }
-
-        window.onload = runCmsSynchronization;
-    </script>
 </body>
 </html>
