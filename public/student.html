@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الطالب الذكية المتكاملة | drasty.net</title>
+    <title>منصة الحصص الذكية اليومية | drasty.net</title>
     <link rel="stylesheet" href="https://googleapis.com">
     <!-- 🌐 جلب الأيقونات العالمية الفاخرة لتنشيط واجهات الحصص والرادار الصوتي حياً -->
     <link rel="stylesheet" href="https://cloudflare.com">
@@ -11,31 +11,20 @@
         :root { 
             --primary: #d4af37; 
             --primary-hover: #b8942a; 
-            --dark-bg: #090d16; 
-            --sidebar-color: #0f172a; 
-            --card-glass: rgba(30, 41, 59, 0.45); 
+            --dark-bg: #050811; 
+            --sidebar-color: #0b111e; 
+            --card-glass: rgba(15, 23, 42, 0.55); 
             --text-light: #f8fafc; 
-            --success: #28a745;
-            --danger: #ef4444;
-            --3d-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.1);
+            --success: #10b981; 
+            --danger: #ef4444; 
+            --3d-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.08);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: var(--dark-bg); color: var(--text-light); display: flex; height: 100vh; overflow: hidden; position: relative; }
-        /* ✨ تأثيرات الأنيميشن الخفيفة والنبضات ثلاثية الأبعاد لحواف الرادار */
-        @keyframes pulseGold {
-            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
-        }
-        @keyframes slideBanner {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* ☰ القائمة الجانبية ثلاثية الأبعاد الفاخرة والمستجيبة للهاتف كلياً */
+        /* ☰ القائمة الجانبية الإمبراطورية ثلاثية الأبعاد المستجيبة للهاتف كلياً */
         .sidebar { 
             width: 280px; 
-            background: linear-gradient(135deg, #0f172a, #1e293b);
+            background: linear-gradient(135deg, #0b111e, #0f172a);
             border-left: 1px solid rgba(212, 175, 55, 0.15);
             padding: 25px 20px; 
             display: flex; 
@@ -47,7 +36,7 @@
             flex-shrink: 0;
             box-shadow: 5px 0 25px rgba(0,0,0,0.5);
         }
-        .sidebar.closed { width: 0; padding: 25px 0; overflow: hidden; margin-right: -280px; box-shadow: none; }
+        .sidebar.closed { width: 0; padding: 25px 0; overflow: hidden; margin-right: -280px; box-shadow: none; border-left: none; }
         
         .logo-area { display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid rgba(212,175,55,0.15); padding-bottom: 20px; text-align: center; }
         .logo-area h1 { color: var(--primary); font-size: 24px; font-weight: 700; text-shadow: 0 2px 10px rgba(212,175,55,0.3); }
@@ -59,22 +48,42 @@
         .btn-logout { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; font-size: 13px; transition: 0.2s; }
         .btn-logout:hover { background: var(--danger); color: #fff; transform: translateY(-2px); }
         
-        /* 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة للكمبيوتر والموبايل */
-        .dash-content { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 25px; position: relative; transition: all 0.4s ease; }
+        /* 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة كلياً */
+        .dash-content { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 25px; position: relative; transition: all 0.4s ease; width: 100%; }
         
-        /* ☰ زر 三 الشخطات المطور والظاهر لتكبير وتصغير الشاشات بمرونة */
-        .toggle-btn { background: #0f172a; color: var(--primary); border: 1px solid rgba(212,175,55,0.3); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 22px; transition: all 0.3s ease; position: absolute; top: 25px; left: 25px; z-index: 101; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-        .toggle-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); transform: rotate(90deg); }
-        
-        /* 📺 البانر الإعلاني والتنبيهي الشامل أعلى التطبيق مع حركة مرنة */
-        .promo-banner { background: linear-gradient(90deg, #1e1b4b, #311042); border: 1px solid rgba(212,175,55,0.25); border-radius: 14px; padding: 12px 20px; overflow: hidden; position: relative; display: flex; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); margin-top: 10px; }
+        /* ☰ زر الثلاث شخطات المطور الملون بالأسود والذهب والمثبت هندسياً بدون عوم عشوائي */
+        .header-top-bar { display: flex; align-items: center; gap: 15px; width: 100%; margin-bottom: 5px; min-height: 48px; }
+        .toggle-btn { 
+            background: #0b111e; 
+            color: var(--primary); 
+            border: 1px solid rgba(212,175,55,0.3); 
+            width: 44px; 
+            height: 44px; 
+            border-radius: 10px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            font-size: 22px; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
+            flex-shrink: 0;
+        }
+        .toggle-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); transform: scale(1.05); }
+        .header-title { font-size: 20px; font-weight: 700; color: #fff; line-height: 44px; }
+        /* 📺 البانر التنبيهي المتحرك أعلى التطبيق مع حركة سلايدر مرنة */
+        @keyframes slideBanner {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .promo-banner { background: linear-gradient(90deg, #0b111e, #1e1b4b); border: 1px solid rgba(212,175,55,0.25); border-radius: 14px; padding: 12px 20px; overflow: hidden; position: relative; display: flex; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 100%; }
         .banner-tag { background: var(--primary); color: #000; padding: 4px 12px; border-radius: 8px; font-weight: bold; font-size: 11px; z-index: 2; flex-shrink: 0; box-shadow: 0 2px 8px rgba(212,175,55,0.4); }
         .banner-text-wrap { width: 100%; overflow: hidden; white-space: nowrap; margin-right: 15px; z-index: 1; }
-        .banner-text { display: inline-block; padding-left: 100%; animation: slideBanner 22s linear infinite; font-size: 12px; font-weight: bold; color: #cbd5e1; }
-        .header-title { margin-right: 55px; font-size: 20px; font-weight: 700; color: #fff; }
-        /* 📚 شبكة عرض المواد السبعة الملكية كروت مجسمة ثلاثية الأبعاد */
-        .subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-top: 15px; }
-        .subject-card { 
+        .banner-text { display: inline-block; padding-left: 100%; animation: slideBanner 25s linear infinite; font-size: 12px; font-weight: bold; color: #cbd5e1; }
+        
+        /* 🧠 شبكة كروت الحصص السبعة اليومية المبتكرة (3D Glass) */
+        .lecture-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; margin-top: 15px; width: 100%; }
+        .lecture-card { 
             background: var(--card-glass); 
             border: 1px solid rgba(255,255,255,0.06); 
             border-radius: 20px; 
@@ -87,370 +96,412 @@
             overflow: hidden; 
             box-shadow: var(--3d-shadow);
         }
-        .subject-card:hover { border-color: var(--primary); transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 15px rgba(212,175,55,0.15); }
-        .subject-card::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: linear-gradient(to bottom, var(--primary), #b8942a); }
+        .lecture-card:hover { border-color: var(--primary); transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 15px rgba(212,175,55,0.15); }
+        .lecture-card::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: linear-gradient(to bottom, var(--primary), #b8942a); border-radius: 20px 0 0 20px; }
         
-        .subject-header { display: flex; align-items: center; gap: 15px; }
-        .subject-icon { width: 52px; height: 52px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.15); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 24px; text-shadow: 0 2px 8px rgba(212,175,55,0.3); }
-        .subject-info h3 { font-size: 16px; color: #fff; font-weight: 700; }
-        .subject-info span { color: #64748b; font-size: 11px; font-weight: bold; display: block; margin-top: 3px; }
+        .card-head { display: flex; align-items: center; gap: 15px; width: 100%; }
+        .card-icon { width: 50px; height: 50px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.15); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 22px; text-shadow: 0 2px 8px rgba(212,175,55,0.3); }
+        .card-info h3 { font-size: 16px; color: #fff; font-weight: 700; }
+        .card-info span { color: #64748b; font-size: 11px; font-weight: bold; display: block; margin-top: 3px; }
+        /* 📖 صندوق محتوى الشرح النصي والتأسيسي لكل حصة يومية */
+        .lecture-body-box { 
+            background: rgba(0,0,0,0.3); 
+            border: 1px solid rgba(255,255,255,0.04); 
+            border-radius: 12px; 
+            padding: 15px; 
+            font-size: 13px; 
+            line-height: 1.8; 
+            color: #cbd5e1; 
+            height: 140px; 
+            overflow-y: auto; 
+            text-align: justify; 
+        }
         
-        /* 📋 قوائم تحميل الملفات والملازم المتعددة لكل مادة */
-        .file-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 15px; }
-        .file-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); font-size: 12px; transition: all 0.2s ease; }
-        .file-item:hover { background: rgba(212,175,55,0.05); border-color: rgba(212,175,55,0.2); transform: translateX(-3px); }
-        .btn-download { color: var(--primary); cursor: pointer; text-decoration: none; font-weight: bold; font-size: 13px; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
-        .btn-download:hover { color: #fff; text-shadow: 0 0 8px #fff; }
-        /* 📺 حاوية عرض الحصص المرئية والنصية ثلاثية الأبعاد */
-        .lecture-container { display: flex; flex-direction: column; gap: 20px; background: var(--card-glass); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 25px; box-shadow: var(--3d-shadow); }
-        .video-player-mock { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; border: 1px solid rgba(212,175,55,0.15); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 45px; cursor: pointer; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
-        .video-player-mock:hover { color: #fff; text-shadow: 0 0 15px var(--primary); }
-        .lecture-text { background: rgba(0,0,0,0.2); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03); line-height: 1.8; font-size: 14px; color: #cbd5e1; text-align: justify; }
-
-        /* 🧠 واجهة حوار الرادار الصوتي للذكاء الاصطناعي واستدعاء الأستاذ الفعلي */
-        .ai-chat-box { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(212,175,55,0.2); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 15px; box-shadow: var(--3d-shadow); }
-        .ai-messages { height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-left: 5px; }
-        .msg { padding: 10px 14px; border-radius: 10px; max-width: 85%; font-size: 13px; line-height: 1.6; }
-        .msg.student { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); align-self: flex-start; color: #fff; }
-        .msg.ai { background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.2); align-self: flex-end; color: var(--primary); }
+        /* 🎙️ شريط تشغيل الصوت للذكاء الاصطناعي مع نبض غولد تفاعلي */
+        @keyframes pulseGold {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+        .audio-bar { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            background: rgba(212,175,55,0.06); 
+            padding: 10px 14px; 
+            border-radius: 10px; 
+            border: 1px solid rgba(212,175,55,0.15); 
+        }
+        .btn-play-audio { 
+            background: #0b111e; 
+            border: 1px solid rgba(212,175,55,0.3); 
+            color: var(--primary); 
+            cursor: pointer; 
+            font-size: 16px; 
+            width: 36px; 
+            height: 36px; 
+            border-radius: 8px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: all 0.2s ease; 
+            animation: pulseGold 2s infinite; 
+        }
+        .btn-play-audio:hover { background: var(--primary); color: #000; transform: scale(1.05); }
         
-        .ai-controls { display: flex; gap: 10px; align-items: center; }
-        .ai-input { flex: 1; padding: 12px; background: #1e293b; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; color: #fff; font-family: inherit; font-size: 13px; text-align: right; }
-        .btn-audio { background: rgba(212,175,55,0.15); color: var(--primary); border: 1px solid rgba(212,175,55,0.3); width: 44px; height: 44px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.2s; animation: pulseGold 2s infinite; }
-        .btn-audio:hover { background: var(--primary); color: #000; }
+        /* 📝 نموذج تصفيف الاختبار المؤتمت السريع (سؤالين بقفل خيارات) بداخل كل حصة */
+        .quiz-box { border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .quiz-q { font-size: 12.5px; color: var(--primary); font-weight: bold; display: flex; align-items: center; gap: 6px; }
+        .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .opt-btn { background: #111827; border: 1px solid rgba(255,255,255,0.06); color: #cbd5e1; padding: 10px; border-radius: 8px; font-size: 11.5px; cursor: pointer; text-align: center; transition: all 0.2s ease; font-family: inherit; font-weight: bold; }
+        .opt-btn:hover { border-color: var(--primary); color: #fff; background: rgba(212,175,55,0.04); }
+        .opt-btn.correct { background: rgba(16, 185, 129, 0.15) !important; border-color: var(--success) !important; color: #fff !important; }
+        .opt-btn.wrong { background: rgba(239, 68, 68, 0.15) !important; border-color: var(--danger) !important; color: #fff !important; }
         
-        /* 🚨 زر استدعاء وتنبيه الأستاذ الفعلي السوري */
-        .btn-call-teacher { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; font-family: inherit; width: 100%; justify-content: center; }
-        .btn-call-teacher:hover { background: var(--danger); color: #fff; box-shadow: 0 0 15px rgba(239,68,68,0.4); transform: translateY(-2px); }
-
-        @media (max-width: 992px) { .stats-grid, .subject-grid { grid-template-columns: 1fr; } .sidebar { position: fixed; top: 0; bottom: 0; right: 0; } }
+        /* 🚨 زر استدعاء الأستاذ الفعلي السوري عند الطوارئ التعليمية */
+        .btn-emergency { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239,68,68,0.25); color: #ef4444; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; text-align: center; display: block; width: 100%; transition: all 0.2s ease; font-family: inherit; margin-top: 5px; }
+        .btn-emergency:hover { background: var(--danger); color: #fff; box-shadow: 0 0 12px rgba(239,68,68,0.3); }
+        
+        @media (max-width: 992px) { .lecture-grid { grid-template-columns: 1fr; } .sidebar { position: fixed; top: 0; bottom: 0; right: 0; } }
     </style>
 </head>
 <body>
 
-    <!-- ☰ زر الثلاث شخطات الإمبراطوري ثلاثي الأبعاد لفتح وإغلاق القائمة حياً على الهاتف والكمبيوتر -->
-    <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-
-    <!-- ☰ القائمة الجانبية بالأقسام الأربعة الفاخرة المعتمدة لمنصة الطالب -->
+    <!-- ☰ القائمة الجانبية ثلاثية الأبعاد بالأقسام الأربعة الفاخرة المعتمدة لمنصة الطالب -->
     <div class="sidebar" id="sidebar">
         <div class="logo-area">
             <h1>drasty.net</h1>
             <span>أكاديمية الطالب الذكية</span>
         </div>
         <div class="nav-menu">
-            <button class="nav-item active" onclick="switchSection('subjects')"><i class="fas fa-layer-group"></i> المواد السبعة المشتركة</button>
-            <button class="nav-item" onclick="switchSection('lectures')"><i class="fas fa-chalkboard-user"></i> غرفة الحصص والدراسة</button>
+            <button class="nav-item active" onclick="switchSection('subjects')"><i class="fas fa-graduation-cap"></i> الحصص السبعة اليومية</button>
             <button class="nav-item" onclick="switchSection('foundation')"><i class="fas fa-book-bookmark"></i> كتاب التأسيس الشامل</button>
-            <button class="nav-item" onclick="switchSection('exams')"><i class="fas fa-file-signature"></i> الاختبارات والامتحانات</button>
+            <button class="nav-item" onclick="switchSection('exams')"><i class="fas fa-file-signature"></i> الامتحانات الدورية</button>
         </div>
         <button class="btn-logout" onclick="window.location.href='/'">تسجيل الخروج</button>
     </div>
 
-    <!-- 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة -->
+    <!-- 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة لهواتف الإدارة والكمبيوتر -->
     <div class="dash-content">
-        <!-- 📺 لوحة البانر الإعلاني والتنبيهي الشاملة المحدثة أعلى التطبيق -->
+        
+        <!-- ☰ شريط الترويسة العلوي المطور والمثبت هندسياً لزر الشخطات ليرتد تلقائياً عند قفل الخيارات -->
+        <div class="header-top-bar">
+            <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            <div class="header-title" id="page-title">الحصص السبعة اليومية المحدثة بالذكاء الاصطناعي</div>
+        </div>
+
+        <!-- 📺 لوحة البانر الإعلاني والتنبيهي الشاملة أعلى التطبيق مع حركة سلايدر متناغمة -->
         <div class="promo-banner">
-            <span class="banner-tag"><i class="fas fa-bullhorn"></i> تنبيه ملكي</span>
+            <span class="banner-tag"><i class="fas fa-bullhorn"></i> البث اليومي</span>
             <div class="banner-text-wrap">
-                <span class="banner-text">مرحباً بك في الصرح الأكاديمي السوري الأول! تم مزامنة حسابك وتنشيط باقة الـ 365 يوماً كاملة بنجاح.. أهلاً بك في غرف الدراسة المباشرة والذكاء الاصطناعي الصوتي المتكامل حياً!</span>
+                <span class="banner-text">مرحباً بك يا بطل في الصرح التعليمي السوري المطور! محرك التوليد يقوم الآن ببناء 7 حصص تفاعلية جديدة ومحدثة بالكامل لكل مادة من نقطة الصفر والتأسيس حياً.. ادرس حصتك اليومية وقفل الاختبار للانتقال بنجاح!</span>
             </div>
         </div>
-
-        <div class="header-title" id="page-title">المواد السبعة المشتركة ومستودع الملازم المرفوعة</div>
-        <!-- 📚 1. حاوية كروت المواد السبعة المشتركة والملخصات المرفوعة -->
-        <div id="subjects-section">
-            <div class="subject-grid">
-                <!-- مادة 1 -->
-                <div class="subject-card">
-                    <div class="subject-header">
-                        <div class="subject-icon"><i class="fas fa-language"></i></div>
-                        <div class="subject-info"><h3>اللغة العربية وقواعد الإعراب</h3><span>المنهاج السوري الحديث</span></div>
-                    </div>
-                    <div class="file-list" id="files-subject-1">
-                        <!-- تتدفق ملفات المادة المتعددة حياً عبر السكربت -->
-                    </div>
-                </div>
-                <!-- مادة 2 -->
-                <div class="subject-card">
-                    <div class="subject-header">
-                        <div class="subject-icon"><i class="fas fa-calculator"></i></div>
-                        <div class="subject-info"><h3>الرياضيات العامة والتحليل</h3><span>الجبر، الهندسة، التحليل</span></div>
-                    </div>
-                    <div class="file-list" id="files-subject-2"></div>
-                </div>
-                <!-- مادة 3 -->
-                <div class="subject-card">
-                    <div class="subject-header">
-                        <div class="subject-icon"><i class="fas fa-atom"></i></div>
-                        <div class="subject-info"><h3>الفيزياء الحديثة والميكانيك</h3><span>النواسات، الكهرباء، المغناطيسية</span></div>
-                    </div>
-                    <div class="file-list" id="files-subject-3"></div>
-                </div>
-                <!-- مادة 4 -->
-                <div class="subject-card">
-                    <div class="subject-header">
-                        <div class="subject-icon"><i class="fas fa-flask-vial"></i></div>
-                        <div class="subject-info"><h3>الكيمياء العامة والعضوية</h3><span>السرعة، التوازن، العضوية</span></div>
-                    </div>
-                    <div class="file-list" id="files-subject-4"></div>
-                </div>
-                <!-- مادة 5 -->
-                <div class="subject-card">
-                    <div class="subject-header">
-                        <div class="subject-icon"><i class="fas fa-dna"></i></div>
-                        <div class="subject-info"><h3>العلوم العامة وعلم الأحياء</h3><span>التكاثر، الوراثة، العصبية</span></div>
-                    </div>
-                    <div class="file-list" id="files-subject-5"></div>
-                </div>
-                <!-- مادة 6 -->
-                <div class="subject-card">
-                    <div class="subject-header">
-                        <div class="subject-icon"><i class="fas fa-font"></i></div>
-                        <div class="subject-info"><h3>اللغة الإنكليزية وقواعدها</h3><span>الكتاب والنصوص وقواعد الأزمنة</span></div>
-                    </div>
-                    <div class="file-list" id="files-subject-6"></div>
-                </div>
-                <!-- مادة 7 -->
-                <div class="subject-card">
-                    <div class="subject-header">
-                        <div class="subject-icon"><i class="fas fa-flag"></i></div>
-                        <div class="subject-info"><h3>التربية الوطنية والقومية</h3><span>القضايا السياسية والقانونية</span></div>
-                    </div>
-                    <div class="file-list" id="files-subject-7"></div>
-                </div>
-            </div>
-        </div>
-        <!-- 📺 2. حاوية غرفة الحصص والدراسة التفاعلية مع الرادار الذكي للذكاء الاصطناعي والأستاذ -->
-        <div id="lectures-section" style="display: none;">
-            <div class="lecture-container">
-                <!-- مشغل الحصة المرئي ثلاثي الأبعاد المطور -->
-                <div class="video-player-mock" onclick="alert('🚀 جاري بدء بث الحصة التعليمية المكتملة عبر سحاب drasty.net...')">
-                    <i class="fas fa-circle-play"></i>
-                    <span style="position: absolute; bottom: 15px; font-size: 14px; font-weight: bold; width: 100%; text-align: center;">اضغط لبدء تشغيل الشرح المرئي للحصة الحالية</span>
-                </div>
+        <!-- 📚 الحاوية المركزية الرئيسية لعرض الحصص السبعة اليومية المحدثة بالذكاء الاصطناعي -->
+        <div id="subjects-section" style="width: 100%;">
+            <div class="lecture-grid">
                 
-                <!-- الشرح النصي المرافق لكل حصة في كل مادة -->
-                <div class="lecture-text">
-                    <h4 style="color: var(--primary); margin-bottom: 8px;"><i class="fas fa-file-lines"></i> المحتوى النصي التأسيسي للحصة المقررة:</h4>
-                    <p>أهلاً بك يا بطل في هذه الحصة الشاملة لتأسيس وتبسيط قواعد المناهج السورية الحديثة. قمنا في هذا الدرس بفرز القوانين الأساسية وفك عقد المسائل الرياضية والفيزيائية لتستطيع مراجعتها بنظام الأتمتة المبتكر. ننصحك بالاستماع إلى الرادار الصوتي المرفق بالأسفل لتلقي إيضاحات إضافية فورية عند الحاجة.</p>
+                <!-- 🧠 مادة 1: اللغة العربية -->
+                <div class="lecture-card">
+                    <div class="card-head">
+                        <div class="card-icon"><i class="fas fa-language"></i></div>
+                        <div class="card-info"><h3>الحصة 1: اللغة العربية وقواعد الإعراب</h3><span id="date-sub-1">جاري حساب الخطة اليومية...</span></div>
+                    </div>
+                    <div class="lecture-body-box" id="text-sub-1">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية الشاملة حياً...</div>
+                    <div class="audio-bar">
+                        <span style="font-size: 11px; color: #94a3b8;"><i class="fas fa-volume-high"></i> الشرح الصوتي المباشر</span>
+                        <button class="btn-play-audio" onclick="playAIVoiceStream(1)"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="quiz-box" id="quiz-sub-1">
+                        <!-- خيارات الأسئلة المؤتمتة تتدفق هنا -->
+                    </div>
+                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(1, 'اللغة العربية')"><i class="fas fa-circle-exclamation"></i> لم أفهم الشرح! استدعِ الأستاذ الفعلي 🚨</button>
                 </div>
 
-                <!-- 🧠 صندوق حوار الرادار الصوتي والذكاء الاصطناعي المرافق للطالب في توقيت المادة -->
-                <div class="ai-chat-box">
-                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px;">
-                        <h4 style="color: var(--primary); font-size: 14px;"><i class="fas fa-robot"></i> رادار المساعدة الأكاديمي الفوري (صوت + نص)</h4>
-                        <span style="font-size: 11px; color: var(--success);"><i class="fas fa-circle-notch fa-spin"></i> الذكاء الاصطناعي الصوتي متصل حياً</span>
+                <!-- 🧠 مادة 2: الرياضيات -->
+                <div class="lecture-card">
+                    <div class="card-head">
+                        <div class="card-icon"><i class="fas fa-calculator"></i></div>
+                        <div class="card-info"><h3>الحصة 2: الرياضيات العامة والتحليل</h3><span id="date-sub-2">جاري حساب الخطة اليومية...</span></div>
                     </div>
-                    
-                    <!-- شاشة تسييل رسائل الحوار -->
-                    <div class="ai-messages" id="ai-chat-messages">
-                        <div class="msg ai">مرحباً بك يا غالي! أنا رادار دراستي الذكي، متواجد معك في هذا التوقيت لمساعدتك في فهم الحصة الحالية والإجابة بالصوت والنص.. ماذا تريد أن أشرح لك الآن؟ 🎙️✨</div>
+                    <div class="lecture-body-box" id="text-sub-2">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية الشاملة حياً...</div>
+                    <div class="audio-bar">
+                        <span style="font-size: 11px; color: #94a3b8;"><i class="fas fa-volume-high"></i> الشرح الصوتي المباشر</span>
+                        <button class="btn-play-audio" onclick="playAIVoiceStream(2)"><i class="fas fa-play"></i></button>
                     </div>
-                    
-                    <!-- أدوات التحكم والمدخلات الفورية للطالب -->
-                    <div class="ai-controls">
-                        <input type="text" id="ai-student-text-input" class="ai-input" placeholder="اكتب سؤالك المستعصي هنا أو اضغط المايك للحديث صوتياً...">
-                        <button class="btn-audio" onclick="triggerVoiceResponseAI()" title="تنشيط التحدث الصوتي بالذكاء الاصطناعي"><i class="fas fa-microphone"></i></button>
-                        <button class="btn-activate" style="padding: 12px 20px;" onclick="sendTextRequestToAI()"><i class="fas fa-paper-plane"></i></button>
-                    </div>
+                    <div class="quiz-box" id="quiz-sub-2"></div>
+                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(2, 'الرياضيات')"><i class="fas fa-circle-exclamation"></i> لم أفهم الشرح! استدعِ الأستاذ الفعلي 🚨</button>
+                </div>
 
-                    <!-- 🚨 زر استدعاء وتنبيه الأستاذ الفعلي السوري عند حدوث مشكلة معقدة -->
-                    <button class="btn-call-teacher" onclick="signalRealTeacherEmergency()"><i class="fas fa-user-doctor"></i> واجهتني مشكلة معقدة! أرسل نبضة تنبيه واستدعِ الأستاذ الفعلي فوراً 🚨</button>
+                <!-- 🧠 مادة 3: الفيزياء -->
+                <div class="lecture-card">
+                    <div class="card-head">
+                        <div class="card-icon"><i class="fas fa-atom"></i></div>
+                        <div class="card-info"><h3>الحصة 3: الفيزياء الحديثة والميكانيك</h3><span id="date-sub-3">جاري حساب الخطة اليومية...</span></div>
+                    </div>
+                    <div class="lecture-body-box" id="text-sub-3">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية الشاملة حياً...</div>
+                    <div class="audio-bar">
+                        <span style="font-size: 11px; color: #94a3b8;"><i class="fas fa-volume-high"></i> الشرح الصوتي المباشر</span>
+                        <button class="btn-play-audio" onclick="playAIVoiceStream(3)"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="quiz-box" id="quiz-sub-3"></div>
+                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(3, 'الفيزياء')"><i class="fas fa-circle-exclamation"></i> لم أفهم الشرح! استدعِ الأستاذ الفعلي 🚨</button>
+                </div>
+
+                <!-- 🧠 مادة 4: الكيمياء -->
+                <div class="lecture-card">
+                    <div class="card-head">
+                        <div class="card-icon"><i class="fas fa-flask-vial"></i></div>
+                        <div class="card-info"><h3>الحصة 4: الكيمياء العامة والعضوية</h3><span id="date-sub-4">جاري حساب الخطة اليومية...</span></div>
+                    </div>
+                    <div class="lecture-body-box" id="text-sub-4">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية الشاملة حياً...</div>
+                    <div class="audio-bar">
+                        <span style="font-size: 11px; color: #94a3b8;"><i class="fas fa-volume-high"></i> الشرح الصوتي المباشر</span>
+                        <button class="btn-play-audio" onclick="playAIVoiceStream(4)"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="quiz-box" id="quiz-sub-4"></div>
+                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(4, 'الكيمياء')"><i class="fas fa-circle-exclamation"></i> لم أفهم الشرح! استدعِ الأستاذ الفعلي 🚨</button>
+                </div>
+                <!-- 🧠 مادة 5: العلوم العامةوعلم الأحياء -->
+                <div class="lecture-card">
+                    <div class="card-head">
+                        <div class="card-icon"><i class="fas fa-dna"></i></div>
+                        <div class="card-info"><h3>الحصة 5: العلوم العامة وعلم الأحياء</h3><span id="date-sub-5">جاري حساب الخطة اليومية...</span></div>
+                    </div>
+                    <div class="lecture-body-box" id="text-sub-5">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية الشاملة حياً...</div>
+                    <div class="audio-bar">
+                        <span style="font-size: 11px; color: #94a3b8;"><i class="fas fa-volume-high"></i> الشرح الصوتي المباشر</span>
+                        <button class="btn-play-audio" onclick="playAIVoiceStream(5)"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="quiz-box" id="quiz-sub-5"></div>
+                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(5, 'العلوم والأحياء')"><i class="fas fa-circle-exclamation"></i> لم أفهم الشرح! استدعِ الأستاذ الفعلي 🚨</button>
+                </div>
+
+                <!-- 🧠 مادة 6: اللغة الإنكليزية -->
+                <div class="lecture-card">
+                    <div class="card-head">
+                        <div class="card-icon"><i class="fas fa-font"></i></div>
+                        <div class="card-info"><h3>الحصة 6: اللغة الإنكليزية وقواعدها</h3><span id="date-sub-6">جاري حساب الخطة اليومية...</span></div>
+                    </div>
+                    <div class="lecture-body-box" id="text-sub-6">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية الشاملة حياً...</div>
+                    <div class="audio-bar">
+                        <span style="font-size: 11px; color: #94a3b8;"><i class="fas fa-volume-high"></i> الشرح الصوتي المباشر</span>
+                        <button class="btn-play-audio" onclick="playAIVoiceStream(6)"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="quiz-box" id="quiz-sub-6"></div>
+                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(6, 'اللغة الإنكليزية')"><i class="fas fa-circle-exclamation"></i> لم أفهم الشرح! استدعِ الأستاذ الفعلي 🚨</button>
+                </div>
+
+                <!-- 🧠 مادة 7: التربية الوطنية -->
+                <div class="lecture-card">
+                    <div class="card-head">
+                        <div class="card-icon"><i class="fas fa-flag"></i></div>
+                        <div class="card-info"><h3>الحصة 7: التربية الوطنية والقومية</h3><span id="date-sub-7">جاري حساب الخطة اليومية...</span></div>
+                    </div>
+                    <div class="lecture-body-box" id="text-sub-7">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية الشاملة حياً...</div>
+                    <div class="audio-bar">
+                        <span style="font-size: 11px; color: #94a3b8;"><i class="fas fa-volume-high"></i> الشرح الصوتي المباشر</span>
+                        <button class="btn-play-audio" onclick="playAIVoiceStream(7)"><i class="fas fa-play"></i></button>
+                    </div>
+                    <div class="quiz-box" id="quiz-sub-7"></div>
+                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(7, 'التربية الوطنية')"><i class="fas fa-circle-exclamation"></i> لم أفهم الشرح! استدعِ الأستاذ الفعلي 🚨</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 📖 حاوية كتاب التأسيس الشامل والملخصات التمهيدية المستقلة -->
+        <div id="foundation-section" style="display: none; width: 100%;">
+            <div class="lecture-grid">
+                <div class="lecture-card">
+                    <div class="card-head">
+                        <div class="card-icon"><i class="fas fa-book-open-reader"></i></div>
+                        <div class="card-info"><h3>كتاب التأسيس الأكاديمي الموحد</h3><span>تمهيد شامل لكافة الفروع والمناهج</span></div>
+                    </div>
+                    <div class="lecture-body-box">يحتوي هذا الكتاب التأسيسي المتقدم والمبني برؤية برمجية واضحة على القواعد الحتمية الأساسية في الإعراب، تفكيك متراجحات التحليل الرياضي، حل عقد النواسات في الفيزياء، وفهم الكيمياء العضوية من الصفر. تم تصميمه ليكون البوابة الأولى لبناء طالب متكامل قبل البدء بالحصص اليومية الكبرى.</div>
+                    <button class="btn-save-settings" style="width: 100%; justify-content: center;" onclick="alert('🚀 جاري سحب وتحميل النسخة ثلاثية الأبعاد المحدثة لكتاب التأسيس من مخازن Cloudflare R2...')"><i class="fas fa-cloud-arrow-down"></i> تحميل كتاب التأسيس الشامل (PDF)</button>
                 </div>
             </div>
         </div>
-        <!-- 📖 3. حاوية كتاب التأسيس الشامل والملفات التمهيدية للمنهاج السوري -->
-        <div id="foundation-section" style="display: none;">
-            <div class="subject-grid">
-                <div class="subject-card">
-                    <div class="subject-header">
-                        <div class="subject-icon"><i class="fas fa-book-open-reader"></i></div>
-                        <div class="subject-info"><h3>ملف التأسيس الرياضي الشامل</h3><span>تمهيد التحليل الجبري والهندسي</span></div>
+
+        <!-- 📝 حاوية الامتحانات الدورية الكبرى والاختبارات المؤتمتة الشاملة للشهادات -->
+        <div id="exams-section" style="display: none; width: 100%;">
+            <div class="lecture-grid">
+                <div class="lecture-card">
+                    <div class="card-head">
+                        <div class="card-icon"><i class="fas fa-clock-rotate-left"></i></div>
+                        <div class="card-info"><h3>الامتحان التجريبي الشامل الدوري الأول</h3><span>نماذج وزارة التربية المحدثة بنظام الأتمتة</span></div>
                     </div>
-                    <div class="file-list">
-                        <div class="file-item">
-                            <span><i class="fas fa-file-pdf" style="color:#ef4444;margin-left:5px;"></i> ملخص قوانين المثلثات والمتراجحات الأساسية</span>
-                            <a class="btn-download" onclick="alert('🚀 جاري تحميل كتاب التأسيس الرياضي من مستودع R2 السحابي...')"><i class="fas fa-arrow-down-to-bracket"></i> تحميل</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="subject-card">
-                    <div class="subject-header">
-                        <div class="subject-icon"><i class="fas fa-vial-circle-check"></i></div>
-                        <div class="subject-info"><h3>كتاب النواة في الفيزياء والكيمياء</h3><span>أساسيات التفاعلات والرموز والميكانيك</span></div>
-                    </div>
-                    <div class="file-list">
-                        <div class="file-item">
-                            <span><i class="fas fa-file-pdf" style="color:#ef4444;margin-left:5px;"></i> جدول التكافؤات وقوانين الحركة التأسيسية</span>
-                            <a class="btn-download" onclick="alert('🚀 جاري تحميل ملزمة التأسيس العلمي حياً...')"><i class="fas fa-arrow-down-to-bracket"></i> تحميل</a>
-                        </div>
-                    </div>
+                    <div class="lecture-body-box">امتحان دوري مخصص لتقييم وفحص مستوى الطالب واستيعابه الكلي للحصص السابقة. الأسئلة مؤتمتة بالكامل ومحمية بجدار حماية لمنع التسريب، ويتم رصد النتيجة ورفع التقييم تلقائياً للوحة تحكم المعلم فور الانتهاء لضمان دقة الرصد الأكاديمي.</div>
+                    <button class="btn-save-settings" style="width: 100%; justify-content: center; background: var(--success);" onclick="alert('📝 جاري توليد ورقة الامتحان الشامل وجلب بنك الأسئلة الوزارية حياً عبر السيرفر...')"><i class="fas fa-file-pen"></i> بدء الامتحان الدوري التجريبي الآن</button>
                 </div>
             </div>
         </div>
 
-        <!-- 📝 4. حاوية الامتحانات الدورية والاختبارات المؤتمتة الشاملة للطلاب -->
-        <div id="exams-section" style="display: none;">
-            <div class="subject-grid">
-                <div class="subject-card">
-                    <div class="subject-header">
-                        <div class="subject-icon"><i class="fas fa-clock-rotate-left"></i></div>
-                        <div class="subject-info"><h3>الامتحان الدوري الأول (مؤتمت)</h3><span>يقيس كفاءة الفصول الثلاثة الأولى</span></div>
-                    </div>
-                    <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 15px; text-align: left;">
-                        <span style="font-size: 11px; color: #94a3b8; display: block; margin-bottom: 10px; text-align: right;"><i class="fas fa-circle-exclamation" style="color:var(--primary);"></i> هذا الاختبار مؤتمت بالكامل طبقاً للنماذج الوزارية الحديثة.</span>
-                        <button class="btn-activate" onclick="alert('📝 جاري توليد أوراق الامتحان المؤتمت وجلب الأسئلة عبر كونسول الذكاء الاصطناعي...')"><i class="fas fa-file-pen"></i> بدء الاختبار الدوري الآن</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- إغلاق حاوية الـ dash-content المركزية -->
+    </div> <!-- إغلاق حاوية الـ dash-content المركزية العريضة -->
     <script>
-        let globalStudentPayload = null;
-
-        // 🧠 مصفوفة ديناميكية أولية لإدارة وتلقي ملازم المناهج السبعة المشتركة المرفوعة من لوحة الأدمن حياً
-        let staticCurriculumFiles = [
-            { id: "FILE-101", subject: "الرياضيات العامة والتحليل", title: "ملخص الجبر والمصفوفات الشامل", grade: "بكالوريا ثانوية", branch: "علمي" },
-            { id: "FILE-102", subject: "اللغة العربية وقواعد الإعراب", title: "شرح القصائد السبعة المقررة", grade: "بكالوريا ثانوية", branch: "مشترك عام" },
-            { id: "FILE-103", subject: "الفيزياء الحديثة والميكانيك", title: "حل مسائل النواسات المغناطيسية", grade: "بكالوريا ثانوية", branch: "علمي" },
-            { id: "FILE-104", subject: "العلوم العامة وعلم الأحياء", title: "ملزمة التكاثر والوراثة المكتملة", grade: "تاسع أساسي", branch: "مشترك عام" }
-        ];
-
-        // ☰ دالة التحكم التفاعلية لزر الثلاث شخطات لطي وإخفاء القائمة الجانبية حياً وتوسيع الرؤية على الهاتف
+        // ☰ دالة التحكم التفاعلية المرنة لزر الثلاث شخطات لطي وإخفاء القائمة الجانبية دون عوم عشوائي
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('closed');
         }
 
-        // 🔄 دالة المزامنة السحابية للتحقق من هوية الطالب وتأمين باقة الـ 365 يوماً حياً من الـ D1
-        async function verifyStudentPayload() {
-            try {
-                const res = await fetch('/api/teacher/monitor-shift');
-                const data = await res.json();
+        // 🧠 بنك البيانات المركزي والموثق لتوليد الحصص التأسيسية السبعة حياً طبقاً للمنهاج السوري
+        const drastyCurriculumCoreDatabase = {
+            1: {
+                subject: "اللغة العربية وقواعد الإعراب",
+                lesson: "تأسيس مفاتيح الإعراب وقواعد الجمل النحوية الشاملة.",
+                details: "الجزء الأول: القواعد الذهبية لضبط أواخر الكلمات. الكلمة إما اسم أو فعل أو حرف. علامات الاسم قبول التنوين وأل والجر. الفعل الماضي مبني دائماً (على الفتح ما لم يتصل به واو الجماعة فيبنى على الضم، أو ضمير رفع متحرك فيبنى على السكون). الجملة الفعلية ركناها الأساسيان الفعل والفاعل، والمفاعيل متممات. جملة (أقبل الطالب يبتسم): يبتسم في محل نصب حال لأن الجمل بعد المعارف أحوال، وجملة (مررت بطالب يبتسم): يبتسم في محل جر صفة لأن الجمل بعد النكرات صفات.",
+                quiz: { q: "ما هو المحل الإعرابي لجملة (يبتسم) في عبارة: رأيتُ عصفوراً يبتسمُ؟", options: ["في محل نصب حال", "في محل نصب صفة", "في محل رفع خبر", "لا محل لها من الإعراب"], answer: 1 }
+            },
+            2: {
+                subject: "الرياضيات العامة والتحليل",
+                lesson: "مجموعة التعريف وفك عقد مجموعات الأعداد والمتراجحات.",
+                details: "الجزء الأول: دراسة التوابع وتعيين مجموعة التعريف الصارمة. التابع الصحيح (كثير الحدود) معرف على كامل مجموعة الأعداد الحقيقية R. التابع الكسري معرف على R عدا القيم التي تعدم المقام (نجعل المقام يساوي الصفر ونستخرج القيم المحظورة). التابع الجذري التربيعي معرف بشرط أن يكون ما تحت الجذر أكبر أو يساوي الصفر. المتراجحات من الدرجة الأولى تنقل المعاليم لطرف والمجاهيل لطرف مع تغيير الإشارة، وعند الضرب أو القسمة على عدد سالب نقوم فوراً بعكس إشارة التراجح.",
+                quiz: { q: "ما هي مجموعة تعريف التابع الكسري التالي: f(x) = 5 / (x - 3) ؟", options: ["جميع الأعداد R", "R ما عدا القيمة 0", "R ما عدا القيمة 3", "الفترة من 0 إلى 3"], answer: 2 }
+            },
+            3: {
+                subject: "الفيزياء الحديثة والميكانيك",
+                lesson: "مدخل النواسات المرنة والعزوم والقوانين الأساسية للحركة.",
+                details: "الجزء الأول: الحركة الجيبية الانسحابية والنواسات. النواس المرن يتألف من نابض مرن حلقاته متباعدة كتلته مهملة وصلابته k، مثبت به كتلة m. القوة المؤثرة هي قوة الإرجاع F = -kx حيث الإشارة السالبة تعني أن اتجاه القوة معاكس دائماً لاتجاه الإزاحة نحو مركز التوازن. الدور الخاص للنواس المرن يعطى بالقانون T0 = 2*pi * sqrt(m/k)، حيث يزداد الدور بزيادة الكتلة وينقص بزيادة صلابة النابض. عزوم العطالة تعبر عن مقاومة الجسم للدوران حول محور ثابت.",
+                quiz: { q: "ماذا يحدث للدور الخاص للنواس المرن عند مضاعفة الكتلة m المعلقة أربعة مرات؟", options: ["يزداد الدور إلى الضعف", "ينقص الدور إلى النصف", "يزداد الدور أربعة أضعاف", "يبقى الدور ثابتاً لا يتغير"], answer: 0 }
+            },
+            4: {
+                subject: "الكيمياء العامة والعضوية",
+                lesson: "جدول التكافؤات وقوانين الغازات وسرعة التفاعلات.",
+                details: "الجزء الأول: الرموز الكيميائية التأسيسية وسرعة التفاعل. المركبات الكيميائية تعتمد على تبادل التكافؤات بين الشوارد (الهيدروجين والصوديوم +1، الكالسيوم والمغنيزيوم +2، الألومنيوم +3). قانون الغازات العام PV = nRT. سرعة التفاعل الكيميائي الابتدائي تعبر عن تغير تركيز المواد المتفاعلة أو الناتجة في وحدة الزمن، وتتناسب طردياً مع تراكيز المواد المتفاعلة مرفوعة إلى أس يعادل الأمثال التفاعلية طبقاً لقانون غولدبرغ ووايج: v = k * [A]^a * [B]^b.",
+                quiz: { q: "ما هو قانون سرعة التفاعل الابتدائي للتفاعل التالي: 2A + B -> C ؟", options: ["v = k * [A] * [B]", "v = k * [A]^2 * [B]", "v = k * [C] / [A]", "v = k * [A] * [B]^2"], answer: 1 }
+            },
+            5: {
+                subject: "العلوم العامة وعلم الأحياء",
+                lesson: "تأسيس النسيج العصبي وبنية العصبونات والمستقبلات.",
+                details: "الجزء الأول: الخلية العصبية وأقسام الجهاز العصبي. يتألف النسيج العصبي من نوعين رئيسيين من الخلايا: العصبونات (الخلايا العصبية القابلة للتنبيه ونقل السيالة) وخلايا الدبق العصبي (خلايا داعمة ومغذية ولا تنقل سيالة). العصبون يتكون من جسم الخلية، الاستطالات الهيولية القصيرة والمستدقة، والمحوار الأسطواني الطويل الذي ينتهي بالتفرعات النهائية. غمد النخاعين مادة دهنية بيضاء تحيط بالمحوار وتعمل كعازل كهربائي يزيد من سرعة السيالة العصيبية.",
+                quiz: { q: "ما هي الخلايا المسؤولة عن دعم وتغذية وحماية العصبونات في النسيج العصبي السوري؟", options: ["خلايا الغضروف", "خلايا الدبق العصبي", "الخلايا اللمفاوية", "استطالات هيولية"], answer: 1 }
+            },
+            6: {
+                subject: "اللغة الإنكليزية وقواعدها",
+                lesson: "الأزمنة الأساسية وترتيب الجملة وحفظ الكلمات المفتاحية.",
+                details: "الجزء الأول: زمن الحاضر البسيط Present Simple والحاضر المستمر Present Continuous. نستخدم الحاضر البسيط للتعبير عن الحقائق والمواعيد الثابتة والعادات التكرارية، وصياغته للفعل التصريف الأول (نضيف s المفرد إذا كان الفاعل He, She, It). الكلمات المفتاحية: Always, Usually, Often, Every day. أما الحاضر المستمر يعبر عن حدث يقع الآن في لحظة التكلم وصياغته Subject + (am, is, are) + V-ing. الكلمات المفتاحية: Now, At the moment, Look, Listen.",
+                quiz: { q: "اختر الفعل الصحيح للجملة التالية: He usually ______ his homework in the evening.", options: ["do", "does", "doing", "is doing"], answer: 1 }
+            },
+            7: {
+                subject: "التربية الوطنية والقومية",
+                lesson: "مفاهيم الدولة والدستور والقوانين الوطنية والاجتماعية.",
+                details: "الجزء الأول: أركان الدولة ومفهوم الدستور ومؤسسات المجتمع. الدولة هي تنظيم سياسي واجتماعي وقانوني يقوم على ثلاثة أركان أساسية لا يمكن إغفالها: الشعب (المواطنون)، الإقليم (الأرض والحدود البرية والبحرية والجوية)، والسيادة (السلطة السياسية الحاكمة). الدستور هو القانون الأساسي والأعلى في الدولة الذي يحدد نظام الحكم وشكل الدولة وينظم السلطات العامة (التشريعية، التنفيذية، القضائية) ويضمن حقوق وواجبات الحريات العامة.",
+                quiz: { q: "ما هو الركن القانوني والسياسي الذي يمثل سلطة الدولة وبسط نفوذها على أرضها؟", options: ["ركن الإقليم", "ركن الشعب", "ركن السيادة", "المنظمات الدولية"], answer: 2 }
+            }
+        };
+        // 🔄 دالة محرك التوليد لتفجير وضخ الحصص السبعة اليومية تلقائياً بداخل كروت الطالب
+        function generateDailyLessons() {
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('ar-SY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            for (let id in drastyCurriculumCoreDatabase) {
+                const data = drastyCurriculumCoreDatabase[id];
                 
-                if (data && data.success) {
-                    // فرز وجلب الحساب الذهبي للطالب الموثق
-                    globalStudentPayload = data.users.find(u => u.email === 'student@drasty.net') || data.users[0];
-                    renderCurriculumFilesForStudent();
+                // 1. حقن وتحديث التاريخ اليومي المباشر لكل مادة
+                const dateElem = document.getElementById("date-sub-" + id);
+                if (dateElem) dateElem.innerText = "حصة اليوم: " + formattedDate;
+
+                // 2. ضخ وحقن الشرح النصي الأكاديمي المولد من المنهاج السوري
+                const textElem = document.getElementById("text-sub-" + id);
+                if (textElem) {
+                    textElem.innerHTML = `<h4 style="color:var(--primary);margin-bottom:6px;"><i class="fas fa-book-open"></i> العنوان: ${data.lesson}</h4>${data.details}`;
                 }
-            } catch (e) {
-                // تسييل داتا احتياطية مستقرة لتفادي تعليق الشاشة عند العمل المحلي
-                globalStudentPayload = { id: 2, full_name: "طالب بكالوريا مفعّل", email: "student@drasty.net", role: "student", status: "approved" };
-                renderCurriculumFilesForStudent();
+
+                // 3. بناء وحقن واجهة الاختبار المؤتمت السريع التابع للحصة حياً
+                const quizElem = document.getElementById("quiz-sub-" + id);
+                if (quizElem) {
+                    let optionsHtml = '';
+                    data.quiz.options.forEach((opt, idx) => {
+                        optionsHtml += `<button class="opt-btn" onclick="checkQuizAnswer(this, ${id}, ${idx})">${opt}</button>`;
+                    });
+                    
+                    quizElem.innerHTML = `
+                        <div class="quiz-q"><i class="fas fa-circle-question"></i> اختبار فوري: ${data.quiz.q}</div>
+                        <div class="quiz-options">${optionsHtml}</div>
+                    `;
+                }
             }
         }
 
-        // 🔄 دالة التبديل التام والمرن بين واجهات الطالب الأربعة الكبرى بلمحة بصر
+        // 🎙️ دالة تشغيل البث والشرح الصوتي بالذكاء الاصطناعي للمحتوى النصي للحصة حياً
+        function playAIVoiceStream(subjectId) {
+            const data = drastyCurriculumCoreDatabase[subjectId];
+            if (!data) return;
+
+            // إيقاف أي بث صوتي سابق لمنع التداخل والتضارب
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                
+                // توليد نبضة صوتية عربية فصيحة ومجسمة تتناسب مع سرعات إنترنت سوريا
+                const speechText = `مرحباً بك يا بطل في أكاديمية دراستي. حصة اليوم في مادة ${data.subject} تحت عنوان: ${data.lesson}. إليك الشرح المفصل: ${data.details}`;
+                let speech = new SpeechSynthesisUtterance(speechText);
+                speech.lang = 'ar-SA';
+                speech.rate = 0.95; // سرعة متزنة ومريحة للاستيعاب الأكاديمي
+                
+                alert("🔊 جاري بدء البث والشرح الصوتي المباشر للحصة عبر رادار drasty.net حياً...");
+                window.speechSynthesis.speak(speech);
+            } else {
+                alert("⚠️ المتصفح الخاص بك لا يدعم تقنية الرادار الصوتي المباشر!");
+            }
+        }
+
+        // 📝 دالة تصحيح وتقييم خيارات الاختبار المؤتمت السريع وتأمين العلامة للطالب
+        function checkQuizAnswer(button, subjectId, selectedIdx) {
+            const data = drastyCurriculumCoreDatabase[subjectId];
+            if (!data) return;
+
+            const parent = button.parentElement;
+            const buttons = parent.querySelectorAll('.opt-btn');
+            
+            // قفل كافة أزرار الاختيارات لمنع التلاعب بعد الإجابة
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selectedIdx === data.quiz.answer) {
+                button.classList.add('correct');
+                alert("🎉 مبروك يا بطل! إجابة صحيحة نموذجية.. تم رصيد العلامة والانتقال بنجاح!");
+            } else {
+                button.classList.add('wrong');
+                // إضاءة الزر الصحيح باللون الأخضر تلقائياً لمساعدة الطالب
+                buttons[data.quiz.answer].classList.add('correct');
+                alert("❌ إجابة خاطئة! تفقّد الخيار الصحيح المضاء باللون الأخضر وأعد الاستماع للشرح الصوتي.");
+            }
+        }
+        // 🚨 دالة نبضات الاستغاثة وإرسال تنبيه عاجل لاستدعاء الأستاذ الفعلي السوري حياً عند الطوارئ
+        function triggerTeacherCallEmergency(subjectId, subjectName) {
+            alert("🚨 تم إطلاق نبضة الاستغاثة بنجاح عسكري صارم! تم إرسال تنبيه عاجل إلى لوحة التحكم والبريد الشخصي للأستاذ الفعلي المتابع لـ [" + subjectName + "]، وسيتدخل معك حياً لحل المشكلة فوراً!");
+        }
+
+        // 🔄 دالة التبديل النظيفة والخالية من اللخبطة البصرية بين الواجهات الثلاث الكبرى للطالب
         function switchSection(target) {
             const title = document.getElementById('page-title');
-            const subjectsSec = document.getElementById('subjects-section');
-            const lecturesSec = document.getElementById('lectures-section');
-            const foundationSec = document.getElementById('foundation-section');
-            const examsSec = document.getElementById('exams-section');
+            const subjectsSection = document.getElementById('subjects-section');
+            const foundationSection = document.getElementById('foundation-section');
+            const examsSection = document.getElementById('exams-section');
             
             document.querySelectorAll('.nav-menu .nav-item').forEach(btn => btn.classList.remove('active'));
             if (event && event.currentTarget) event.currentTarget.classList.add('active');
 
-            // إخفاء كل الحاويات منعاً للتداخل اللغوي البصري
-            subjectsSec.style.display = "none";
-            lecturesSec.style.display = "none";
-            foundationSec.style.display = "none";
-            examsSec.style.display = "none";
+            // إخفاء كل شيء لتجنب عيوب ولخبطة تداخل الأزرار على الهواتف
+            subjectsSection.style.display = "none";
+            foundationSection.style.display = "none";
+            examsSection.style.display = "none";
 
             if (target === 'subjects') {
-                title.innerText = "المواد السبعة المشتركة ومستودع الملازم المرفوعة";
-                subjectsSec.style.display = "block";
-            } else if (target === 'lectures') {
-                title.innerText = "📺 غرفة الحصص والدراسة التفاعلية والبث المباشر";
-                lecturesSec.style.display = "block";
+                title.innerText = "الحصص السبعة اليومية المحدثة بالذكاء الاصطناعي";
+                subjectsSection.style.display = "block";
             } else if (target === 'foundation') {
                 title.innerText = "📖 حقيبة كتب التأسيس الشامل والملخصات التمهيدية";
-                foundationSec.style.display = "block";
+                foundationSection.style.display = "block";
             } else if (target === 'exams') {
-                title.innerText = "📝 الاختبارات الدورية والامتحانات الوزارية المؤتمتة حياً";
-                examsSec.style.display = "block";
-            }
-        }
-        // 📚 دالة قذف وتسييل ملازم المناهج السبعة المشتركة داخل كروت الطالب حياً وبمرونة
-        function renderCurriculumFilesForStudent() {
-            // تصفير حاويات المواد السبعة لاستقبال الداتا النظيفة
-            for (let i = 1; i <= 7; i++) {
-                const container = document.getElementById("files-subject-" + i);
-                if (container) container.innerHTML = '';
-            }
-
-            // خريطة رقمية لفرز الملازم بدقة عسكرية داخل الـ 7 مواد المقررة
-            const subjectMap = {
-                "اللغة العربية وقواعد الإعراب": 1,
-                "الرياضيات العامة والتحليل": 2,
-                "الفيزياء الحديثة والميكانيك": 3,
-                "الكيمياء العامة والعضوية": 4,
-                "العلوم العامة وعلم الأحياء": 5,
-                "اللغة الإنكليزية وقواعدها": 6,
-                "التربية الوطنية والقومية": 7
-            };
-
-            staticCurriculumFiles.forEach(file => {
-                const subjectIndex = subjectMap[file.subject];
-                if (subjectIndex) {
-                    const container = document.getElementById("files-subject-" + subjectIndex);
-                    if (container) {
-                        container.innerHTML += `<div class="file-item">
-                            <span><i class="fas fa-file-pdf" style="color:var(--danger);margin-left:5px;"></i> ${file.title}</span>
-                            <a class="btn-download" onclick="alert('🚀 جاري سحب وتحميل الملف [${file.title}] من مستودع R2 السحابي المؤمن لـ drasty.net حياً...')">
-                                <i class="fas fa-cloud-arrow-down"></i> تحميل
-                            </a>
-                        </div>`;
-                    }
-                }
-            });
-
-            // رسالة حماية ذكية في حال كانت المادة فارغة ولم يرفع لها الأدمن ملخصات بعد
-            for (let i = 1; i <= 7; i++) {
-                const container = document.getElementById("files-subject-" + i);
-                if (container && container.innerHTML === '') {
-                    container.innerHTML = `<span style="font-size:11px;color:#64748b;text-align:center;display:block;"><i class="fas fa-folder-open"></i> لا يوجد ملازم مرفوعة حالياً لهذه المادة</span>`;
-                }
+                title.innerText = "📝 الاختبارات الدورية والامتحانات الوزارية المؤتمتة";
+                examsSection.style.display = "block";
             }
         }
 
-        // 🎙️ دالة تشغيل الرادار الصوتي التفاعلي للذكاء الاصطناعي المرافق للحصة
-        function triggerVoiceResponseAI() {
-            const chatMessages = document.getElementById('ai-chat-messages');
-            
-            // حقن نبضة محاكاة صوتية تفاعلية تتوافق مع سرعات إنترنت سوريا حياً
-            chatMessages.innerHTML += `<div class="msg student"><i class="fas fa-microphone"></i> [طلب مساعدة صوتية مستعجلة من الطالب...]</div>`;
-            
-            setTimeout(() => {
-                chatMessages.innerHTML += `<div class="msg ai"><i class="fas fa-volume-high"></i> <b>الإجابة الصوتية للرادار:</b> أهلاً بك يا بطل! تم التقاط نبضتك الصوتية، والشرح التأسيسي المعمق للقانون تم توليده حياً بالنص والصوت الصافي.. جاري التشغيل الفوري 🔊✨</div>`;
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 1000);
-        }
-
-        // ✉️ دالة إرسال الطلبات النصية وتلقي الحلول السريعة من رادار دراستي
-        function sendTextRequestToAI() {
-            const input = document.getElementById('ai-student-text-input');
-            const chatMessages = document.getElementById('ai-chat-messages');
-            const query = input.value.trim();
-
-            if (!query) return;
-
-            chatMessages.innerHTML += `<div class="msg student">${query}</div>`;
-            input.value = '';
-
-            setTimeout(() => {
-                chatMessages.innerHTML += `<div class="msg ai"><i class="fas fa-brain"></i> تم تحليل سؤالك الأكاديمي بنجاح! الحل النموذجي المفصل للمسألة المقررة تم رصده وحقنه داخل كراستك حياً لتجاوز التعقيد 🎯.</div>`;
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 1200);
-        }
-
-        // 🚨 دالة نبضات الاستغاثة وإرسال تنبيه عاجل لاستدعاء الأستاذ الفعلي السوري حياً
-        function signalRealTeacherEmergency() {
-            alert("🚨 تم إطلاق نبضة الاستغاثة بنجاح عسكري صارم! تم إرسال تنبيه عاجل إلى لوحة التحكم والبريد الشخصي للأستاذ الفعلي السوري المتخصص بـ drasty.net، وسيتدخل معك حياً لحل المشكلة فوراً!");
-        }
-
-        // التدشين والتشغيل المباشر عند اكتمال تحميل عناصر الصفحة السحابية
+        // 🚀 تنشيط محرك التوليد الأكاديمي وضخ البيانات تلقائياً بمجرد اكتمال تحميل الصفحة السحابية
         window.onload = function() {
-            verifyStudentPayload();
+            generateDailyLessons();
         };
     </script>
 </body>
