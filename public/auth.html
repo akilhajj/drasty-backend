@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة العبور الرقمية | أكاديمية دراستي</title>
+    
+    <!-- روابط cdnjs الآمنة داخل سوريا لضمان التشغيل الدائم -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
+    <style>
+        @import url('https://googleapis.com');
+
+        :root {
+            --bg-royal-black: #030508;
+            --bg-deep-blue: #091022;
+            --neon-gold: #d4af37;
+            --neon-gold-glow: rgba(212, 175, 55, 0.4);
+            --neon-success: #10b981;
+            --neon-emergency: #ef4444;
+            --glass-bg: rgba(9, 16, 34, 0.55);
+            --glass-border: rgba(212, 175, 55, 0.15);
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, var(--bg-deep-blue) 0%, var(--bg-royal-black) 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* حاوية النماذج الزجاجية الفاخرة المدمجة */
+        .auth-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            width: 100%;
+            max-width: 550px;
+            padding: 40px 30px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 1px 2px rgba(255,255,255,0.05);
+            position: relative;
+            z-index: 10;
+        }
+
+        .auth-logo {
+            display: block;
+            max-width: 150px;
+            margin: 0 auto 20px auto;
+            filter: drop-shadow(0 0 8px var(--neon-gold-glow));
+        }
+
+        .auth-title {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* تبديل التبويبات بين دخول وتسجيل */
+        .auth-tabs {
+            display: flex;
+            background: rgba(3, 5, 8, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            padding: 5px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--text-muted);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-tab.active {
+            color: #ffffff;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            text-shadow: 0 0 8px var(--neon-gold);
+        }
+
+        /* تصميم عناصر الحقول والمدخلات */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group i {
+            position: absolute;
+            right: 15px;
+            top: 43px;
+            color: var(--neon-gold);
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #e2e8f0;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(3, 5, 8, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 12px;
+            padding: 12px 45px 12px 15px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--neon-gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            background: rgba(3, 5, 8, 0.8);
+        }
+
+        select.form-control {
+            appearance: none;
+            cursor: pointer;
+        }
+
+        /* زر الإرسال الإمبراطوري المتوهج */
+        .btn-auth {
+            width: 100%;
+            background: linear-gradient(135deg, #b8932c 0%, var(--neon-gold) 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            color: #030508;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px var(--neon-gold-glow);
+            filter: brightness(1.1);
+        }
+
+        /* رسائل النظام السحابية للنجاح والطوارئ */
+        .system-msg {
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: none;
+            text-align: center;
+        }
+
+        .msg-error { background: rgba(239, 68, 108, 0.15); color: var(--neon-emergency); border: 1px solid var(--neon-emergency); }
+        .msg-success { background: rgba(16, 185, 129, 0.15); color: var(--neon-success); border: 1px solid var(--neon-success); }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container animate__animated animate__fadeInUp">
+        <!-- 🌟 الشعار الرسمي في قمة بوابة تسجيل الدخول -->
+        <img src="https://i.ibb.co/rfpGS4Yv/1781592192697-1-removebg-preview.png" alt="Drasty Logo" class="auth-logo">
+        <h2 class="auth-title">بوابة العبور السحابية الموحدة</h2>
+
+        <!-- تبويبات التبديل الفيزيائي النظيف -->
+        <div class="auth-tabs">
+            <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">تسجيل الدخول</div>
+            <div class="auth-tab" id="tab-register" onclick="switchTab('register')">إنشاء حساب جديد</div>
+        </div>
+
+        <!-- لوحة عرض رسائل النظام التنبيهية -->
+        <div id="system-message" class="system-msg"></div>
+
+        <!-- 🔑 أولاً: نموذج تسجيل الدخول الحالي (Login Form) -->
+        <form id="form-login" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="login-email" class="form-control" placeholder="name@example.com" required>
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-auth">ولوج آمن للمنصة</button>
+        </form>
+
+        <!-- 📝 ثانياً: نموذج إنشاء الحساب المطور (Registration Form) -->
+        <form id="form-register" class="hidden" onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label>الاسم الثلاثي الكامل</label>
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="reg-name" class="form-control" placeholder="اكتب اسمك الثلاثي كما في الهوية" required>
+            </div>
+            
+            <div class="form-group">
+                <label>رقم الهاتف المحمول (سوريا)</label>
+                <i class="fa-solid fa-phone"></i>
+                <input type="tel" id="reg-phone" class="form-control" placeholder="09xxxxxxxx" pattern="09[0-9]{8}" title="يرجى إدخال رقم هاتف سوري صحيح مكون من 10 أرقام ويبدأ بـ 09" required>
+            </div>
+
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="reg-email" class="form-control" placeholder="طالب_بكالوريا@drasty.net" required>
+            </div>
+
+            <div class="form-group">
+                <label>المرحلة الدراسية</label>
+                <i class="fa-solid fa-graduation-cap"></i>
+                <select id="reg-grade" class="form-control" onchange="toggleBranchField()" required>
+                    <option value="" disabled selected>اختر مرحلتك التعليمية</option>
+                    <option value="baccalaureate">المرحلة الثانوية (البكالوريا)</option>
+                    <option value="ninth">شهادة التعليم الأساسي (التاسع)</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="branch-group">
+                <label>الفرع الدراسي</label>
+                <i class="fa-solid fa-book-open"></i>
+                <select id="reg-branch" class="form-control">
+                    <option value="general" selected>عام (لطلاب التاسع)</option>
+                    <option value="scientific">الفرع العلمي</option>
+                    <option value="literary">الفرع الأدبي</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>كلمة المرور الحامية</label>
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="reg-password" class="form-control" placeholder="اختر كلمة مرور قوية" required>
+            </div>
+
+            <button type="submit" class="btn-auth">إرسال طلب الانضمام والاشتراك</button>
+        </form>
+
+    </div>
+    <!-- محرك الربط السحابي البرمجي لأكاديمية دراستي -->
+    <script>
+        // الرابط الفعلي المعتمد للـ Cloudflare Worker الخلفي
+        const API_BASE = "https://workers.dev";
+
+        // التبديل الحركي بين تبويبات تسجيل الدخول وإنشاء الحساب
+        function switchTab(type) {
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+            const formLogin = document.getElementById('form-login');
+            const formRegister = document.getElementById('form-register');
+            const msgBox = document.getElementById('system-message');
+
+            msgBox.style.display = 'none';
+
+            if (type === 'login') {
+                tabLogin.classList.add('active');
+                tabRegister.classList.remove('active');
+                formLogin.classList.remove('hidden');
+                formRegister.classList.add('hidden');
+            } else {
+                tabLogin.classList.remove('active');
+                tabRegister.classList.add('active');
+                formLogin.classList.add('hidden');
+                formRegister.classList.remove('hidden');
+            }
+        }
+
+        // ذكاء الفلترة: إجبار فرع عام عند اختيار التاسع، وإظهار الفروع عند اختيار البكالوريا
+        function toggleBranchField() {
+            const grade = document.getElementById('reg-grade').value;
+            const branchSelect = document.getElementById('reg-branch');
+            
+            if (grade === 'ninth') {
+                branchSelect.value = 'general';
+                branchSelect.disabled = true;
+            } else {
+                branchSelect.disabled = false;
+                if(branchSelect.value === 'general') {
+                    branchSelect.value = 'scientific';
+                }
+            }
+        }
+
+        // دالة إظهار رسائل النظام الملونة (ذهبي نيون للطوارئ، أخضر للنجاح)
+        function showMessage(text, isSuccess = false) {
+            const msgBox = document.getElementById('system-message');
+            msgBox.innerText = text;
+            msgBox.style.display = 'block';
+            if (isSuccess) {
+                msgBox.className = "system-msg msg-success animate__animated animate__fadeIn";
+            } else {
+                msgBox.className = "system-msg msg-error animate__animated animate__shakeX";
+            }
+        }
+
+        // 📝 معالجة طلب إنشاء حساب جديد وإرساله للـ D1
+        async function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const phone = document.getElementById('reg-phone').value;
+            const email = document.getElementById('reg-email').value;
+            const grade = document.getElementById('reg-grade').value;
+            const branch = document.getElementById('reg-branch').value;
+            const password = document.getElementById('reg-password').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name, phone, email, password,
+                        role: 'student', // الحسابات المنشأة تلقائياً هي حسابات طلاب
+                        grade, branch,
+                        allowed_days: 30 // قيمة افتراضية للاشتراك الأولي ويمكن للمدير تعديلها
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage(data.message, true);
+                    document.getElementById('form-register').reset();
+                    // النقل التلقائي لواجهة الدخول بعد 4 ثوانٍ ليعلم الطالب بنجاح العملية
+                    setTimeout(() => switchTab('login'), 4000);
+                } else {
+                    showMessage(data.error || "حدث خطأ غير متوقع أثناء معالجة الطلب.");
+                }
+            } catch (err) {
+                showMessage("فشل الاتصال بالخادم السحابي، تحقق من شبكة الإنترنت داخل سوريا.");
+            }
+        }
+
+        // 🔑 معالجة التحقق والتأكد من الصلاحية وتسجيل الدخول لقفل الصفحات
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // تخزين بيانات الترخيص الرقمية بنجاح داخل ذاكرة المتصفح لقفل البوابات
+                    localStorage.setItem('drasty_token', data.token);
+                    localStorage.setItem('drasty_role', data.role);
+                    localStorage.setItem('drasty_name', data.name);
+                    localStorage.setItem('drasty_grade', data.grade);
+                    localStorage.setItem('drasty_branch', data.branch);
+
+                    showMessage("تم التحقق بنجاح! جاري العبور الآمن لواجهتك الدراسية...", true);
+
+                    // توجيه ذكي وفوري بناءً على الرتبة المخزنة بالـ D1
+                    setTimeout(() => {
+                        if (data.role === 'student') {
+                            window.location.href = `student.html?token=${data.token}`;
+                        } else if (data.role === 'teacher' || data.role === 'admin') {
+                            window.location.href = `teacher.html?token=${data.token}`;
+                        } else {
+                            window.location.href = 'index.html';
+                        }
+                    }, 1500);
+                } else {
+                    showMessage(data.error || "خطأ ببيانات الولوج الرقمية.");
+                }
+            } catch (err) {
+                showMessage("عذراً، فشل الاتصال بالخادم السحابي الحامي للمنصة.");
+            }
+        }
+
+        // فحص ذكي عند فتح الصفحة: لو الطالب مسجل دخول مسبقاً ولديه جلسة يتم تحويله تلقائياً
+        window.onload = function() {
+            const token = localStorage.getItem('drasty_token');
+            const role = localStorage.getItem('drasty_role');
+            if (token && role) {
+                if (role === 'student') window.location.href = `student.html?token=${token}`;
+                else if (role === 'teacher' || role === 'admin') window.location.href = `teacher.html?token=${token}`;
+            }
+        }
+    </script>
+</body>
+</html>
