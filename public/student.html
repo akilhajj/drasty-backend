@@ -427,26 +427,61 @@
             window.location.href = "auth.html";
         }
 
-        // 3️⃣ محرك سحب وحقن حصص الـ 60 دقيقة من داتا بيس D1 المفلترة حسب الطالب
+                // محرك عرض واستقبال الحصص السبعة المؤتمتة ذاتياً دون تداخل بشري
         async function fetchStudentCourses() {
             const injector = document.getElementById('courses-live-injector');
             try {
-                // نرسل طلب للـ Worker مع توكن الأمان لفلترة المناهج حسب صف وفرع الطالب
                 const response = await fetch(`${API_BASE}/api/courses?grade=${userGrade}&branch=${userBranch}`, {
                     headers: { 'Authorization': token }
                 });
                 
-                if (!response.ok) throw new Error("فشل السحب");
+                if (!response.ok) throw new Error();
                 const courses = await response.json();
 
-                if (courses.length === 0) {
-                    injector.innerHTML = `
-                        <div class="course-card" style="padding: 40px; text-align: center; color: var(--text-muted); grid-column: 1/-1; background: var(--glass-bg);">
-                            <i class="fa-solid fa-folder-open" style="font-size: 2rem; color: var(--neon-gold); margin-bottom: 15px;"></i>
-                            <p>لم يتم حقن أي دروس أو حصص مخصصة لفئتك الدراسية حتى الآن من قبل الأساتذة.</p>
-                        </div>`;
-                    return;
-                }
+                injector.innerHTML = "";
+                courses.forEach((course, index) => {
+                    const card = document.createElement('div');
+                    card.className = "course-card animate__animated animate__fadeInUp";
+                    card.style.gridColumn = "1/-1"; // لوحة كبرى فاخرة لعرض الحصة
+                    card.innerHTML = `
+                        <div class="course-details" style="padding: 30px; background: var(--glass-bg); position: relative; border-radius: 20px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                                <span class="course-tag" style="font-size:0.9rem; padding:5px 15px;">${course.subject_name}</span>
+                                <span style="font-size:0.85rem; color:var(--neon-gold); font-weight:bold;"><i class="fa-solid fa-calendar-day"></i> حصة اليوم الدراسي: ${course.generated_day}</span>
+                            </div>
+                            <h4 class="course-title" style="font-size:1.4rem; color: #f7e9c8; margin-bottom:20px;"><i class="fa-solid fa-book-bookmark" style="color:var(--neon-gold); margin-left:10px;"></i> ${course.title}</h4>
+                            
+                            <!-- لوحة الشرح المطور من كتب السيرفر الممسوحة ضوئياً -->
+                            <div class="curriculum-text-board" style="background:rgba(3,5,8,0.7); border:1px solid rgba(212,175,55,0.1); border-radius:12px; padding:25px; font-size:1.05rem; line-height:1.9; color:#e2e8f0; max-height:400px; overflow-y:auto; margin-bottom:20px; text-align:right;">
+                                ${course.text_content.replace(/\n/g, '<br>')}
+                            </div>
+
+                            <div class="course-footer-info" style="display:flex; justify-content:space-between; align-items:center;">
+                                <span><i class="fa-solid fa-clock"></i> حصة الـ 60 دقيقة المؤتمتة لعام 2026</span>
+                                <!-- زر المحاضر الصوتي التفاعلي حياً -->
+                                <button class="btn-action" style="background:rgba(16,185,129,0.1); color:var(--neon-success); border:1px solid var(--neon-success); padding:8px 20px; border-radius:8px; cursor:pointer; font-weight:bold;" onclick="speakLessonContent(\`${course.text_content.replace(/['"`\\]/g, ' ')}\`)\">
+                                    <i class="fa-solid fa-volume-high"></i> استمع للمحاضر الصوتي للحصة حياً
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    injector.appendChild(card);
+                });
+
+            } catch (err) {
+                injector.innerHTML = `<div class="course-card" style="padding:40px; text-align:center; color:var(--neon-emergency); grid-column:1/-1;"><p>⚠️ خطأ سحابي: فشل محرك الأتمتة الذكي في توليد حصص المواد السبعة لليوم.</p></div>`;
+            }
+        }
+
+        // دالة نطق محتوى الحصة بالكامل بصوت الفصحى التفاعلي للطالب السوري
+        function speakLessonContent(text) {
+            window.speechSynthesis.cancel(); // إيقاف أي صوت مسبق
+            const cleanText = text.replace(/<br>/g, ' ').substring(0, 400); // نطق الأفكار والملخص بدقة وسرعة
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'ar';
+            window.speechSynthesis.speak(utterance);
+        }
+
 
                 // تفريغ الحاوية وبناء كروت الـ 3D Glassmorphism للدروس
                 injector.innerHTML = "";
