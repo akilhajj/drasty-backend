@@ -428,6 +428,7 @@
         }
 
                 // محرك عرض واستقبال الحصص السبعة المؤتمتة ذاتياً دون تداخل بشري
+              // محرك عرض الحصص وتوليد الامتحانات المؤتمتة التفاعلية حياً ومباشرة للطالب
         async function fetchStudentCourses() {
             const injector = document.getElementById('courses-live-injector');
             try {
@@ -440,9 +441,28 @@
 
                 injector.innerHTML = "";
                 courses.forEach((course, index) => {
+                    // تحضير كود الامتحانات المؤتمتة الموردة تلقائياً من الـ AI
+                    let examHTML = "";
+                    if (course.exam) {
+                        examHTML = `
+                            <div class="exam-automated-board" style="margin-top:25px; padding:20px; background:rgba(3,5,8,0.5); border:1px solid rgba(212,175,55,0.15); border-radius:12px;">
+                                <h5 style="color:var(--neon-gold); font-size:1.05rem; margin-bottom:12px;"><i class="fa-solid fa-graduation-cap"></i> الامتحان المؤتمت المجدول لعام 2026 (توليد ذكي تلقائي)</h5>
+                                <p style="font-weight:700; margin-bottom:15px; color:#ffffff;">س: ${course.exam.question}</p>
+                                
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                                    <button class="form-control" style="text-align:right; cursor:pointer;" onclick="verifyStudentAnswer(this, 'A', '${course.exam.correct_option}')">أ) ${course.exam.option_a}</button>
+                                    <button class="form-control" style="text-align:right; cursor:pointer;" onclick="verifyStudentAnswer(this, 'B', '${course.exam.correct_option}')">ب) ${course.exam.option_b}</button>
+                                    <button class="form-control" style="text-align:right; cursor:pointer;" onclick="verifyStudentAnswer(this, 'C', '${course.exam.correct_option}')">ج) ${course.exam.option_c}</button>
+                                    <button class="form-control" style="text-align:right; cursor:pointer;" onclick="verifyStudentAnswer(this, 'D', '${course.exam.correct_option}')">د) ${course.exam.option_d}</button>
+                                </div>
+                                <div class="feedback-zone" style="margin-top:12px; font-weight:bold; font-size:0.9rem; display:none;"></div>
+                            </div>
+                        `;
+                    }
+
                     const card = document.createElement('div');
                     card.className = "course-card animate__animated animate__fadeInUp";
-                    card.style.gridColumn = "1/-1"; // لوحة كبرى فاخرة لعرض الحصة
+                    card.style.gridColumn = "1/-1";
                     card.innerHTML = `
                         <div class="course-details" style="padding: 30px; background: var(--glass-bg); position: relative; border-radius: 20px;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
@@ -451,27 +471,53 @@
                             </div>
                             <h4 class="course-title" style="font-size:1.4rem; color: #f7e9c8; margin-bottom:20px;"><i class="fa-solid fa-book-bookmark" style="color:var(--neon-gold); margin-left:10px;"></i> ${course.title}</h4>
                             
-                            <!-- لوحة الشرح المطور من كتب السيرفر الممسوحة ضوئياً -->
                             <div class="curriculum-text-board" style="background:rgba(3,5,8,0.7); border:1px solid rgba(212,175,55,0.1); border-radius:12px; padding:25px; font-size:1.05rem; line-height:1.9; color:#e2e8f0; max-height:400px; overflow-y:auto; margin-bottom:20px; text-align:right;">
                                 ${course.text_content.replace(/\n/g, '<br>')}
                             </div>
 
                             <div class="course-footer-info" style="display:flex; justify-content:space-between; align-items:center;">
                                 <span><i class="fa-solid fa-clock"></i> حصة الـ 60 دقيقة المؤتمتة لعام 2026</span>
-                                <!-- زر المحاضر الصوتي التفاعلي حياً -->
                                 <button class="btn-action" style="background:rgba(16,185,129,0.1); color:var(--neon-success); border:1px solid var(--neon-success); padding:8px 20px; border-radius:8px; cursor:pointer; font-weight:bold;" onclick="speakLessonContent(\`${course.text_content.replace(/['"`\\]/g, ' ')}\`)\">
                                     <i class="fa-solid fa-volume-high"></i> استمع للمحاضر الصوتي للحصة حياً
                                 </button>
                             </div>
+
+                            <!-- حقن الامتحان المولد ذاتياً هنا -->
+                            ${examHTML}
                         </div>
                     `;
                     injector.appendChild(card);
                 });
 
             } catch (err) {
-                injector.innerHTML = `<div class="course-card" style="padding:40px; text-align:center; color:var(--neon-emergency); grid-column:1/-1;"><p>⚠️ خطأ سحابي: فشل محرك الأتمتة الذكي في توليد حصص المواد السبعة لليوم.</p></div>`;
+                injector.innerHTML = `<div class="course-card" style="padding:40px; text-align:center; color:var(--neon-emergency); grid-column:1/-1;"><p>⚠️ خطأ سحابي: فشل محرك الأتمتة الذكي في جلب المناهج والامتحانات.</p></div>`;
             }
         }
+
+        // محرك التصحيح الفوري التفاعلي لأسئلة الطلاب (الأخضر للنجاح والأحمر للطوارئ)
+        function verifyStudentAnswer(buttonElement, selectedOption, correctOption) {
+            const parentBoard = buttonElement.closest('.exam-automated-board');
+            const buttons = parentBoard.querySelectorAll('button');
+            const feedbackZone = parentBoard.querySelector('.feedback-zone');
+            
+            // قفل الأزرار بعد الإجابة لمنع التلاعب بالنتيجة
+            buttons.forEach(btn => btn.disabled = true);
+
+            feedbackZone.style.display = "block";
+
+            if (selectedOption === correctOption) {
+                buttonElement.style.background = "rgba(16, 185, 129, 0.2)";
+                buttonElement.style.borderColor = "var(--neon-success)";
+                buttonElement.style.color = "var(--neon-success)";
+                feedbackZone.innerHTML = `<span style="color:var(--neon-success);"><i class="fa-solid fa-circle-check"></i> إجابة صحيحة وممتازة! أحسنت يا بطل، لقد تم توثيق تفوقك السحابي بنجاح.</span>`;
+            } else {
+                buttonElement.style.background = "rgba(239, 68, 68, 0.2)";
+                buttonElement.style.borderColor = "var(--neon-emergency)";
+                buttonElement.style.color = "var(--neon-emergency)";
+                feedbackZone.innerHTML = `<span style="color:var(--neon-emergency);"><i class="fa-solid fa-circle-xmark"></i> إجابة خاطئة (طوارئ مراجعة)! الخيار الصحيح هو (${correctOption === 'A' ? 'أ' : (correctOption === 'B' ? 'ب' : (correctOption === 'C' ? 'ج' : 'د'))}). راجع لوحة الشرح بالأعلى رعاك الله.</span>`;
+            }
+        }
+
 
         // دالة نطق محتوى الحصة بالكامل بصوت الفصحى التفاعلي للطالب السوري
         function speakLessonContent(text) {
