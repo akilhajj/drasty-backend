@@ -364,14 +364,14 @@
                 </div>
             </div>
 
-            <!-- 📚 اللوحة 2: نموذج حقن المناهج والدروس بداخل قاعدة البيانات السحابية D1 -->
+                     <!-- 📚 اللوحة 2 الملوكية: أداة حقن وتغذية المناهج السورية من نصوص الـ سكان دفعة واحدة -->
             <div id="panel-courses" class="management-panel hidden animate__animated animate__fadeIn">
-                <h3 class="panel-title"><i class="fa-solid fa-photo-film"></i> حقن ونشر درس جديد في نظام حصص الـ 60 دقيقة</h3>
+                <h3 class="panel-title"><i class="fa-solid fa-file-invoice"></i> حقن وتغذية المنهاج السوري من نصوص الكتب (الماسح الضوئي)</h3>
                 
                 <form id="form-inject-course" onsubmit="handleCourseInjection(event)">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>اسم المادة الدراسية</label>
+                            <label>اسم المادة الدراسية الرسمية</label>
                             <select id="course-subject" class="form-control" required>
                                 <option value="الرياضيات">الرياضيات</option>
                                 <option value="الفيزياء">الفيزياء</option>
@@ -383,7 +383,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>المرحلة المستهدفة</label>
+                            <label>المرحلة التعليمية المستهدفة</label>
                             <select id="course-grade" class="form-control" required>
                                 <option value="baccalaureate">المرحلة الثانوية (البكالوريا)</option>
                                 <option value="ninth">شهادة التعليم الأساسي (التاسع)</option>
@@ -394,37 +394,33 @@
                             <select id="course-branch" class="form-control" required>
                                 <option value="scientific">الفرع العلمي</option>
                                 <option value="literary">الفرع الأدبي</option>
-                                <option value="general">عام (لطلاب التاسع)</option>
+                                <option value="general">عام (تلقائي لطلاب التاسع)</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-grid">
                         <div class="form-group" style="grid-column: span 2;">
-                            <label>عنوان الحصة أو الفصل الدراسي</label>
-                            <input type="text" id="course-title" class="form-control" placeholder="مثال: الأشعة في الفراغ - الحصة الأولى التأسيسية" required>
+                            <label>عنوان الحصة أو الفصل الدراسي الفعلي في الكتاب</label>
+                            <input type="text" id="course-title" class="form-control" placeholder="مثال: الحركة التوافقية البسيطة - النواس المرن" required>
                         </div>
                         <div class="form-group">
-                            <label>مدة الحصة الدراسية (بالدقائق)</label>
-                            <input type="number" id="course-duration" class="form-control" value="60" min="1" required>
+                            <label>رقم اليوم الدراسي المجدول (ترتيب الحصة)</label>
+                            <input type="number" id="course-lesson-order" class="form-control" value="1" min="1" placeholder="مثال: اليوم 1، اليوم 2..." required>
                         </div>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 25px;">
-                        <label>رابط البث السحابي المباشر للحصة (قنوات الحفظ المستقرة)</label>
-                        <input type="url" id="course-video-url" class="form-control" placeholder="https://vimeo.com... أو رابط الدرس السحابي" required>
+                        <label>النص المستخلص الكامل من الصفحات الممسوحة سكان (OCR Raw Text)</label>
+                        <textarea id="course-book-text" class="form-control" rows="8" placeholder="قم بنسخ ولصق النص المستخلص من صفحات الكتاب الممسوحة ضوئياً هنا.. سيقوم الذكاء الاصطناعي بتحليله وتوليد الشرح الصوتي واللوحات النصية للطالب تلقائياً في يوم الحصة المجدول." required></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit-panel">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> حقن ونشر الحصة في بنك دروس الطلاب فوراً
+                        <i class="fa-solid fa-square-plus"></i> حقن المعرفة في جدول المناهج السحابية فوراً
                     </button>
                 </form>
             </div>
 
-        </div> <!-- إغلاق panels-wrapper بنجاح -->
-    </main> <!-- إغلاق الحاوية التنفيذية الكبرى للوحة التحكم -->
-    <!-- محرك التحكم والربط السحابي للوحة الأستاذ والموجه -->
-    <script>
         // النطاق الفعلي للمحرك الخلفي على Cloudflare Worker
         const API_BASE = "https://workers.dev";
 
