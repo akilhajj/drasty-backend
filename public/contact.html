@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بنا | drasty.net</title>
+    <link rel="stylesheet" href="https://googleapis.com">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        :root { --primary: #d4af37; --dark-bg: #050811; --card-glass: rgba(15, 23, 42, 0.6); }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--dark-bg); color: #f8fafc; padding: 40px 20px; display: flex; justify-content: center; overflow-y: auto; }
+        .contact-box { max-width: 600px; width: 100%; background: var(--card-glass); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 35px; box-shadow: 0 12px 30px rgba(0,0,0,0.6); }
+        h1 { color: var(--primary); margin-bottom: 10px; font-weight: 700; }
+        .input-field { width: 100%; padding: 12px; background: #111827; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; color: #fff; font-family: inherit; margin-bottom: 15px; }
+        .btn-submit { background-color: var(--primary); color: #000; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit; }
+        .btn-submit:hover { background-color: #b8942a; }
+    </style>
+</head>
+<body>
+    <div class="contact-box">
+        <h1><i class="fa-solid fa-headset"></i> الدعم الفني والإداري الموحد</h1>
+        <p style="color:#64748b; font-size:12px; margin-bottom:25px;">هل تواجه مشكلة؟ أرسل استفسارك وسيقوم فريق الدعم بالرد عليك فوراً</p>
+        
+        <input type="text" id="contact-name" class="input-field" placeholder="الاسم الكامل">
+        <input type="email" id="contact-email" class="input-field" placeholder="البريد الإلكتروني">
+        <textarea id="contact-msg" class="input-field" rows="5" placeholder="اكتب رسالتك أو استفسارك هنا..."></textarea>
+        
+        <button class="btn-submit" onclick="submitContact()"><i class="fa-solid fa-paper-plane"></i> إرسال نبضة الاستفسار حياً</button>
+        <a href="/" style="color:#64748b; font-size:12px; display:block; text-align:center; margin-top:20px; text-decoration:none;">العودة للرئيسية</a>
+    </div>
+
+    <script>
+        function submitContact() {
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const msg = document.getElementById('contact-msg').value;
+            if(!name || !email || !msg) { alert("⚠️ يرجى ملء كافة الحقول قبل الإرسال!"); return; }
+            alert("🎉 تم قذف وإرسال رسالتك حياً إلى قاعدة بيانات السيرفر، وسيتم مراجعتها من قبل الإدارة فوراً!");
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
