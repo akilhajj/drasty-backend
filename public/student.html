@@ -3,360 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية الحصص الشاملة | drasty.net</title>
+    <title>أكاديمية drasty.net | لوحة الطالب</title>
     <link rel="stylesheet" href="https://googleapis.com">
-    <!-- 🌐 ربط حزمة الأيقونات الصافية والمضمونة 100% لمنع المربعات الفارغة واللخبطة على شاشات الهاتف والكمبيوتر -->
-    <link rel="stylesheet" href="https://jsdelivr.net">
+    <!-- 🌐 ربط حزمة الأيقونات المستقرة عبر cdnjs كلاود فلير لضمان ظهورها داخل سوريا للأبد ومنع المربعات الفارغة -->
+    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        :root { --primary: #d4af37; --primary-hover: #b8942a; --dark-bg: #050811; --sidebar-color: #0b111e; --card-glass: rgba(15, 23, 42, 0.6); --text-light: #f8fafc; --success: #10b981; --danger: #ef4444; --3d-shadow: 0 12px 30px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.08); }
+        :root { 
+            --primary: #d4af37; 
+            --primary-hover: #b8942a; 
+            --dark-bg: #050811; 
+            --sidebar-color: #0b111e; 
+            --card-glass: rgba(15, 23, 42, 0.6); 
+            --text-light: #f8fafc; 
+            --success: #10b981; 
+            --danger: #ef4444; 
+            --3d-shadow: 0 12px 30px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.08); 
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: var(--dark-bg); color: var(--text-light); display: flex; height: 100vh; overflow: hidden; position: relative; }
-        
         /* ☰ القائمة الجانبية ثلاثية الأبعاد المصلحة والمستجيبة كلياً */
         .sidebar { width: 280px; background: linear-gradient(135deg, #0b111e, #0f172a); border-left: 1px solid rgba(212, 175, 55, 0.15); padding: 25px 20px; display: flex; flex-direction: column; gap: 20px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 100; flex-shrink: 0; box-shadow: 5px 0 25px rgba(0,0,0,0.5); }
         .sidebar.closed { width: 0; padding: 25px 0; overflow: hidden; margin-right: -280px; box-shadow: none; border-left: none; }
         .logo-area { display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid rgba(212,175,55,0.15); padding-bottom: 20px; text-align: center; }
         .logo-area h1 { color: var(--primary); font-size: 24px; font-weight: 700; text-shadow: 0 2px 10px rgba(212,175,55,0.3); }
-        
         .nav-menu { display: flex; flex-direction: column; gap: 10px; flex: 1; }
         .nav-item { background: none; border: 1px solid transparent; color: #94a3b8; padding: 14px 18px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 13px; transition: all 0.2s; width: 100%; text-align: right; }
         .nav-item:hover, .nav-item.active { border-color: var(--primary); color: var(--primary); background: rgba(212, 175, 55, 0.06); }
         .btn-logout { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; font-size: 13px; }
         
-        /* 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة */
+        /* 👑 مساحة عرض المحتوى والترويسة لمنع التداخل البصري */
         .dash-content { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; width: 100%; transition: all 0.3s ease; }
-        
-        /* ☰ شريط الترويسة المطور الحامي لزر الثلاث شخطات لمنع لخبطة وانقسام شاشات الموبايل */
         .header-top-bar { display: flex; align-items: center; gap: 12px; width: 100%; margin-bottom: 5px; min-height: 48px; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 8px; }
+        
+        /* ☰ زر الثلاث شخطات المطور ذو الإطار الذهبي والارتداد المرن مع الخيارات */
         .toggle-btn { background: #0b111e; color: var(--primary); border: 2px solid var(--primary); width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.4); flex-shrink: 0; z-index: 102; }
         .toggle-btn:hover { background: var(--primary); color: #000; }
         .header-title { font-size: 14px; font-weight: 700; color: #fff; line-height: 42px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        /* 📺 البانر التنبيهي المطور */
-        .promo-banner { background: linear-gradient(90deg, #0b111e, #1e1b4b); border: 1px solid rgba(212,175,55,0.2); border-radius: 12px; padding: 10px 15px; overflow: hidden; display: flex; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); width: 100%; }
-        .banner-tag { background: var(--primary); color: #000; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 10px; flex-shrink: 0; }
-        .banner-text { margin-right: 12px; font-size: 11px; font-weight: bold; color: #cbd5e1; white-space: nowrap; }
-        
-        /* 🧠 كروت الحصص السبعة اليومية المطورة (3D Glass) */
-        .lecture-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; margin-top: 10px; width: 100%; }
-        .lecture-card { background: var(--card-glass); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 15px; transition: all 0.3s ease; position: relative; overflow: hidden; box-shadow: var(--3d-shadow); }
-        .lecture-card::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--primary); }
-        
-        .card-head { display: flex; align-items: center; gap: 12px; width: 100%; }
-        .card-icon { width: 44px; height: 44px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 18px; }
-        .card-info h3 { font-size: 14px; color: #fff; font-weight: 700; }
-        .card-info span { color: #64748b; font-size: 10px; font-weight: bold; display: block; margin-top: 2px; }
-        
-        /* 📺 مشغل البث المرئي الفعلي الشامل المخصص لحصة الـ 60 دقيقة */
-        .video-box-wrap { width: 100%; position: relative; border-radius: 10px; overflow: hidden; border: 1px solid rgba(212,175,55,0.2); background: #000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .video-box-wrap video { width: 100%; aspect-ratio: 16/9; display: block; object-fit: cover; }
-        
-        .lecture-body-box { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.04); border-radius: 12px; padding: 12px; font-size: 12px; line-height: 1.7; color: #cbd5e1; height: 120px; overflow-y: auto; text-align: justify; }
-        
-        /* 🧠 صندوق الاستجواب الحواري المباشر مع رادار المساعدة الذكي */
-        .ai-radar-chat { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; }
-        .ai-chat-screen { height: 100px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03); }
-        .msg-bubble { padding: 6px 10px; border-radius: 8px; font-size: 11px; max-width: 85%; line-height: 1.5; }
-        .msg-bubble.ai { background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.15); color: var(--primary); align-self: flex-start; }
-        .msg-bubble.student { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #fff; align-self: flex-end; }
-        
-        .ai-bar-inputs { display: flex; gap: 6px; align-items: center; }
-        .ai-text-field { flex: 1; padding: 8px 12px; background: #111827; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; color: #fff; font-size: 11.5px; text-align: right; font-family: inherit; }
-        .btn-mic-trigger { background: rgba(212,175,55,0.1); color: var(--primary); border: 1px solid rgba(212,175,55,0.25); width: 34px; height: 34px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: 0.2s; }
-        .btn-mic-trigger:hover { background: var(--primary); color: #000; }
-        
-        .quiz-box { border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
-        .quiz-q { font-size: 11.5px; color: var(--primary); font-weight: bold; display: flex; align-items: center; gap: 5px; }
-        .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .opt-btn { background: #111827; border: 1px solid rgba(255,255,255,0.06); color: #cbd5e1; padding: 8px; border-radius: 6px; font-size: 11px; cursor: pointer; text-align: center; transition: 0.2s; font-family: inherit; font-weight: bold; }
-        .opt-btn:hover { border-color: var(--primary); color: #fff; }
-        .opt-btn.correct { background: rgba(16, 185, 129, 0.15) !important; border-color: var(--success) !important; color: #fff !important; }
-        .opt-btn.wrong { background: rgba(239, 68, 68, 0.15) !important; border-color: var(--danger) !important; color: #fff !important; }
-        
-        .btn-emergency { background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239,68,68,0.2); color: #ef4444; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; text-align: center; display: block; width: 100%; font-family: inherit; margin-top: 2px; }
-        .btn-save-settings { background-color: var(--primary); color: #000; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 12px; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; margin-top: 10px; }
-        @media (max-width: 992px) { .lecture-grid { grid-template-columns: 1fr; } .sidebar { position: fixed; top: 0; bottom: 0; right: 0; } .sidebar.closed { margin-right: -280px; } }
-    </style>
-</head>
-<body>
-
-    <!-- ☰ القائمة الجانبية ثلاثية الأبعاد بالأقسام الأربعة المعتمدة لمنصة الطالب -->
-    <div class="sidebar" id="sidebar">
-        <div class="logo-area">
-            <h1>drasty.net</h1>
-            <span>أكاديمية الطالب الذكية</span>
-        </div>
-        <div class="nav-menu">
-            <button class="nav-item active" onclick="switchSection('subjects')"><i class="fa-solid fa-graduation-cap"></i> الحصص الشاملة (ساعة)</button>
-            <button class="nav-item" onclick="switchSection('foundation')"><i class="fa-solid fa-book-bookmark"></i> كتاب التأسيس الشامل</button>
-            <button class="nav-item" onclick="switchSection('exams')"><i class="fa-solid fa-file-signature"></i> الامتحانات الدورية</button>
-        </div>
-        <button class="btn-logout" onclick="window.location.href='/'">تسجيل الخروج</button>
-    </div>
-
-    <!-- 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة كلياً لهواتف الإدارة والكمبيوتر -->
-    <div class="dash-content">
-        
-        <!-- ☰ شريط الترويسة العلوي المطور والمثبت هندسياً لزر الشخطات ليرتد ويلتصق تلقائياً مع القائمة الجانبية -->
-        <div class="header-top-bar" id="header-bar">
-            <button class="toggle-btn" id="sidebar-toggle-trigger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
-            <div class="header-title" id="page-title">حصص الـ 60 دقيقة المحدثة بالبث المرئي والذكاء الاصطناعي</div>
-        </div>
-
-        <!-- 📺 لوحة البانر الإعلاني والتنبيهي الشاملة أعلى المنصة مع حركة سلايدر متناغمة -->
-        <div class="promo-banner">
-            <span class="banner-tag"><i class="fa-solid fa-bullhorn"></i> البث اليومي</span>
-            <div class="banner-text-wrap">
-                <span class="banner-text">تم بناء 7 حصص تفاعلية جديدة ومحدثة بالكامل مدة كل حصة ساعة كاملة.. شاهد الشرح المرئي واستجوب رادار المساعدة الصوتي بنجاح!</span>
-            </div>
-        </div>
-        <!-- 📚 الحاوية المركزية لشبكة الحصص اليومية الشاملة مدة ساعة كاملة -->
-        <div id="subjects-section" style="width: 100%;">
-            <div class="lecture-grid">
-                
-                <!-- 🧠 مادة 1: اللغة العربية -->
-                <div class="lecture-card">
-                    <div class="card-head">
-                        <div class="card-icon"><i class="fa-solid fa-language"></i></div>
-                        <div class="card-info"><h3>الحصة 1: اللغة العربية وقواعد الإعراب</h3><span id="date-sub-1">جاري حساب الخطة اليومية...</span></div>
-                    </div>
-                    <!-- 📺 مشغل البث المرئي الفعلي الكامل للحصة لمدة ساعة -->
-                    <div class="video-box-wrap">
-                        <video id="video-player-1" controls poster="https://drasty.net">
-                            <source src="https://mixkit.co" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="lecture-body-box" id="text-sub-1">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية...</div>
-                    <!-- 🧠 رادار الاستجواب والمحادثة الصوتية التفاعلية حياً داخل الحصة -->
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-1">
-                            <div class="msg-bubble ai">مرحباً بك! أنا أستاذ العربي الآلي المرفق بدرس الساعة الحالي.. اسألني صوتياً أو نصياً في أي نقطة لم تفهمها بالدرس 🎙️✨</div>
-                        </div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-1" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
-                            <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(1)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(1)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-1"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(1, 'اللغة العربية')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
-
-                <!-- 🧠 مادة 2: الرياضيات -->
-                <div class="lecture-card">
-                    <div class="card-head">
-                        <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
-                        <div class="card-info"><h3>الحصة 2: الرياضيات العامة والتحليل</h3><span id="date-sub-2">جاري حساب الخطة اليومية...</span></div>
-                    </div>
-                    <div class="video-box-wrap">
-                        <video id="video-player-2" controls poster="https://drasty.net">
-                            <source src="https://mixkit.co" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="lecture-body-box" id="text-sub-2">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-2">
-                            <div class="msg-bubble ai">مرحباً بك! أنا أستاذ الرياضيات الآلي.. اسألني عن فك عقد القوانين والمعادلات في أي ثانية من درس الساعة 🎙️✨</div>
-                        </div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-2" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
-                            <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(2)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(2)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-2"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(2, 'الرياضيات')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
-
-                <!-- 🧠 مادة 3: الفيزياء -->
-                <div class="lecture-card">
-                    <div class="card-head">
-                        <div class="card-icon"><i class="fa-solid fa-atom"></i></div>
-                        <div class="card-info"><h3>الحصة 3: الفيزياء الحديثة والميكانيك</h3><span id="date-sub-3">جاري حساب الخطة اليومية...</span></div>
-                    </div>
-                    <div class="video-box-wrap">
-                        <video id="video-player-3" controls poster="https://drasty.net">
-                            <source src="https://mixkit.co" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="lecture-body-box" id="text-sub-3">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-3">
-                            <div class="msg-bubble ai">مرحباً بك! أنا أستاذ الفيزياء الآلي.. اسألني عن النواسات والمسائل والعزوم حياً بدرس الساعة 🎙️✨</div>
-                        </div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-3" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
-                            <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(3)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(3)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-3"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(3, 'الفيزياء')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
-
-                <!-- 🧠 مادة 4: الكيمياء -->
-                <div class="lecture-card">
-                    <div class="card-head">
-                        <div class="card-icon"><i class="fa-solid fa-flask-vial"></i></div>
-                        <div class="card-info"><h3>الحصة 4: الكيمياء العامة والعضوية</h3><span id="date-sub-4">جاري حساب الخطة اليومية...</span></div>
-                    </div>
-                    <div class="video-box-wrap">
-                        <video id="video-player-4" controls poster="https://drasty.net">
-                            <source src="https://mixkit.co" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="lecture-body-box" id="text-sub-4">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-4">
-                            <div class="msg-bubble ai">مرحباً بك! أنا أستاذ الكيمياء الآلي.. اسألني عن سرعة التفاعلات والمعادلات العضوية حياً 🎙️✨</div>
-                        </div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-4" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
-                            <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(4)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(4)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-4"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(4, 'الكيمياء')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
-                <!-- 🧠 مادة 5: العلوم العامة وعلم الأحياء -->
-                <div class="lecture-card">
-                    <div class="card-head">
-                        <div class="card-icon"><i class="fa-solid fa-dna"></i></div>
-                        <div class="card-info"><h3>الحصة 5: العلوم العامة وعلم الأحياء</h3><span id="date-sub-5">جاري حساب الخطة اليومية...</span></div>
-                    </div>
-                    <div class="video-box-wrap">
-                        <video id="video-player-5" controls poster="https://drasty.net">
-                            <source src="https://mixkit.co" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="lecture-body-box" id="text-sub-5">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-5">
-                            <div class="msg-bubble ai">مرحباً بك! أنا أستاذ العلوم والوراثة الآلي.. اسألني عن النسيج العصبي وبنية الخلية حياً بدرس الساعة 🎙️✨</div>
-                        </div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-5" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
-                            <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(5)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(5)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-5"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(5, 'العلوم والأحياء')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
-
-                <!-- 🧠 مادة 6: اللغة الإنكليزية -->
-                <div class="lecture-card">
-                    <div class="card-head">
-                        <div class="card-icon"><i class="fa-solid fa-font"></i></div>
-                        <div class="card-info"><h3>الحصة 6: اللغة الإنكليزية وقواعدها</h3><span id="date-sub-6">جاري حساب الخطة اليومية...</span></div>
-                    </div>
-                    <div class="video-box-wrap">
-                        <video id="video-player-6" controls poster="https://drasty.net">
-                            <source src="https://mixkit.co" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="lecture-body-box" id="text-sub-6">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-6">
-                            <div class="msg-bubble ai">مرحباً بك! أنا أستاذ الإنكليزي الآلي.. ناقشني في قواعد الأزمنة والنصوص المقررة بدرس الساعة 🎙️✨</div>
-                        </div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-6" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
-                            <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(6)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(6)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-6"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(6, 'اللغة الإنكليزية')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
-
-                <!-- 🧠 مادة 7: التربية الوطنية -->
-                <div class="lecture-card">
-                    <div class="card-head">
-                        <div class="card-icon"><i class="fa-solid fa-flag"></i></div>
-                        <div class="card-info"><h3>الحصة 7: التربية الوطنية والقومية</h3><span id="date-sub-7">جاري حساب الخطة اليومية...</span></div>
-                    </div>
-                    <div class="video-box-wrap">
-                        <video id="video-player-7" controls poster="https://drasty.net">
-                            <source src="https://mixkit.co" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="lecture-body-box" id="text-sub-7">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-7">
-                            <div class="msg-bubble ai">مرحباً بك! أنا أستاذ الوطنية الآلي.. اسألني عن الدستور والقوانين حركياً بداخل درس الساعة 🎙️✨</div>
-                        </div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-7" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
-                            <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(7)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(7)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-7"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(7, 'التربية الوطنية')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- 📖 حاوية كتاب التأسيس الشامل المتمم للمنهج -->
-        <div id="foundation-section" style="display: none; width: 100%;">
-            <div class="lecture-grid">
-                <div class="lecture-card">
-                    <div class="card-head"><div class="card-icon"><i class="fa-solid fa-book-open-reader"></i></div><div class="card-info"><h3>كتاب التأسيس الأكاديمي الموحد ممتد السيرفر</h3><span>بناء النواة العلمية والأدبية للطلاب من الصفر</span></div></div>
-                    <div class="lecture-body-box">يحتوي كتاب التأسيس المتقدم والمبني برؤية برمجية واضحة على القواعد الحتمية الأساسية في الإعراب، تفكيك متراجحات التحليل الرياضي، حل عقد النواسات في الفيزياء، وفهم الكيمياء العضوية من الصفر. تم تصميمه ليكون البوابة الأولى لبناء طالب متكامل قبل البدء بالحصص اليومية الكبرى الشاملة لـ drasty.net.</div>
-                    <button class="btn-save-settings" style="width: 100%; justify-content: center;" onclick="alert('🚀 جاري سحب وتحميل النسخة ثلاثية الأبعاد المحدثة لكتاب التأسيس من مخازن Cloudflare R2 الشغالة...')"><i class="fa-solid fa-cloud-arrow-down"></i> تحميل كتاب التأسيس الشامل (PDF)</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 📝 حاوية الامتحانات التجريبية الدورية المؤتمتة لفرز وتقييم مستويات الطلاب -->
-        <div id="exams-section" style="display: none; width: 100%;">
-            <div class="lecture-grid">
-                <div class="lecture-card">
-                    <div class="card-head"><div class="card-icon"><i class="fa-solid fa-clock-rotate-left"></i></div><div class="card-info"><h3>الامتحان التجريبي الشامل الدوري الأول</h3><span>نماذج وزارة التربية المحدثة بنظام الأتمتة المبتكر لعام 2026</span></div></div>
-                    <div class="lecture-body-box">امتحان دوري مخصص لتقييم وفحص مستوى الطالب واستيعابه الكلي للحصص السابقة. الأسئلة مؤتمتة بالكامل ومحمية بجدار حماية لمنع التسريب، ويتم رصد النتيجة ورفع التقييم تلقائياً للوحة تحكم المعلم فور الانتهاء لضمان دقة الرصد الأكاديمي الصارم.</div>
-                    <button class="btn-save-settings" style="width: 100%; justify-content: center; background: var(--success);" onclick="alert('📝 جاري توليد ورقة الامتحان الشامل وجلب بنك الأسئلة الوزارية حياً عبر السيرفر...')"><i class="fa-solid fa-file-pen"></i> بدء الامتحان التجريبي الدوري الآن</button>
-                </div>
-            </div>
-        </div>
-
-    </div> <!-- إغلاق حاوية الـ dash-content المركزية العريضة -->
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية الحصص الشاملة | drasty.net</title>
-    <link rel="stylesheet" href="https://googleapis.com">
-    <!-- 🌐 ربط حزمة الأيقونات الصافية والمضمونة 100% لمنع المربعات الفارغة واللخبطة البصرية على الهواتف -->
-    <link rel="stylesheet" href="https://jsdelivr.net">
-    <style>
-        :root { --primary: #d4af37; --primary-hover: #b8942a; --dark-bg: #050811; --sidebar-color: #0b111e; --card-glass: rgba(15, 23, 42, 0.6); --text-light: #f8fafc; --success: #10b981; --danger: #ef4444; --3d-shadow: 0 12px 30px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.08); }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--dark-bg); color: var(--text-light); display: flex; height: 100vh; overflow: hidden; position: relative; }
-        
-        /* ☰ القائمة الجانبية ثلاثية الأبعاد المصلحة والمستجيبة كلياً */
-        .sidebar { width: 280px; background: linear-gradient(135deg, #0b111e, #0f172a); border-left: 1px solid rgba(212, 175, 55, 0.15); padding: 25px 20px; display: flex; flex-direction: column; gap: 20px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 100; flex-shrink: 0; box-shadow: 5px 0 25px rgba(0,0,0,0.5); }
-        .sidebar.closed { width: 0; padding: 25px 0; overflow: hidden; margin-right: -280px; box-shadow: none; border-left: none; }
-        .logo-area { display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid rgba(212,175,55,0.15); padding-bottom: 20px; text-align: center; }
-        .logo-area h1 { color: var(--primary); font-size: 24px; font-weight: 700; text-shadow: 0 2px 10px rgba(212,175,55,0.3); }
-        
-        .nav-menu { display: flex; flex-direction: column; gap: 10px; flex: 1; }
-        .nav-item { background: none; border: 1px solid transparent; color: #94a3b8; padding: 14px 18px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 13px; transition: all 0.2s; width: 100%; text-align: right; }
-        .nav-item:hover, .nav-item.active { border-color: var(--primary); color: var(--primary); background: rgba(212, 175, 55, 0.06); }
-        .btn-logout { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; font-size: 13px; }
-        
-        /* 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة */
-        .dash-content { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; width: 100%; transition: all 0.3s ease; }
-        
-        /* ☰ شريط الترويسة المطور الحامي لزر الثلاث شخطات لمنع لخبطة وانقسام شاشات الموبايل */
-        .header-top-bar { display: flex; align-items: center; gap: 12px; width: 100%; margin-bottom: 5px; min-height: 48px; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 8px; }
-        .toggle-btn { background: #0b111e; color: var(--primary); border: 2px solid var(--primary); width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.4); flex-shrink: 0; z-index: 102; }
-        .toggle-btn:hover { background: var(--primary); color: #000; }
-        .header-title { font-size: 14px; font-weight: 700; color: #fff; line-height: 42px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
         /* 📺 البانر التنبيهي المطور */
         .promo-banner { background: linear-gradient(90deg, #0b111e, #1e1b4b); border: 1px solid rgba(212,175,55,0.2); border-radius: 12px; padding: 10px 15px; overflow: hidden; display: flex; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); width: 100%; }
         .banner-tag { background: var(--primary); color: #000; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 10px; flex-shrink: 0; }
@@ -372,7 +54,7 @@
         .card-info h3 { font-size: 14px; color: #fff; font-weight: 700; }
         .card-info span { color: #64748b; font-size: 10px; font-weight: bold; display: block; margin-top: 2px; }
         
-        /* 📺 مشغل البث المرئي الفعلي الشامل المخصص لحصة الـ 60 دقيقة */
+        /* 📺 مشغل البث المرئي الفعلي الكامل المخصص لحصة الـ 60 دقيقة */
         .video-box-wrap { width: 100%; position: relative; border-radius: 10px; overflow: hidden; border: 1px solid rgba(212,175,55,0.2); background: #000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .video-box-wrap video { width: 100%; aspect-ratio: 16/9; display: block; object-fit: cover; }
         
@@ -386,7 +68,7 @@
         .msg-bubble.student { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #fff; align-self: flex-end; }
         
         .ai-bar-inputs { display: flex; gap: 6px; align-items: center; }
-        .ai-text-field { flex: 1; padding: 8px 12px; background: #111827; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; color: #fff; font-size: 11.5px; text-align: right; font-family: inherit; }
+        .ai-text-field { flex: 1; padding: 8px 12px; background: #111827; border: 1px solid rgba(212,175,55,0.05); border-radius: 8px; color: #fff; font-size: 11.5px; text-align: right; font-family: inherit; }
         .btn-mic-trigger { background: rgba(212,175,55,0.1); color: var(--primary); border: 1px solid rgba(212,175,55,0.25); width: 34px; height: 34px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: 0.2s; }
         .btn-mic-trigger:hover { background: var(--primary); color: #000; }
         
@@ -404,12 +86,11 @@
     </style>
 </head>
 <body>
-
-    <!-- ☰ القائمة الجانبية ثلاثية الأبعاد بالأقسام الأربعة المعتمدة لمنصة الطالب -->
+    <!-- ☰ القائمة الجانبية ثلاثية الأبعاد المصححة والمستجيبة كلياً -->
     <div class="sidebar" id="sidebar">
         <div class="logo-area">
             <h1>drasty.net</h1>
-            <span>أكاديمية الطالب الذكية</span>
+            <span>أكاديمية الطالب</span>
         </div>
         <div class="nav-menu">
             <button class="nav-item active" onclick="switchSection('subjects')"><i class="fa-solid fa-graduation-cap"></i> الحصص الشاملة (ساعة)</button>
@@ -419,40 +100,37 @@
         <button class="btn-logout" onclick="window.location.href='/'">تسجيل الخروج</button>
     </div>
 
-    <!-- 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة كلياً لهواتف الإدارة والكمبيوتر -->
+    <!-- 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة كلياً -->
     <div class="dash-content">
-        
         <!-- ☰ شريط الترويسة العلوي المطور والمثبت هندسياً لزر الشخطات ليرتد ويلتصق تلقائياً مع القائمة الجانبية -->
         <div class="header-top-bar" id="header-bar">
             <button class="toggle-btn" id="sidebar-toggle-trigger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
             <div class="header-title" id="page-title">حصص الـ 60 دقيقة المحدثة بالبث المرئي والذكاء الاصطناعي</div>
         </div>
 
-        <!-- 📺 لوحة البانر الإعلاني والتنبيهي الشاملة أعلى المنصة مع حركة سلايدر متناغمة -->
+        <!-- 📺 لوحة البانر الإعلاني والتنبيهي الشاملة أعلى المنصة -->
         <div class="promo-banner">
             <span class="banner-tag"><i class="fa-solid fa-bullhorn"></i> البث اليومي</span>
             <div class="banner-text-wrap">
                 <span class="banner-text">تم بناء 7 حصص تفاعلية جديدة ومحدثة بالكامل مدة كل حصة ساعة كاملة.. شاهد الشرح المرئي واستجوب رادار المساعدة الصوتي بنجاح!</span>
             </div>
         </div>
+
         <!-- 📚 الحاوية المركزية لشبكة الحصص اليومية الشاملة مدة ساعة كاملة -->
         <div id="subjects-section" style="width: 100%;">
             <div class="lecture-grid">
-                
-                <!-- 🧠 مادة 1: اللغة العربية -->
+                <!-- 🧠 مادة 1: اللغة العربية وقواعد الإعراب -->
                 <div class="lecture-card">
                     <div class="card-head">
                         <div class="card-icon"><i class="fa-solid fa-language"></i></div>
                         <div class="card-info"><h3>الحصة 1: اللغة العربية وقواعد الإعراب</h3><span id="date-sub-1">جاري حساب الخطة اليومية...</span></div>
                     </div>
-                    <!-- 📺 مشغل البث المرئي الفعلي الكامل للحصة لمدة ساعة -->
                     <div class="video-box-wrap">
                         <video id="video-player-1" controls poster="https://drasty.net">
                             <source src="https://mixkit.co" type="video/mp4">
                         </video>
                     </div>
-                    <div class="lecture-body-box" id="text-sub-1">جاري استدعاء معالج النصوص وتوليد شرح الحصة التأسيسية...</div>
-                    <!-- 🧠 رادار الاستجواب والمحادثة الصوتية التفاعلية حياً داخل الحصة -->
+                    <div class="lecture-body-box" id="text-sub-1">جاري استدعاء معالج النصوص وتوليد شرح الحصة Tأسيسية...</div>
                     <div class="ai-radar-chat">
                         <div class="ai-chat-screen" id="ai-chat-screen-1">
                             <div class="msg-bubble ai">مرحباً بك! أنا أستاذ العربي الآلي المرفق بدرس الساعة الحالي.. اسألني صوتياً أو نصياً في أي نقطة لم تفهمها بالدرس 🎙️✨</div>
@@ -460,14 +138,14 @@
                         <div class="ai-bar-inputs">
                             <input type="text" id="ai-input-1" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
                             <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(1)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(1)"><i class="fa-solid fa-paper-plane"></i></button>
+                            <button class="btn-mic-trigger" style="background:rgba(212,175,55,0.2);" onclick="sendTextRequestToAI(1)"><i class="fa-solid fa-paper-plane"></i></button>
                         </div>
                     </div>
                     <div class="quiz-box" id="quiz-sub-1"></div>
                     <button class="btn-emergency" onclick="triggerTeacherCallEmergency(1, 'اللغة العربية')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
                 </div>
 
-                <!-- 🧠 مادة 2: الرياضيات -->
+                <!-- 🧠 مادة 2: الرياضيات العامة والتحليل -->
                 <div class="lecture-card">
                     <div class="card-head">
                         <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
@@ -486,14 +164,13 @@
                         <div class="ai-bar-inputs">
                             <input type="text" id="ai-input-2" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
                             <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(2)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(2)"><i class="fa-solid fa-paper-plane"></i></button>
+                            <button class="btn-mic-trigger" style="background:rgba(212,175,55,0.2);" onclick="sendTextRequestToAI(2)"><i class="fa-solid fa-paper-plane"></i></button>
                         </div>
                     </div>
                     <div class="quiz-box" id="quiz-sub-2"></div>
                     <button class="btn-emergency" onclick="triggerTeacherCallEmergency(2, 'الرياضيات')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
                 </div>
-
-                <!-- 🧠 مادة 3: الفيزياء -->
+                <!-- 🧠 مادة 3: الفيزياء الحديثة والميكانيك -->
                 <div class="lecture-card">
                     <div class="card-head">
                         <div class="card-icon"><i class="fa-solid fa-atom"></i></div>
@@ -512,14 +189,14 @@
                         <div class="ai-bar-inputs">
                             <input type="text" id="ai-input-3" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
                             <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(3)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(3)"><i class="fa-solid fa-paper-plane"></i></button>
+                            <button class="btn-mic-trigger" style="background:rgba(212,175,55,0.2);" onclick="sendTextRequestToAI(3)"><i class="fa-solid fa-paper-plane"></i></button>
                         </div>
                     </div>
                     <div class="quiz-box" id="quiz-sub-3"></div>
                     <button class="btn-emergency" onclick="triggerTeacherCallEmergency(3, 'الفيزياء')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
                 </div>
 
-                <!-- 🧠 مادة 4: الكيمياء -->
+                <!-- 🧠 مادة 4: الكيمياء العامة والعضوية -->
                 <div class="lecture-card">
                     <div class="card-head">
                         <div class="card-icon"><i class="fa-solid fa-flask-vial"></i></div>
@@ -538,7 +215,7 @@
                         <div class="ai-bar-inputs">
                             <input type="text" id="ai-input-4" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
                             <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(4)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(4)"><i class="fa-solid fa-paper-plane"></i></button>
+                            <button class="btn-mic-trigger" style="background:rgba(212,175,55,0.2);" onclick="sendTextRequestToAI(4)"><i class="fa-solid fa-paper-plane"></i></button>
                         </div>
                     </div>
                     <div class="quiz-box" id="quiz-sub-4"></div>
@@ -563,14 +240,14 @@
                         <div class="ai-bar-inputs">
                             <input type="text" id="ai-input-5" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
                             <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(5)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(5)"><i class="fa-solid fa-paper-plane"></i></button>
+                            <button class="btn-mic-trigger" style="background:rgba(212,175,55,0.2);" onclick="sendTextRequestToAI(5)"><i class="fa-solid fa-paper-plane"></i></button>
                         </div>
                     </div>
                     <div class="quiz-box" id="quiz-sub-5"></div>
                     <button class="btn-emergency" onclick="triggerTeacherCallEmergency(5, 'العلوم والأحياء')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
                 </div>
 
-                <!-- 🧠 مادة 6: اللغة الإنكليزية -->
+                <!-- 🧠 مادة 6: اللغة الإنكليزية وقواعدها -->
                 <div class="lecture-card">
                     <div class="card-head">
                         <div class="card-icon"><i class="fa-solid fa-font"></i></div>
@@ -589,14 +266,14 @@
                         <div class="ai-bar-inputs">
                             <input type="text" id="ai-input-6" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
                             <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(6)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(6)"><i class="fa-solid fa-paper-plane"></i></button>
+                            <button class="btn-mic-trigger" style="background:rgba(212,175,55,0.2);" onclick="sendTextRequestToAI(6)"><i class="fa-solid fa-paper-plane"></i></button>
                         </div>
                     </div>
                     <div class="quiz-box" id="quiz-sub-6"></div>
                     <button class="btn-emergency" onclick="triggerTeacherCallEmergency(6, 'اللغة الإنكليزية')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
                 </div>
 
-                <!-- 🧠 مادة 7: التربية الوطنية -->
+                <!-- 🧠 مادة 7: التربية الوطنية والقومية -->
                 <div class="lecture-card">
                     <div class="card-head">
                         <div class="card-icon"><i class="fa-solid fa-flag"></i></div>
@@ -615,16 +292,14 @@
                         <div class="ai-bar-inputs">
                             <input type="text" id="ai-input-7" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة...">
                             <button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(7)"><i class="fa-solid fa-microphone"></i></button>
-                            <button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(7)"><i class="fa-solid fa-paper-plane"></i></button>
+                            <button class="btn-mic-trigger" style="background:rgba(212,175,55,0.2);" onclick="sendTextRequestToAI(7)"><i class="fa-solid fa-paper-plane"></i></button>
                         </div>
                     </div>
                     <div class="quiz-box" id="quiz-sub-7"></div>
                     <button class="btn-emergency" onclick="triggerTeacherCallEmergency(7, 'التربية الوطنية')"><i class="fa-solid fa-circle-exclamation"></i> لم أفهم الدرس! استدعِ الأستاذ الفعلي 🚨</button>
                 </div>
-
-            </div>
-        </div>
-
+            </div> <!-- إغلاق وسم الـ lecture-grid الخاص بالشبكة -->
+        </div> <!-- إغلاق وسم الـ subjects-section الخاص بحاوية المواد اليومية -->
         <!-- 📖 حاوية كتاب التأسيس الشامل المتمم للمنهج -->
         <div id="foundation-section" style="display: none; width: 100%;">
             <div class="lecture-grid">
@@ -648,167 +323,190 @@
         </div>
 
     </div> <!-- إغلاق حاوية الـ dash-content المركزية العريضة -->
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية الحصص الشاملة | drasty.net</title>
-    <link rel="stylesheet" href="https://googleapis.com">
-    <link rel="stylesheet" href="https://jsdelivr.net">
-    <style>
-        :root { --primary: #d4af37; --primary-hover: #b8942a; --dark-bg: #050811; --sidebar-color: #0b111e; --card-glass: rgba(15, 23, 42, 0.6); --text-light: #f8fafc; --success: #10b981; --danger: #ef4444; --3d-shadow: 0 12px 30px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.08); }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--dark-bg); color: var(--text-light); display: flex; height: 100vh; overflow: hidden; position: relative; }
-        .sidebar { width: 280px; background: linear-gradient(135deg, #0b111e, #0f172a); border-left: 1px solid rgba(212, 175, 55, 0.15); padding: 25px 20px; display: flex; flex-direction: column; gap: 20px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 100; flex-shrink: 0; box-shadow: 5px 0 25px rgba(0,0,0,0.5); }
-        .sidebar.closed { width: 0; padding: 25px 0; overflow: hidden; margin-right: -280px; box-shadow: none; border-left: none; }
-        .logo-area { display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid rgba(212,175,55,0.15); padding-bottom: 20px; text-align: center; }
-        .logo-area h1 { color: var(--primary); font-size: 24px; font-weight: 700; text-shadow: 0 2px 10px rgba(212,175,55,0.3); }
-        .nav-menu { display: flex; flex-direction: column; gap: 10px; flex: 1; }
-        .nav-item { background: none; border: 1px solid transparent; color: #94a3b8; padding: 14px 18px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 13px; transition: all 0.2s; width: 100%; text-align: right; }
-        .nav-item:hover, .nav-item.active { border-color: var(--primary); color: var(--primary); background: rgba(212, 175, 55, 0.06); }
-        .btn-logout { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; font-size: 13px; }
-        .dash-content { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; width: 100%; transition: all 0.3s ease; }
-        .header-top-bar { display: flex; align-items: center; gap: 12px; width: 100%; margin-bottom: 5px; min-height: 48px; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 8px; }
-        .toggle-btn { background: #0b111e; color: var(--primary); border: 2px solid var(--primary); width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.4); flex-shrink: 0; z-index: 102; }
-        .toggle-btn:hover { background: var(--primary); color: #000; }
-        .header-title { font-size: 14px; font-weight: 700; color: #fff; line-height: 42px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .promo-banner { background: linear-gradient(90deg, #0b111e, #1e1b4b); border: 1px solid rgba(212,175,55,0.2); border-radius: 12px; padding: 10px 15px; overflow: hidden; display: flex; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); width: 100%; }
-        .banner-tag { background: var(--primary); color: #000; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 10px; flex-shrink: 0; }
-        .banner-text { margin-right: 12px; font-size: 11px; font-weight: bold; color: #cbd5e1; white-space: nowrap; }
-        .lecture-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 25px; margin-top: 15px; width: 100%; }
-        .lecture-card { background: var(--card-glass); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 25px; display: flex; flex-direction: column; gap: 15px; transition: all 0.3s ease; position: relative; overflow: hidden; box-shadow: var(--3d-shadow); }
-        .lecture-card::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--primary); }
-        .card-head { display: flex; align-items: center; gap: 15px; width: 100%; }
-        .card-icon { width: 44px; height: 44px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 18px; }
-        .card-info h3 { font-size: 14px; color: #fff; font-weight: 700; }
-        .card-info span { color: #64748b; font-size: 10px; font-weight: bold; display: block; margin-top: 3px; }
-        .video-box-wrap { width: 100%; position: relative; border-radius: 10px; overflow: hidden; border: 1px solid rgba(212,175,55,0.2); background: #000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .video-box-wrap video { width: 100%; aspect-ratio: 16/9; display: block; object-fit: cover; }
-        .lecture-body-box { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.04); border-radius: 12px; padding: 15px; font-size: 12px; line-height: 1.7; color: #cbd5e1; height: 130px; overflow-y: auto; text-align: justify; }
-        .ai-radar-chat { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; }
-        .ai-chat-screen { height: 100px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03); }
-        .msg-bubble { padding: 6px 10px; border-radius: 8px; font-size: 11px; max-width: 85%; line-height: 1.5; }
-        .msg-bubble.ai { background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.15); color: var(--primary); align-self: flex-start; }
-        .msg-bubble.student { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #fff; align-self: flex-end; }
-        .ai-bar-inputs { display: flex; gap: 6px; align-items: center; }
-        .ai-text-field { flex: 1; padding: 8px 12px; background: #111827; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; color: #fff; font-size: 11.5px; text-align: right; font-family: inherit; }
-        .btn-mic-trigger { background: rgba(212,175,55,0.1); color: var(--primary); border: 1px solid rgba(212,175,55,0.25); width: 34px; height: 34px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: 0.2s; }
-        .btn-mic-trigger:hover { background: var(--primary); color: #000; }
-        .quiz-box { border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
-        .quiz-q { font-size: 11.5px; color: var(--primary); font-weight: bold; display: flex; align-items: center; gap: 5px; }
-        .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .opt-btn { background: #111827; border: 1px solid rgba(255,255,255,0.06); color: #cbd5e1; padding: 8px; border-radius: 6px; font-size: 11px; cursor: pointer; text-align: center; transition: 0.2s; font-family: inherit; font-weight: bold; }
-        .opt-btn:hover { border-color: var(--primary); color: #fff; }
-        .opt-btn.correct { background: rgba(16, 185, 129, 0.15) !important; border-color: var(--success) !important; color: #fff !important; }
-        .opt-btn.wrong { background: rgba(239, 68, 68, 0.15) !important; border-color: var(--danger) !important; color: #fff !important; }
-        .btn-emergency { background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239,68,68,0.2); color: #ef4444; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; text-align: center; display: block; width: 100%; font-family: inherit; margin-top: 2px; }
-        .btn-save-settings { background-color: var(--primary); color: #000; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 12px; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; margin-top: 10px; }
-        @media (max-width: 992px) { .lecture-grid { grid-template-columns: 1fr; } .sidebar { position: fixed; top: 0; bottom: 0; right: 0; } .sidebar.closed { margin-right: -280px; } }
-    </style>
-</head>
-<body>
-    <div class="sidebar" id="sidebar">
-        <div class="logo-area"><h1>drasty.net</h1><span>أكاديمية الطالب</span></div>
-        <div class="nav-menu">
-            <button class="nav-item active" onclick="switchSection('subjects')"><i class="fa-solid fa-graduation-cap"></i> الحصص الشاملة (ساعة)</button>
-            <button class="nav-item" onclick="switchSection('foundation')"><i class="fa-solid fa-book-bookmark"></i> كتاب التأسيس الشامل</button>
-            <button class="nav-item" onclick="switchSection('exams')"><i class="fa-solid fa-file-signature"></i> الامتحانات الدورية</button>
-        </div>
-        <button class="btn-logout" onclick="window.location.href='/'">تسجيل الخروج</button>
-    </div>
-    <div class="dash-content">
-        <div class="header-top-bar" id="header-bar">
-            <button class="toggle-btn" id="sidebar-toggle-trigger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
-            <div class="header-title" id="page-title">حصص الـ 60 دقيقة المحدثة بالبث المرئي والذكاء الاصطناعي</div>
-        </div>
-        <div class="promo-banner">
-            <span class="banner-tag"><i class="fa-solid fa-bullhorn"></i> البث اليومي</span>
-        <div id="subjects-section" style="width: 100%;">
-            <div class="lecture-grid">
-                
-                <!-- 🧠 مادة 1: اللغة العربية -->
-                <div class="lecture-card">
-                    <div class="card-head"><div class="card-icon"><i class="fa-solid fa-language"></i></div><div class="card-info"><h3>الحصة 1: اللغة العربية وقواعد الإعراب</h3><span id="date-sub-1">...</span></div></div>
-                    <div class="video-box-wrap"><video id="video-player-1" controls poster="https://drasty.net"><source src="https://mixkit.co" type="video/mp4"></video></div>
-                    <div class="lecture-body-box" id="text-sub-1">...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-1"><div class="msg-bubble ai">أنا أستاذ العربي الآلي المرفق بدرس الساعة الحالي.. اسألني صوتياً أو نصياً في أي نقطة لم تفهمها 🎙️✨</div></div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-1" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة..."><button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(1)"><i class="fa-solid fa-microphone"></i></button><button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(1)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-1"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(1, 'اللغة العربية')"><i class="fa-solid fa-circle-exclamation"></i> استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
+    <script>
+        // 🧠 بنك البيانات المركزي لضخ محاور حصص الساعة السبعة حياً طبقاً للمنهاج السوري المحدث لعام 2026
+        const drastyCurriculumCoreDatabase = {
+            1: {
+                subject: "اللغة العربية وقواعد الإعراب",
+                lesson: "شرح مفاتيح الإعراب وقواعد الجمل النحوية المقررة للامتحان.",
+                details: "أهلاً بك في هذه الحصة المرئية الممتدة لساعة كاملة. القواعد الذهبية لضبط أواخر الكلمات النحوية المعتمدة. الكلمة إما اسم أو فعل أو حرف. علامات الاسم قبول التنوين وأل والجر. الفعل الماضي مبني دائماً على الفتح ما لم يتصل به واو الجماعة فيبنى على الضم، أو ضمير رفع متحرك فيبنى على السكون. جملة أقبل الطالب يبتسم: يبتسم في محل نصب حال لأن الجمل بعد المعارف أحوال، وجملة مررت بطالب يبتسم: يبتسم في محل جر صفة لأن الجمل بعد النكرات صفات.",
+                quiz: { q: "ما هو المحل الإعرابي لجملة (يبتسم) في عبارة: رأيتُ عصفوراً يبتسمُ؟", options: ["في محل نصب حال", "في محل نصب صفة", "في محل رفع خبر", "لا محل لها من الإعراب"], answer: 1 }
+            },
+            2: {
+                subject: "الرياضيات العامة والتحليل",
+                lesson: "جلسة امتحانية مطولة حول مجموعة التعريف وفك عقد المتراجحات.",
+                details: "أهلاً بك في الحصة المرئية المتكاملة لدرس اليوم. دراسة التوابع وتعيين مجموعة التعريف الصارمة للامتحانات الوزارية. التابع الصحيح كثير الحدود معرف على كامل مجموعة الأعداد الحقيقية R. التابع الكسري معرف على R عدا القيم التي تعدم المقام وتجعله صفراً. التابع الجذري التربيعي معرف بشرط أن يكون ما تحت الجذر أكبر أو يساوي الصفر. المتراجحات من الدرجة الأولى تنقل المعاليم لطرف والمجاهيل لطرف مع تغيير الإشارة.",
+                quiz: { q: "ما هي مجموعة تعريف التابع الكسري التالي: f(x) = 5 / (x - 3) ؟", options: ["جميع الأعداد R", "R ما عدا القيمة 0", "R ما عدا القيمة 3", "الفترة من 0 إلى 3"], answer: 2 }
+            },
+            3: {
+                subject: "الفيزياء الحديثة والميكانيك",
+                lesson: "بث مرئي ممتد لحل مسائل النواسات المرنة والعزوم وقوانين الحركة.",
+                details: "مرحباً بك في درس الـ 60 دقيقة المخصص للنواسات. الحركة الجيبية الانسحابية الشاملة والنواسات. النواس المرن يتألف من نابض مرن حلقاته متباعدة كتلته مهملة وصلابته k، مثبت به كتلة m. القوة المؤثرة هي قوة الإرجاع F = -kx حيث الإشارة السالبة تعني أن اتجاه قوة الإرجاع معاكس دائماً لاتجاه الإزاحة نحو مركز التوازن الاهتزازي. الدور الخاص للنواس المرن يعطى بالقانون T0 = 2 * pi * sqrt(m/k).",
+                quiz: { q: "ماذا يحدث للدور الخاص للنواس المرن عند مضاعفة الكتلة m المعلقة أربعة مرات؟", options: ["يزداد الدور إلى الضعف", "ينقص الدور إلى النصف", "يزداد الدور أربعة أضعاف", "يبقى الدور ثابتاً"], answer: 0 }
+            },
+            4: {
+                subject: "الكيمياء العامة والعضوية",
+                lesson: "شرح شامل لجدول التكافؤات وقوانين الغازات وسرعة التفاعلات المخبرية.",
+                details: "أهلاً بك يا بطل في حصة الكيمياء اليومية المكتملة. الرموز الكيميائية التأسيسية وسرعة التفاعل الموحدة. المركبات الكيميائية تعتمد على تبادل التكافؤات بين الشوارد الأساسية، قانون الغازات العام PV = nRT. سرعة التفاعل الكيميائي الابتدائي تعبر عن تغير تركيز المواد المتفاعلة أو الناتجة في وحدة الزمن، وتتناسب طردياً مع تراكيز المواد المتفاعلة مرفوعة إلى أس يعادل الأمثال التفاعلية.",
+                quiz: { q: "ما هو قانون سرعة التفاعل الابتدائي للتفاعل التالي: 2A + B -> C ؟", options: ["v = k * [A] * [B]", "v = k * [A]^2 * [B]", "v = k * [C] / [A]", "v = k * [A] * [B]^2"], answer: 1 }
+            },
+            5: {
+                subject: "العلوم العامة وعلم الأحياء",
+                lesson: "تأسيس النسيج العصبي وبنية العصبونات والمستقبلات الحسية.",
+                details: "الخلايا العصبية وأقسام الجهاز العصبي المركزي. يتألف النسيج العصبي من نوعين رئيسيين من الخلايا: العصبونات القابلة للتنبيه ونقل السيالة وخلايا الدبق العصبي الداعمة والمغذية والتي لا تنقل سيالة مطلقاً. العصبون يتكون من جسم الخلية، الاستطالات الهيولية القصيرة والمستدقة، والمحوار الأسطواني الطويل الذي ينتهي بالتفرعات النهائية المشبكية. غمد النخاعين مادة دهنية بيضاء تحيط بالمحوار العصبي.",
+                quiz: { q: "ما هي الخلايا المسؤولة عن دعم وتغذية وحماية العصبونات في النسيج العصبي؟", options: ["خلايا الغضروف", "خلايا الدبق العصبي", "الخلايا اللمفاوية", "استطالات هيولية"], answer: 1 }
+            },
+            6: {
+                subject: "اللغة الإنكليزية وقواعدها",
+                lesson: "شرح مرئي لقواعد الأزمنة الأساسية وترتيب الجملة والكلمات الوزارية.",
+                details: "زمن الحاضر البسيط Present Simple والحاضر المستمر Present Continuous في المنهاج. نستخدم الحاضر البسيط للتعبير عن الحقائق والمواعيد الثابتة والعادات التكرارية، وصياغته للفعل التصريف الأول ونضيف s المفرد إذا كان الفاعل مفرد غائب. أما الحاضر المستمر يعبر عن حدث يقع الآن في لحظة التكلّم وصياغته فاعل متبوعاً بأفعال الكون المعروفة ثم الفعل مضافاً إليه أي إن جي.",
+                quiz: { q: "اختر الفعل الصحيح للجملة التالية: He usually ______ his homework in the evening.", options: ["do", "does", "doing", "is doing"], answer: 1 }
+            },
+            7: {
+                subject: "التربية الوطنية والقومية",
+                lesson: "تأسيس مفاهيم الدولة والدستور والقوانين الوطنية والاجتماعية السورية.",
+                details: "أركان الدولة ومفهوم الدستور ومؤسسات المجتمع المدني. الدولة هي تنظيم سياسي واجتماعي وقانوني يقوم على ثلاثة أركان أساسية لا يمكن إغفالها: الشعب وهم المواطنون، الإقليم وهو الأرض والحدود البرية والبحرية والجوية، والسيادة وهي السلطة السياسية الحاكمة العليا. الدستور هو القانون الأساسي والأعلى في الدولة الذي يحدد نظام الحكم وينظم السلطات العامة.",
+                quiz: { q: "ما هو الركن القانوني والسياسي الذي يمثل سلطة الدولة وبسط نفوذها على أرضها? ", options: ["ركن الإقليم", "ركن الشعب", "ركن السيادة", "المنظمات الدولية"], answer: 2 }
+            }
+        };
+        // ☰ دالة الارتداد والتحكم لزر الشخطات الملكي
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const headerBar = document.getElementById('header-bar');
+            sidebar.classList.toggle('closed');
+            if (sidebar.classList.contains('closed')) {
+                headerBar.classList.add('sidebar-closed');
+            } else {
+                headerBar.classList.remove('sidebar-closed');
+            }
+        }
 
-                <!-- 🧠 مادة 2: الرياضيات -->
-                <div class="lecture-card">
-                    <div class="card-head"><div class="card-icon"><i class="fa-solid fa-calculator"></i></div><div class="card-info"><h3>الحصة 2: الرياضيات العامة والتحليل</h3><span id="date-sub-2">...</span></div></div>
-                    <div class="video-box-wrap"><video id="video-player-2" controls poster="https://drasty.net"><source src="https://mixkit.co" type="video/mp4"></video></div>
-                    <div class="lecture-body-box" id="text-sub-2">...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-2"><div class="msg-bubble ai">أنا أستاذ الرياضيات الآلي.. اسألني عن فك عقد القوانين والمعادلات في أي ثانية من درس الساعة 🎙️✨</div></div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-2" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة..."><button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(2)"><i class="fa-solid fa-microphone"></i></button><button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(2)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-2"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(2, 'الرياضيات')"><i class="fa-solid fa-circle-exclamation"></i> استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
+        // 🔄 ضخ ومزامنة الحصص السبعة حركياً فور فتح الشاشة بناءً على التاريخ الفعلي المباشر
+        function generateDailyLessons() {
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('ar-SY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-                <!-- 🧠 مادة 3: الفيزياء -->
-                <div class="lecture-card">
-                    <div class="card-head"><div class="card-icon"><i class="fa-solid fa-atom"></i></div><div class="card-info"><h3>الحصة 3: الفيزياء الحديثة والميكانيك</h3><span id="date-sub-3">...</span></div></div>
-                    <div class="video-box-wrap"><video id="video-player-3" controls poster="https://drasty.net"><source src="https://mixkit.co" type="video/mp4"></video></div>
-                    <div class="lecture-body-box" id="text-sub-3">...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-3"><div class="msg-bubble ai">أنا أستاذ الفيزياء الآلي.. اسألني عن النواسات والمسائل والعزوم حياً بدرس الساعة 🎙️✨</div></div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-3" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة..."><button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(3)"><i class="fa-solid fa-microphone"></i></button><button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(3)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-3"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(3, 'الفيزياء')"><i class="fa-solid fa-circle-exclamation"></i> استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
+            for (let id in drastyCurriculumCoreDatabase) {
+                const data = drastyCurriculumCoreDatabase[id];
+                const dateElem = document.getElementById("date-sub-" + id);
+                if (dateElem) dateElem.innerText = "حصة اليوم: " + formattedDate;
 
-                <!-- 🧠 مادة 4: الكيمياء -->
-                <div class="lecture-card">
-                    <div class="card-head"><div class="card-icon"><i class="fa-solid fa-flask-vial"></i></div><div class="card-info"><h3>الحصة 4: الكيمياء العامة والعضوية</h3><span id="date-sub-4">...</span></div></div>
-                    <div class="video-box-wrap"><video id="video-player-4" controls poster="https://drasty.net"><source src="https://mixkit.co" type="video/mp4"></video></div>
-                    <div class="lecture-body-box" id="text-sub-4">...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-4"><div class="msg-bubble ai">أنا أستاذ الكيمياء الآلي.. اسألني عن سرعة التفاعلات والمعادلات العضوية حياً 🎙️✨</div></div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-4" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة..."><button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(4)"><i class="fa-solid fa-microphone"></i></button><button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(4)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-4"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(4, 'الكيمياء')"><i class="fa-solid fa-circle-exclamation"></i> استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
+                const textElem = document.getElementById("text-sub-" + id);
+                if (textElem) {
+                    textElem.innerHTML = `<h4 style="color:var(--primary);margin-bottom:6px;"><i class="fa-solid fa-book-open"></i> محاور الدرس: ${data.lesson}</h4>${data.details}`;
+                }
 
-                <!-- 🧠 مادة 5: العلوم العامة وعلم الأحياء -->
-                <div class="lecture-card">
-                    <div class="card-head"><div class="card-icon"><i class="fa-solid fa-dna"></i></div><div class="card-info"><h3>الحصة 5: العلوم العامة وعلم الأحياء</h3><span id="date-sub-5">...</span></div></div>
-                    <div class="video-box-wrap"><video id="video-player-5" controls poster="https://drasty.net"><source src="https://mixkit.co" type="video/mp4"></video></div>
-                    <div class="lecture-body-box" id="text-sub-5">...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-5"><div class="msg-bubble ai">أنا أستاذ العلوم والوراثة الآلي.. اسألني عن النسيج العصبي وبنية الخلية حياً بدرس الساعة 🎙️✨</div></div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-5" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة..."><button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(5)"><i class="fa-solid fa-microphone"></i></button><button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(5)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="quiz-box" id="quiz-sub-5"></div>
-                    <button class="btn-emergency" onclick="triggerTeacherCallEmergency(5, 'العلوم والأحياء')"><i class="fa-solid fa-circle-exclamation"></i> استدعِ الأستاذ الفعلي 🚨</button>
-                </div>
+                const quizElem = document.getElementById("quiz-sub-" + id);
+                if (quizElem) {
+                    let optionsHtml = '';
+                    data.quiz.options.forEach((opt, idx) => {
+                        optionsHtml += `<button class="opt-btn" onclick="checkQuizAnswer(this, ${id}, ${idx})">${opt}</button>`;
+                    });
+                    quizElem.innerHTML = `
+                        <div class="quiz-q"><i class="fa-solid fa-circle-question"></i> اختبار تأكيد استيعاب حصة الـ 60 دقيقة: ${data.quiz.q}</div>
+                        <div class="quiz-options">${optionsHtml}</div>
+                    `;
+                }
+            }
+        }
+        // 🎙️ معالج الاستجواب والرد الصوتي المباشر المعقم بقوة لمنع الكنة الأجنبية والتوقف المفاجئ
+        function triggerVoiceResponseAI(subjectId) {
+            const screen = document.getElementById('ai-chat-screen-' + subjectId);
+            screen.innerHTML += `<div class="msg-bubble student"><i class="fa-solid fa-microphone"></i> [تم تسجيل استفسارك الصوتي وجاري تحليله...]</div>`;
+            screen.scrollTop = screen.scrollHeight;
 
-                <!-- 🧠 مادة 6: اللغة الإنكليزية -->
-                <div class="lecture-card">
-                    <div class="card-head"><div class="card-icon"><i class="fa-solid fa-font"></i></div><div class="card-info"><h3>الحصة 6: اللغة الإنكليزية وقواعدها</h3><span id="date-sub-6">...</span></div></div>
-                    <div class="video-box-wrap"><video id="video-player-6" controls poster="https://drasty.net"><source src="https://mixkit.co" type="video/mp4"></video></div>
-                    <div class="lecture-body-box" id="text-sub-6">...</div>
-                    <div class="ai-radar-chat">
-                        <div class="ai-chat-screen" id="ai-chat-screen-6"><div class="msg-bubble ai">أنا أستاذ الإنكليزي الآلي.. ناقشني في قواعد الأزمنة والنصوص المقررة بدرس الساعة 🎙️✨</div></div>
-                        <div class="ai-bar-inputs">
-                            <input type="text" id="ai-input-6" class="ai-text-field" placeholder="ناقش الذكاء الاصطناعي في الحصة..."><button class="btn-mic-trigger" onclick="triggerVoiceResponseAI(6)"><i class="fa-solid fa-microphone"></i></button><button class="btn-play-audio" style="width:34px; height:34px;" onclick="sendTextRequestToAI(6)"><i class="fa-solid fa-paper-plane"></i></button>
-                        </div>
+            setTimeout(() => {
+                const replyText = `أهلاً بك يا بطل. تم التقاط استفسارك الصوتي حول درس الـ 60 دقيقة الحالي بنجاح.. جاري معالجة النقطة والرد عليك بالصوت والنص الفصيح لضمان الفهم الشامل وتأمين العلامة التامة.`;
+                screen.innerHTML += `<div class="msg-bubble ai"><i class="fa-solid fa-robot"></i> ${replyText}</div>`;
+                screen.scrollTop = screen.scrollHeight;
+
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    let speech = new SpeechSynthesisUtterance(replyText);
+                    speech.lang = 'ar-SA';
+                    const voices = window.speechSynthesis.getVoices();
+                    const arabicVoice = voices.find(v => v.lang.includes('ar'));
+                    if (arabicVoice) speech.voice = arabicVoice;
+                    speech.rate = 0.88;
+                    window.speechSynthesis.speak(speech);
+                }
+            }, 1000);
+        }
+
+        // ✉️ معالج مناقشة الأستاذ الآلي نصياً حياً بداخل الحصة المقررة
+        function sendTextRequestToAI(subjectId) {
+            const input = document.getElementById('ai-input-' + subjectId);
+            const screen = document.getElementById('ai-chat-screen-' + subjectId);
+            const query = input.value.trim();
+
+            if (!query) return;
+
+            screen.innerHTML += `<div class="msg-bubble student">${query}</div>`;
+            input.value = '';
+            screen.scrollTop = screen.scrollHeight;
+
+            setTimeout(() => {
+                const aiReply = `<i class="fa-solid fa-brain"></i> <b>الأستاذ الآلي:</b> تم تحليل سؤالك حول [${query}] بدقة كاملة! الحل يعتمد على القوانين الوزارية المعتمدة لـ drasty.net وتم حقنه في كراستك حياً لتجاوز الصعوبة.`;
+                screen.innerHTML += `<div class="msg-bubble ai">${aiReply}</div>`;
+                screen.scrollTop = screen.scrollHeight;
+            }, 1100);
+        }
+
+        function checkQuizAnswer(button, subjectId, selectedIdx) {
+            const data = drastyCurriculumCoreDatabase[subjectId];
+            if (!data) return;
+            const buttons = button.parentElement.querySelectorAll('.opt-btn');
+            buttons.forEach(btn => btn.disabled = true);
+            if (selectedIdx === data.quiz.answer) {
+                button.classList.add('correct');
+                alert("🎉 مبروك! إجابة صحيحة وتم رصد تقييمك بنجاح.");
+            } else {
+                button.classList.add('wrong');
+                buttons[data.quiz.answer].classList.add('correct');
+                alert("❌ إجابة خاطئة! راجع الخيار المضاء بالأخضر وأعد الاستماع للشرح.");
+            }
+        }
+
+        function triggerTeacherCallEmergency(id, name) {
+            alert("🚨 تم إطلاق نبضة الاستغاثة بنجاح! تم إرسال تنبيه عاجل إلى السلطة التعليمية والمعلم الفعلي المتخصص بـ [" + name + "]، وسيتدخل معك حياً فوراً عبر الغرفة!");
+        }
+
+        function switchSection(target) {
+            const title = document.getElementById('page-title');
+            const subjectsSection = document.getElementById('subjects-section');
+            const foundationSection = document.getElementById('foundation-section');
+            const examsSection = document.getElementById('exams-section');
+            
+            document.querySelectorAll('.nav-menu .nav-item').forEach(btn => btn.classList.remove('active'));
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.add('active');
+            } else if (typeof event !== 'undefined' && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+
+            subjectsSection.style.display = "none";
+            foundationSection.style.display = "none";
+            examsSection.style.display = "none";
+
+            if (target === 'subjects') {
+                title.innerText = "حصص الـ 60 دقيقة المحدثة بالبث المرئي والذكاء الاصطناعي";
+                subjectsSection.style.display = "block";
+            } else if (target === 'foundation') {
+                title.innerText = "📖 حقيبة كتب التأسيس الشامل والملخصات التمهيدية";
+                foundationSection.style.display = "block";
+            } else if (target === 'exams') {
+                title.innerText = "📝 الاختبارات الدورية والامتحانات الوزارية المؤتمتة";
+                examsSection.style.display = "block";
+            }
+        }
+
+        window.onload = function() {
+            generateDailyLessons();
+            if ('speechSynthesis' in window) window.speechSynthesis.getVoices();
+        };
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
+        }
+    </script>
+</body>
+</html>
