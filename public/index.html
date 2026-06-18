@@ -319,17 +319,89 @@
             color: rgba(148, 163, 184, 0.4);
         }
 
-        /* التجاوب والتوافق التام مع شاشات الهواتف المحمولة */
+               /* 🛠️ الكود الإصلاحي المطور لمنع العوم وضبط أبعاد الهواتف المحمولة والآيباد */
         @media (max-width: 992px) {
-            header { flex-direction: column; gap: 18px; border-radius: 30px; padding: 25px; position: absolute; top: 15px; }
-            nav ul { flex-wrap: wrap; justify-content: center; gap: 8px; }
-            .hero-section { padding-top: 260px; }
-            .hero-title { font-size: 2.3rem; }
-            .portals-container { grid-template-columns: 1fr; gap: 25px; }
+            html, body {
+                max-width: 100%;
+                overflow-x: hidden !important; /* قفل التمرير الأفقي ومنع الخروج عن الإطار */
+                position: relative;
+            }
+            
+            header { 
+                flex-direction: column; 
+                gap: 15px; 
+                border-radius: 25px; 
+                padding: 15px 20px; 
+                position: absolute; 
+                top: 15px; 
+                left: 2.5%;
+                width: 95%;
+            }
+            
+            nav ul { 
+                flex-wrap: wrap; 
+                justify-content: center; 
+                gap: 5px; 
+            }
+            
+            nav ul li a {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+
+            .hero-section { 
+                padding-top: 260px; 
+                padding-left: 15px;
+                padding-right: 15px;
+                overflow: hidden; /* منع تمدد الأنميشن خارج الشاشة */
+            }
+            
+            .hero-title { 
+                font-size: 1.9rem; /* تصغير العنوان ليتناسب مع عرض الهاتف */
+                line-height: 1.4;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-bottom: 40px;
+                padding: 0 10px;
+            }
+            
+            /* إلغاء المنظور ثلاثي الأبعاد العنيف على الهواتف لمنع تشوه الإطار وعوم الكروت */
+            .portals-container { 
+                grid-template-columns: 1fr; 
+                gap: 20px; 
+                perspective: none !important; 
+                width: 100%;
+                padding: 0 5px;
+            }
+
+            .portal-item {
+                transform: none !important; /* إيقاف الميلان الفيزيائي المسبب للخروج عن الإطار */
+                padding: 35px 20px;
+                border-radius: 20px;
+            }
+
+            .portal-item:hover {
+                transform: translateY(-5px) !important; /* استبدال حركة الـ 3D بحركة صعود بسيطة وآمنة */
+                box-shadow: 0 15px 30px rgba(212, 175, 55, 0.15);
+            }
+            
+            .portal-watermark {
+                width: 110px;
+                bottom: -20px;
+                left: -20px;
+            }
+            
+            .ambient-glow {
+                display: none; /* إيقاف إضاءة الخلفية الكبيرة على الهاتف لتسريع التصفح */
+            }
+            
+            .footer-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
-    </style>
-</head>
-<body>
 
     <!-- محرك الإضاءة السحابية الخلفية المولد للعمق البصري المحيطي -->
     <div class="ambient-glow"></div>
