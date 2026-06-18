@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة الحصص الذكية اليومية | drasty.net</title>
     <link rel="stylesheet" href="https://googleapis.com">
-    <!-- 🌐 جلب الأيقونات العالمية الفاخرة لتنشيط واجهات الحصص والرادار الصوتي حياً -->
-    <link rel="stylesheet" href="https://cloudflare.com">
+    <!-- 🌐 جلب حزمة الأيقونات العالمية المضمونة 100% لمنع ظهور المربعات الفارغة على الهواتف -->
+    <link rel="stylesheet" href="https://jsdelivr.net">
     <style>
         :root { 
             --primary: #d4af37; 
             --primary-hover: #b8942a; 
             --dark-bg: #050811; 
             --sidebar-color: #0b111e; 
-            --card-glass: rgba(15, 23, 42, 0.55); 
+            --card-glass: rgba(15, 23, 42, 0.6); 
             --text-light: #f8fafc; 
             --success: #10b981; 
             --danger: #ef4444; 
@@ -21,20 +21,20 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: var(--dark-bg); color: var(--text-light); display: flex; height: 100vh; overflow: hidden; position: relative; }
-        /* ☰ القائمة الجانبية الإمبراطورية ثلاثية الأبعاد المستجيبة للهاتف كلياً */
+        /* ☰ القائمة الجانبية ثلاثية الأبعاد المحمية من التداخل على الهاتف والكمبيوتر */
         .sidebar { 
             width: 280px; 
-            background: linear-gradient(135deg, #0b111e, #0f172a);
-            border-left: 1px solid rgba(212, 175, 55, 0.15);
+            background: linear-gradient(135deg, #0b111e, #0f172a); 
+            border-left: 1px solid rgba(212, 175, 55, 0.15); 
             padding: 25px 20px; 
             display: flex; 
             flex-direction: column; 
             gap: 20px; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
             position: relative; 
             z-index: 100; 
-            flex-shrink: 0;
-            box-shadow: 5px 0 25px rgba(0,0,0,0.5);
+            flex-shrink: 0; 
+            box-shadow: 5px 0 25px rgba(0,0,0,0.5); 
         }
         .sidebar.closed { width: 0; padding: 25px 0; overflow: hidden; margin-right: -280px; box-shadow: none; border-left: none; }
         
@@ -42,21 +42,22 @@
         .logo-area h1 { color: var(--primary); font-size: 24px; font-weight: 700; text-shadow: 0 2px 10px rgba(212,175,55,0.3); }
         .logo-area span { color: #64748b; font-size: 11px; margin-top: 5px; font-weight: bold; }
         
-        .nav-menu { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-top: 10px; }
-        .nav-item { background: none; border: 1px solid transparent; color: #94a3b8; padding: 14px 18px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 13px; transition: all 0.3s ease; width: 100%; text-align: right; }
-        .nav-item:hover, .nav-item.active { border-color: var(--primary); color: var(--primary); background: rgba(212, 175, 55, 0.08); transform: scale(1.02); box-shadow: 0 4px 15px rgba(212,175,55,0.1); }
-        .btn-logout { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; font-size: 13px; transition: 0.2s; }
-        .btn-logout:hover { background: var(--danger); color: #fff; transform: translateY(-2px); }
+        .nav-menu { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .nav-item { background: none; border: 1px solid transparent; color: #94a3b8; padding: 14px 18px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 13px; transition: all 0.2s; width: 100%; text-align: right; }
+        .nav-item:hover, .nav-item.active { border-color: var(--primary); color: var(--primary); background: rgba(212, 175, 55, 0.06); }
+        .btn-logout { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; font-size: 13px; }
         
-        /* 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة كلياً */
-        .dash-content { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 25px; position: relative; transition: all 0.4s ease; width: 100%; }
+        /* 👑 مساحة عرض المحتوى العريضة المستجيبة كلياً */
+        .dash-content { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 25px; position: relative; width: 100%; transition: all 0.3s ease; }
         
-        /* ☰ زر الثلاث شخطات المطور الملون بالأسود والذهب والمثبت هندسياً بدون عوم عشوائي */
-        .header-top-bar { display: flex; align-items: center; gap: 15px; width: 100%; margin-bottom: 5px; min-height: 48px; }
+        /* ☰ شريط العنوان العلوي وهندسة زر ☰ المطور ذو الإطار الملون المرتد مع الخيارات */
+        .header-top-bar { display: flex; align-items: center; gap: 15px; width: 100%; margin-bottom: 5px; min-height: 48px; transition: all 0.3s ease; }
+        .header-top-bar.sidebar-closed { margin-right: 0; }
+        
         .toggle-btn { 
             background: #0b111e; 
             color: var(--primary); 
-            border: 1px solid rgba(212,175,55,0.3); 
+            border: 2px solid var(--primary); 
             width: 44px; 
             height: 44px; 
             border-radius: 10px; 
@@ -68,15 +69,16 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
             box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
             flex-shrink: 0;
+            z-index: 102;
         }
-        .toggle-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); transform: scale(1.05); }
-        .header-title { font-size: 20px; font-weight: 700; color: #fff; line-height: 44px; }
+        .toggle-btn:hover { background: var(--primary); color: #000; transform: scale(1.05); }
+        .header-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 44px; }
         /* 📺 البانر التنبيهي المتحرك أعلى التطبيق مع حركة سلايدر مرنة */
         @keyframes slideBanner {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
-        .promo-banner { background: linear-gradient(90deg, #0b111e, #1e1b4b); border: 1px solid rgba(212,175,55,0.25); border-radius: 14px; padding: 12px 20px; overflow: hidden; position: relative; display: flex; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 100%; }
+        .promo-banner { background: linear-gradient(90deg, #0b111e, #1e1b4b); border: 1px solid rgba(212,175,55,0.2); border-radius: 14px; padding: 12px 20px; overflow: hidden; position: relative; display: flex; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 100%; }
         .banner-tag { background: var(--primary); color: #000; padding: 4px 12px; border-radius: 8px; font-weight: bold; font-size: 11px; z-index: 2; flex-shrink: 0; box-shadow: 0 2px 8px rgba(212,175,55,0.4); }
         .banner-text-wrap { width: 100%; overflow: hidden; white-space: nowrap; margin-right: 15px; z-index: 1; }
         .banner-text { display: inline-block; padding-left: 100%; animation: slideBanner 25s linear infinite; font-size: 12px; font-weight: bold; color: #cbd5e1; }
@@ -91,13 +93,13 @@
             display: flex; 
             flex-direction: column; 
             gap: 15px; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            transition: all 0.3s ease; 
             position: relative; 
             overflow: hidden; 
             box-shadow: var(--3d-shadow);
         }
-        .lecture-card:hover { border-color: var(--primary); transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 15px rgba(212,175,55,0.15); }
-        .lecture-card::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: linear-gradient(to bottom, var(--primary), #b8942a); border-radius: 20px 0 0 20px; }
+        .lecture-card:hover { border-color: var(--primary); transform: translateY(-4px); }
+        .lecture-card::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--primary); }
         
         .card-head { display: flex; align-items: center; gap: 15px; width: 100%; }
         .card-icon { width: 50px; height: 50px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.15); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 22px; text-shadow: 0 2px 8px rgba(212,175,55,0.3); }
@@ -161,7 +163,9 @@
         /* 🚨 زر استدعاء الأستاذ الفعلي السوري عند الطوارئ التعليمية */
         .btn-emergency { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239,68,68,0.25); color: #ef4444; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; text-align: center; display: block; width: 100%; transition: all 0.2s ease; font-family: inherit; margin-top: 5px; }
         .btn-emergency:hover { background: var(--danger); color: #fff; box-shadow: 0 0 12px rgba(239,68,68,0.3); }
-        
+        .btn-save-settings { background-color: var(--primary); color: #000; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; font-family: inherit; margin-top: 10px; }
+        .btn-save-settings:hover { background-color: #fff; }
+
         @media (max-width: 992px) { .lecture-grid { grid-template-columns: 1fr; } .sidebar { position: fixed; top: 0; bottom: 0; right: 0; } }
     </style>
 </head>
@@ -184,9 +188,9 @@
     <!-- 👑 مساحة عرض المحتوى والبيانات العريضة المستجيبة لهواتف الإدارة والكمبيوتر -->
     <div class="dash-content">
         
-        <!-- ☰ شريط الترويسة العلوي المطور والمثبت هندسياً لزر الشخطات ليرتد تلقائياً عند قفل الخيارات -->
-        <div class="header-top-bar">
-            <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <!-- ☰ شريط الترويسة العلوي المطور والمثبت هندسياً لزر الشخطات ليرتد ويلتصق تلقائياً مع القائمة الجانبية -->
+        <div class="header-top-bar" id="header-bar">
+            <button class="toggle-btn" id="sidebar-toggle-trigger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
             <div class="header-title" id="page-title">الحصص السبعة اليومية المحدثة بالذكاء الاصطناعي</div>
         </div>
 
@@ -218,7 +222,7 @@
                     <button class="btn-emergency" onclick="triggerTeacherCallEmergency(1, 'اللغة العربية')"><i class="fas fa-circle-exclamation"></i> لم أفهم الشرح! استدعِ الأستاذ الفعلي 🚨</button>
                 </div>
 
-                <!-- 🧠 مادة 2: الرياضيات -->
+                <!-- 🧠 mادة 2: الرياضيات -->
                 <div class="lecture-card">
                     <div class="card-head">
                         <div class="card-icon"><i class="fas fa-calculator"></i></div>
@@ -262,7 +266,7 @@
                     <div class="quiz-box" id="quiz-sub-4"></div>
                     <button class="btn-emergency" onclick="triggerTeacherCallEmergency(4, 'الكيمياء')"><i class="fas fa-circle-exclamation"></i> لم أفهم الشرح! استدعِ الأستاذ الفعلي 🚨</button>
                 </div>
-                <!-- 🧠 مادة 5: العلوم العامةوعلم الأحياء -->
+                <!-- 🧠 مادة 5: العلوم العامة وعلم الأحياء -->
                 <div class="lecture-card">
                     <div class="card-head">
                         <div class="card-icon"><i class="fas fa-dna"></i></div>
@@ -340,11 +344,6 @@
 
     </div> <!-- إغلاق حاوية الـ dash-content المركزية العريضة -->
     <script>
-        // ☰ دالة التحكم التفاعلية المرنة لزر الثلاث شخطات لطي وإخفاء القائمة الجانبية دون عوم عشوائي
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('closed');
-        }
-
         // 🧠 بنك البيانات المركزي والموثق لتوليد الحصص التأسيسية السبعة حياً طبقاً للمنهاج السوري
         const drastyCurriculumCoreDatabase = {
             1: {
@@ -361,14 +360,14 @@
             },
             3: {
                 subject: "الفيزياء الحديثة والميكانيك",
-                lesson: "مدخل النواسات المرنة والعزوم والقوانين الأساسية للحركة.",
-                details: "الجزء الأول: الحركة الجيبية الانسحابية والنواسات. النواس المرن يتألف من نابض مرن حلقاته متباعدة كتلته مهملة وصلابته k، مثبت به كتلة m. القوة المؤثرة هي قوة الإرجاع F = -kx حيث الإشارة السالبة تعني أن اتجاه القوة معاكس دائماً لاتجاه الإزاحة نحو مركز التوازن. الدور الخاص للنواس المرن يعطى بالقانون T0 = 2*pi * sqrt(m/k)، حيث يزداد الدور بزيادة الكتلة وينقص بزيادة صلابة النابض. عزوم العطالة تعبر عن مقاومة الجسم للدوران حول محور ثابت.",
+                lesson: "مدخل النواسات المرنة والعزوم والقوانين الأساسية الحركة.",
+                details: "الجزء الأول: الحركة الجيبية الانسحابية والنواسات. النواس المرن يتألف من نابض مرن حلقاته متباعدة كتلته مهملة وصلابته k، مثبت به كتلة m. القوة المؤثرة هي قوة الإرجاع F = -kx حيث الإشارة السالبة تعني أن اتجاه القوة معاكس دائماً لافتجاه الإزاحة نحو مركز التوازن. الدور الخاص للنواس المرن يعطى بالقانون T0 = 2*pi * sqrt(m/k)، حيث يزداد الدور بزيادة الكتلة وينقص بزيادة صلابة النابض. عزوم العطالة تعبر عن مقاومة الجسم للدوران حول محور ثابت.",
                 quiz: { q: "ماذا يحدث للدور الخاص للنواس المرن عند مضاعفة الكتلة m المعلقة أربعة مرات؟", options: ["يزداد الدور إلى الضعف", "ينقص الدور إلى النصف", "يزداد الدور أربعة أضعاف", "يبقى الدور ثابتاً لا يتغير"], answer: 0 }
             },
             4: {
                 subject: "الكيمياء العامة والعضوية",
                 lesson: "جدول التكافؤات وقوانين الغازات وسرعة التفاعلات.",
-                details: "الجزء الأول: الرموز الكيميائية التأسيسية وسرعة التفاعل. المركبات الكيميائية تعتمد على تبادل التكافؤات بين الشوارد (الهيدروجين والصوديوم +1، الكالسيوم والمغنيزيوم +2، الألومنيوم +3). قانون الغازات العام PV = nRT. سرعة التفاعل الكيميائي الابتدائي تعبر عن تغير تركيز المواد المتفاعلة أو الناتجة في وحدة الزمن، وتتناسب طردياً مع تراكيز المواد المتفاعلة مرفوعة إلى أس يعادل الأمثال التفاعلية طبقاً لقانون غولدبرغ ووايج: v = k * [A]^a * [B]^b.",
+                details: "الجزء الأول: الرموز الكيميائية التأسيسية وسرعة التفاعل. المركبات الكيميائية تعتمد على تبادل التكافؤات بين الشوارد (الهيدروجين والصوديوم +1، الكالسيوم والمغنيزيوم +2، الألومنيوم +3). قانون الغازات العام PV = nRT. سرعة التفاعل الكيميائي الابتدائي تعبر عن تغير تركيز المواد المتفاعلة أو الناتجة في وحدة الزمن، وتتناسب طردياً مع تراكيز المواد المتفاعلة مرفوعة إلى أس يعادل الأمثال التفاعلية طبقاً لـ قانون غولدبرغ ووايج: v = k * [A]^a * [B]^b.",
                 quiz: { q: "ما هو قانون سرعة التفاعل الابتدائي للتفاعل التالي: 2A + B -> C ؟", options: ["v = k * [A] * [B]", "v = k * [A]^2 * [B]", "v = k * [C] / [A]", "v = k * [A] * [B]^2"], answer: 1 }
             },
             5: {
@@ -380,17 +379,55 @@
             6: {
                 subject: "اللغة الإنكليزية وقواعدها",
                 lesson: "الأزمنة الأساسية وترتيب الجملة وحفظ الكلمات المفتاحية.",
-                details: "الجزء الأول: زمن الحاضر البسيط Present Simple والحاضر المستمر Present Continuous. نستخدم الحاضر البسيط للتعبير عن الحقائق والمواعيد الثابتة والعادات التكرارية، وصياغته للفعل التصريف الأول (نضيف s المفرد إذا كان الفاعل He, She, It). الكلمات المفتاحية: Always, Usually, Often, Every day. أما الحاضر المستمر يعبر عن حدث يقع الآن في لحظة التكلم وصياغته Subject + (am, is, are) + V-ing. الكلمات المفتاحية: Now, At the moment, Look, Listen.",
+                details: "الجزء الأول: زمن الحاضر البسيط Present Simple والحاضر المستمر Present Continuous. نستخدم الحاضر البسيط للتعبير عن الحقائق والمواعيد الثابتة والعادات التكرارية، وصياغته للفعل التصريف الأول (نضيف s المفرد إذا كان الفاعل He, She, It). الكلمات المفتاحية: Always, Usually, Often, Every day. العبارات المفتاحية للحاضر المستمر تعبر عن حدث يقع الآن في لحظة التكلم وصياغته Subject + (am, is, are) + V-ing.",
                 quiz: { q: "اختر الفعل الصحيح للجملة التالية: He usually ______ his homework in the evening.", options: ["do", "does", "doing", "is doing"], answer: 1 }
             },
             7: {
                 subject: "التربية الوطنية والقومية",
                 lesson: "مفاهيم الدولة والدستور والقوانين الوطنية والاجتماعية.",
-                details: "الجزء الأول: أركان الدولة ومفهوم الدستور ومؤسسات المجتمع. الدولة هي تنظيم سياسي واجتماعي وقانوني يقوم على ثلاثة أركان أساسية لا يمكن إغفالها: الشعب (المواطنون)، الإقليم (الأرض والحدود البرية والبحرية والجوية)، والسيادة (السلطة السياسية الحاكمة). الدستور هو القانون الأساسي والأعلى في الدولة الذي يحدد نظام الحكم وشكل الدولة وينظم السلطات العامة (التشريعية، التنفيذية، القضائية) ويضمن حقوق وواجبات الحريات العامة.",
+                details: "الجزء الأول: أركان الدولة ومفهوم الدستور ومؤسسات المجتمع. الدولة هي تنظيم سياسي واجتماعي وقانوني يقوم على ثلاثة أركان أساسية لا يمكن إغفالها: الشعب (المواطنون)، الإقليم (الأرض والحدود البرية والبحرية والجوية)، والسيادة (السلطة السياسية الحاكمة). الدستور هو القانون الأساسي والأعلى في الدولة الذي يحدد نظام الحكم وشكل الدولة وينظم السلطات العامة ويضمن حقوق وواجبات الحريات العامة.",
                 quiz: { q: "ما هو الركن القانوني والسياسي الذي يمثل سلطة الدولة وبسط نفوذها على أرضها؟", options: ["ركن الإقليم", "ركن الشعب", "ركن السيادة", "المنظمات الدولية"], answer: 2 }
             }
         };
-        // 🔄 دالة محرك التوليد لتفجير وضخ الحصص السبعة اليومية تلقائياً بداخل كروت الطالب
+        // ☰ دالة التحكم التفاعلية لزر الثلاث شخطات لطي وإخفاء القائمة وجعل الزر يرتد ويلتصق مع الخيارات حياً
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const headerBar = document.getElementById('header-bar');
+            const toggleBtn = document.getElementById('sidebar-toggle-trigger');
+            
+            sidebar.classList.toggle('closed');
+            
+            // هندسة حركة الارتداد والالتصاق لزر ☰ جهة اليمين مع القائمة المفتوحة والمغلقة
+            if (sidebar.classList.contains('closed')) {
+                headerBar.classList.add('sidebar-closed');
+                toggleBtn.style.transform = "rotate(0deg)";
+            } else {
+                headerBar.classList.remove('sidebar-closed');
+                toggleBtn.style.transform = "rotate(90deg)";
+            }
+        }
+
+        // 🎙️ دالة تشغيل البث والشرح الصوتي المعقم بالذكاء الاصطناعي للمحتوى النصي للحصة حياً دون تعليق
+        function playAIVoiceStream(subjectId) {
+            const data = drastyCurriculumCoreDatabase[subjectId];
+            if (!data) return;
+
+            if ('speechSynthesis' in window) {
+                // 🛑 تعقيم وإلغاء أي بث صوتي معلق سابقاً في ذاكرة المتصفح كلياً لمنع التجميد
+                window.speechSynthesis.cancel();
+                
+                const speechText = `مرحباً بك يا بطل في أكاديمية دراستي. حصة اليوم المخصصة لك في مادة ${data.subject} تحت عنوان: ${data.lesson}. إليك الشرح والتأسيس الأكاديمي المفصل: ${data.details}`;
+                let speech = new SpeechSynthesisUtterance(speechText);
+                speech.lang = 'ar-SA';
+                speech.rate = 0.92; // سرعة هادئة وموزونة للاستيعاب الكامل وضمان الاستقرار
+                
+                alert("🔊 تم تفعيل الرادار الصوتي! جاري بدء البث والشرح المباشر للحصة التعليمية حياً عبر drasty.net...");
+                window.speechSynthesis.speak(speech);
+            } else {
+                alert("⚠️ المتصفح الخاص بك لا يدعم تقنية الرادار الصوتي المباشر!");
+            }
+        }
+        // 🔄 دالة محرك التوليد لتفجير وضخ الحصص السبعة اليومية تلقائياً بداخل كروت الطالب طبقاً للتاريخ
         function generateDailyLessons() {
             const today = new Date();
             const formattedDate = today.toLocaleDateString('ar-SY', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
@@ -424,28 +461,6 @@
             }
         }
 
-        // 🎙️ دالة تشغيل البث والشرح الصوتي بالذكاء الاصطناعي للمحتوى النصي للحصة حياً
-        function playAIVoiceStream(subjectId) {
-            const data = drastyCurriculumCoreDatabase[subjectId];
-            if (!data) return;
-
-            // إيقاف أي بث صوتي سابق لمنع التداخل والتضارب
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                
-                // توليد نبضة صوتية عربية فصيحة ومجسمة تتناسب مع سرعات إنترنت سوريا
-                const speechText = `مرحباً بك يا بطل في أكاديمية دراستي. حصة اليوم في مادة ${data.subject} تحت عنوان: ${data.lesson}. إليك الشرح المفصل: ${data.details}`;
-                let speech = new SpeechSynthesisUtterance(speechText);
-                speech.lang = 'ar-SA';
-                speech.rate = 0.95; // سرعة متزنة ومريحة للاستيعاب الأكاديمي
-                
-                alert("🔊 جاري بدء البث والشرح الصوتي المباشر للحصة عبر رادار drasty.net حياً...");
-                window.speechSynthesis.speak(speech);
-            } else {
-                alert("⚠️ المتصفح الخاص بك لا يدعم تقنية الرادار الصوتي المباشر!");
-            }
-        }
-
         // 📝 دالة تصحيح وتقييم خيارات الاختبار المؤتمت السريع وتأمين العلامة للطالب
         function checkQuizAnswer(button, subjectId, selectedIdx) {
             const data = drastyCurriculumCoreDatabase[subjectId];
@@ -454,7 +469,6 @@
             const parent = button.parentElement;
             const buttons = parent.querySelectorAll('.opt-btn');
             
-            // قفل كافة أزرار الاختيارات لمنع التلاعب بعد الإجابة
             buttons.forEach(btn => btn.disabled = true);
 
             if (selectedIdx === data.quiz.answer) {
@@ -462,11 +476,11 @@
                 alert("🎉 مبروك يا بطل! إجابة صحيحة نموذجية.. تم رصيد العلامة والانتقال بنجاح!");
             } else {
                 button.classList.add('wrong');
-                // إضاءة الزر الصحيح باللون الأخضر تلقائياً لمساعدة الطالب
                 buttons[data.quiz.answer].classList.add('correct');
                 alert("❌ إجابة خاطئة! تفقّد الخيار الصحيح المضاء باللون الأخضر وأعد الاستماع للشرح الصوتي.");
             }
         }
+
         // 🚨 دالة نبضات الاستغاثة وإرسال تنبيه عاجل لاستدعاء الأستاذ الفعلي السوري حياً عند الطوارئ
         function triggerTeacherCallEmergency(subjectId, subjectName) {
             alert("🚨 تم إطلاق نبضة الاستغاثة بنجاح عسكري صارم! تم إرسال تنبيه عاجل إلى لوحة التحكم والبريد الشخصي للأستاذ الفعلي المتابع لـ [" + subjectName + "]، وسيتدخل معك حياً لحل المشكلة فوراً!");
@@ -482,7 +496,6 @@
             document.querySelectorAll('.nav-menu .nav-item').forEach(btn => btn.classList.remove('active'));
             if (event && event.currentTarget) event.currentTarget.classList.add('active');
 
-            // إخفاء كل شيء لتجنب عيوب ولخبطة تداخل الأزرار على الهواتف
             subjectsSection.style.display = "none";
             foundationSection.style.display = "none";
             examsSection.style.display = "none";
