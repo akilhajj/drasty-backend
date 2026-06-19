@@ -7,58 +7,65 @@ export default {
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
     };
 
-    // 🌐 التوجيه التلقائي للموقع الرئيسي ومنع الصفحة البيضاء
+    // 🌐 التوجيه التلقائي الذكي لمنع ظهور الصفحة البيضاء وتحويل الزائر للموقع الفعلي
     if (url.pathname === "/" || url.pathname === "/index.html") {
-      return Response.redirect("https://drasty-backend.akilhajj00.workers.dev", 301);
+      return Response.redirect("https://drasty.net", 301);
     }
 
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders });
     }
 
-    // 🔒 جدار حماية الجلسات والتحقق الصارم من التوكنات قبل منح البيانات
+    // 🔒 جدار حماية الجلسات والتحقق الصارم من التوكنات الرقمية المخزنة بالـ D1
     async function checkAuth(req, allowedRoles = []) {
       const authHeader = req.headers.get("Authorization");
       if (!authHeader) return { authorized: false, error: "لم يتم تزويد رمز الترخيص الرقمي." };
+      
       const session = await env.DB.prepare("SELECT users.id, users.name, users.role, users.grade, users.branch, users.subscription_expires_at, users.created_at FROM sessions JOIN users ON sessions.user_id = users.id WHERE sessions.token = ? AND sessions.expires_at > datetime('now')").bind(authHeader).first();
-      if (!session) return { authorized: false, error: "انتهت صلاحية جلستك الرقمية." };
-      if (allowedRoles.length > 0 && !allowedRoles.includes(session.role)) return { authorized: false, error: "غير مصرح لرتبتك الحالية بالوصول." };
+      if (!session) return { authorized: false, error: "انتهت صلاحية جلستك الرقمية الآمنة." };
+      if (allowedRoles.length > 0 && !allowedRoles.includes(session.role)) return { authorized: false, error: "خطأ بالأمان: غير مصرح لرتبتك الحالية بالوصول." };
+      
       return { authorized: true, user: session };
     }
 
-    // 📝 1️⃣ بوابة إنشاء حساب طالب جديد (Registration)
+    // 📝 1️⃣ بوابة إنشاء حساب طالب جديد (Registration API)
     if (url.pathname === "/api/register" && request.method === "POST") {
       try {
         const { name, phone, email, password, grade, branch } = await request.json();
         const userId = crypto.randomUUID();
+        
         const existingUser = await env.DB.prepare("SELECT id FROM users WHERE email = ?").bind(email).first();
-        if (existingUser) return new Response(JSON.stringify({ error: "البريد مسجل مسبقاً!" }), { status: 400, headers: corsHeaders });
+        if (existingUser) return new Response(JSON.stringify({ error: "البريد مسجل مسبقاً بالأكاديمية!" }), { status: 400, headers: corsHeaders });
+        
         const expirationDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
         await env.DB.prepare("INSERT INTO users (id, name, phone, email, password_hash, role, grade, branch, status, allowed_days, subscription_expires_at) VALUES (?, ?, ?, ?, ?, 'student', ?, ?, 'pending', 30, ?)").bind(userId, name, phone, email, password, grade, branch, expirationDate).run();
-        return new Response(JSON.stringify({ success: true, message: "تم إرسال طلب الانضمام بنجاح!" }), { status: 201, headers: corsHeaders });
+        
+        return new Response(JSON.stringify({ success: true, message: "تم إرسال طلب الانضمام بنجاح! يرجى انتظار التفعيل الإداري." }), { status: 201, headers: corsHeaders });
       } catch (err) {
         return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: corsHeaders });
       }
     }
-    // 🔑 2️⃣ بوابة تسجيل الدخول والتحقق من التفعيل والصلاحية الزمنية
+    // 🔑 2️⃣ بوابة تسجيل الدخول والتحقق من التفعيل والصلاحية الزمنية للطلاب
     if (url.pathname === "/api/login" && request.method === "POST") {
       try {
         const { email, password } = await request.json();
         const user = await env.DB.prepare("SELECT * FROM users WHERE email = ? AND password_hash = ?").bind(email, password).first();
+        
         if (!user) return new Response(JSON.stringify({ error: "معلومات تسجيل الدخول غير صحيحة!" }), { status: 401, headers: corsHeaders });
-        if (user.status !== "approved") return new Response(JSON.stringify({ error: "حسابك قيد المراجعة الإدارية." }), { status: 403, headers: corsHeaders });
-        if (user.subscription_expires_at < new Date().toISOString()) return new Response(JSON.stringify({ error: "انتهت أيام صلاحية اشتراكك الدراسي." }), { status: 403, headers: corsHeaders });
+        if (user.status !== "approved") return new Response(JSON.stringify({ error: "حسابك قيد المراجعة والتدقيق الإداري حالياً." }), { status: 403, headers: corsHeaders });
+        if (user.subscription_expires_at < new Date().toISOString()) return new Response(JSON.stringify({ error: "انتهت أيام صلاحية اشتراكك الدراسي، يرجى التجديد." }), { status: 403, headers: corsHeaders });
         
         const token = crypto.randomUUID();
         const sessionExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
         await env.DB.prepare("INSERT INTO sessions (token, user_id, expires_at) VALUES (?, ?, ?)").bind(token, user.id, sessionExpires).run();
+        
         return new Response(JSON.stringify({ success: true, token, role: user.role, name: user.name, grade: user.grade, branch: user.branch }), { status: 200, headers: corsHeaders });
       } catch (err) {
         return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: corsHeaders });
       }
     }
 
-    // 👥 3️⃣ لوحة المعلم: جلب قائمة الطلاب لإدارتهم واعتمادهم
+    // 👥 3️⃣ لوحة الأستاذ: جلب قائمة الحسابات المعلقة والنشطة من الداتا بيس
     if (url.pathname === "/api/admin/students" && request.method === "GET") {
       const auth = await checkAuth(request, ["teacher", "admin"]);
       if (!auth.authorized) return new Response(JSON.stringify({ error: auth.error }), { status: 403, headers: corsHeaders });
@@ -70,7 +77,7 @@ export default {
       }
     }
 
-    // ✅ 4️⃣ لوحة المعلم: الموافقة وتفعيل الحسابات المعلقة أو حظرها
+    // ✅ 4️⃣ لوحة الأستاذ: الموافقة واعتماد الطلاب الجدد أو حظرهم فوراً
     if (url.pathname === "/api/admin/approve" && request.method === "POST") {
       const auth = await checkAuth(request, ["teacher", "admin"]);
       if (!auth.authorized) return new Response(JSON.stringify({ error: auth.error }), { status: 403, headers: corsHeaders });
@@ -83,7 +90,7 @@ export default {
       }
     }
 
-    // ⏳ 5️⃣ لوحة المعلم: تمديد فترة صلاحية اشتراك الطلاب بـ 30 يوماً إضافية
+    // ⏳ 5️⃣ لوحة الأستاذ: تمديد فترة صلاحية اشتراك الطلاب بـ 30 يوماً إضافية
     if (url.pathname === "/api/admin/extend" && request.method === "POST") {
       const auth = await checkAuth(request, ["teacher", "admin"]);
       if (!auth.authorized) return new Response(JSON.stringify({ error: auth.error }), { status: 403, headers: corsHeaders });
@@ -121,8 +128,17 @@ export default {
         const dateCreated = new Date(auth.user.created_at || Date.now());
         const currentLessonOrder = Math.max(1, Math.ceil(Math.abs(new Date() - dateCreated) / (1000 * 60 * 60 * 24)));
         const readyLessons = await env.DB.prepare("SELECT id, subject_name, lesson_title as title, text_content FROM generated_lessons WHERE grade_target = ? AND (branch_target = ? OR branch_target = 'general') AND lesson_order = ?").bind(grade, branch, currentLessonOrder).all();
-        const result = readyLessons.results.map(l => ({ ...l, duration_minutes: 60, generated_day: currentLessonOrder }));
-        return new Response(JSON.stringify(result), { status: 200, headers: corsHeaders });
+        const readyExams = await env.DB.prepare("SELECT id, subject_name, question, option_a, option_b, option_c, option_d, correct_option FROM exams WHERE grade_target = ? AND (branch_target = ? OR branch_target = 'general')").bind(grade, branch).all();
+        const responseData = readyLessons.results.map(lesson => {
+          const associatedExam = readyExams.results.find(e => e.subject_name === lesson.subject_name) || null;
+          return {
+            ...lesson,
+            duration_minutes: 60,
+            generated_day: currentLessonOrder,
+            exam: associatedExam
+          };
+        });
+        return new Response(JSON.stringify(responseData), { status: 200, headers: corsHeaders });
       } catch (err) {
         return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: corsHeaders });
       }
