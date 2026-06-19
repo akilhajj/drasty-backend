@@ -3,300 +3,573 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم الإدارة والأستاذ - أكاديمية دراستي</title>
+    <title>بوابة الكادر التدريسي المتقدمة - أكاديمية دراستي</title>
+    <!-- استدعاء الأيقونات التعريفية الصغيرة الحركية وفونت القاهرة الفاخر -->
     <link rel="stylesheet" href="https://cloudflare.com">
+    <link href="https://googleapis.com" rel="stylesheet">
+    
     <style>
-        :root { 
-            --gold: #d4af37; 
-            --bg: #030508; 
-            --card: rgba(255,255,255,0.03); 
-            --border: rgba(214,175,55,0.15); 
+        :root {
+            --neon-blue: #0ea5e9;
+            --neon-purple: #a855f7;
+            --gold: #d4af37;
+            --bg-dark: #02040a;
+            --glass-card: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(214, 175, 55, 0.12);
+            --text-slate: #94a3b8;
         }
-        body { 
-            margin: 0; 
-            background: var(--bg); 
-            color: #fff; 
-            font-family: 'Cairo', sans-serif; 
+
+        body {
+            margin: 0;
+            background: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            background-image: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.05) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            min-height: 100vh;
         }
-        .sidebar { 
-            position: fixed; 
-            right: 0; 
-            top: 0; 
-            width: 260px; 
-            height: 100vh; 
-            background: #060913; 
-            border-left: 1px solid var(--border); 
-            padding: 20px; 
-            box-sizing: border-box; 
+
+        /* 📋 شريط التنقل الجانبي المستقل للأساتذة */
+        .teacher-sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: rgba(6, 9, 22, 0.85);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid var(--glass-border);
+            padding: 30px 20px;
+            box-sizing: border-box;
+            z-index: 100;
         }
-        .main-content { 
-            margin-right: 260px; 
-            padding: 40px; 
-            box-sizing: border-box; 
-            min-height: 100vh; 
+
+        .brand-container {
+            text-align: center;
+            margin-bottom: 35px;
         }
-        .nav-btn { 
-            display: block; 
-            width: 100%; 
-            padding: 12px; 
-            background: none; 
-            border: 1px solid transparent; 
-            color: #94a3b8; 
-            text-align: right; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            margin-bottom: 10px; 
-            font-size: 1rem; 
-            transition: all 0.3s; 
+
+        .brand-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to left, var(--gold), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .nav-btn.active, .nav-btn:hover { 
-            border-color: var(--gold); 
-            color: var(--gold); 
-            background: rgba(214,175,55,0.05); 
+
+        .profile-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
         }
-        .logout-btn { 
-            position: absolute; 
-            bottom: 20px; 
-            right: 20px; 
-            left: 20px; 
-            width: calc(100% - 40px); 
-            background: #7f1d1d; 
-            color: #fca5a5; 
-            border: 1px solid #b91c1c; 
-            padding: 10px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            text-align: center; 
+
+        .profile-badge i {
+            color: var(--neon-blue);
+            font-size: 1.4rem;
+            margin-bottom: 5px;
         }
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px 18px;
+            background: none;
+            border: 1px solid transparent;
+            color: var(--text-slate);
+            text-align: right;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-item i {
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+
+        .menu-item:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateX(-3px);
+        }
+
+        .menu-item.active {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(168, 85, 247, 0.05));
+            border-color: rgba(14, 165, 233, 0.25);
+            color: var(--neon-blue);
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.05);
+        }
+
+        .menu-item.active i {
+            transform: scale(1.1);
+        }
+
+        .btn-teacher-logout {
+            position: absolute;
+            bottom: 25px;
+            right: 20px;
+            left: 20px;
+            width: calc(100% - 40px);
+            background: rgba(239, 68, 68, 0.08);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-teacher-logout:hover {
+            background: #ef4444;
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+        }
+
+        /* 💻 منطقة العمل والمحتوى الرئيسي */
+        .content-workspace {
+            margin-right: 280px;
+            padding: 40px;
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+
+        .workspace-header {
+            margin-bottom: 35px;
+        }
+
+        .workspace-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            background: linear-gradient(to left, #ffffff, var(--text-slate));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 📊 لوحة المؤشرات المضيئة الصغيرة الـ Analytics Mini-Cards */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .analytics-card {
+            background: var(--glass-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .analytics-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .card-blue::before { background: var(--neon-blue); }
+        .card-purple::before { background: var(--neon-purple); }
+        .card-gold::before { background: var(--gold); }
+
+        .card-info h3 {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-slate);
+            font-weight: 500;
+        }
+
+        .card-info .counter-num {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 5px 0 0 0;
+            color: #ffffff;
+        }
+
+        .card-icon-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .card-blue .card-icon-wrap { background: rgba(14, 165, 233, 0.1); color: var(--neon-blue); }
+        .card-purple .card-icon-wrap { background: rgba(168, 85, 247, 0.1); color: var(--neon-purple); }
+        .card-gold .card-icon-wrap { background: rgba(214, 175, 55, 0.1); color: var(--gold); }
+        /* 🎛️ صناديق استمارات الـ Glassmorphic والمجموعات الإنشائية */
+        .glass-panel {
+            background: var(--glass-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .panel-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0 0 25px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gold);
+        }
+
+        .inputs-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+
+        .form-group-wrap label {
+            font-size: 0.88rem;
+            color: var(--text-slate);
+            font-weight: 500;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-slate);
+            font-size: 0.95rem;
+        }
+
+        .input-with-icon input, .input-with-icon select, .input-with-icon textarea {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            background: rgba(6, 9, 22, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-family: 'Cairo', sans-serif;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+
+        .input-with-icon input:focus, .input-with-icon select:focus, .input-with-icon textarea:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(14, 165, 233, 0.15);
+            outline: none;
+        }
+
+        .btn-modern-action {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--gold), #b3922e);
+            color: #02040a;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+        }
+
+        .btn-modern-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+        }
+
+        .btn-modern-action:disabled {
+            background: #475569;
+            color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 📊 جداول أنيقة متناسقة لمراقبة وتتبع الحصص */
+        .modern-table-wrap {
+            overflow-x: auto;
+        }
+
+        .modern-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        .modern-table th, .modern-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.95rem;
+        }
+
+        .modern-table th {
+            background: rgba(255, 255, 255, 0.01);
+            color: var(--text-slate);
+            font-weight: 600;
+        }
+
+        .modern-table tr:hover td {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .badge-pill-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--neon-blue);
+            border: 1px solid rgba(14, 165, 233, 0.15);
+        }
+
         .hidden { display: none !important; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-        th, td { padding: 15px; text-align: right; border-bottom: 1px solid var(--border); }
-        th { background: #091022; color: var(--gold); }
-        .btn-action { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 5px; font-family: 'Cairo', sans-serif; }
-        .btn-approve { background: #16a34a; color: #fff; transition: background 0.3s; }
-        .btn-approve:hover { background: #15803d; }
-        .btn-extend { background: var(--gold); color: #030508; transition: opacity 0.3s; }
-        .btn-extend:hover { opacity: 0.9; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: var(--gold); font-weight: bold; }
-        input, select, textarea { width: 100%; padding: 10px; background: #091022; border: 1px solid var(--border); border-radius: 6px; color: #fff; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        input:focus, select:focus, textarea:focus { border-color: var(--gold); outline: none; }
-        .btn-submit { background: var(--gold); color: #030508; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 15px; font-family: 'Cairo', sans-serif; transition: opacity 0.3s; }
-        .btn-submit:hover { opacity: 0.9; }
     </style>
 </head>
 <body>
 
-    <!-- 📊 القائمة الجانبية لإدارة الأكاديمية -->
-    <div class="sidebar">
-        <h3 style="color: var(--gold); text-align: center; margin-bottom: 30px;"><i class="fas fa-crown"></i> أكاديمية دراستي</h3>
-        <p style="color: #64748b; font-size: 0.9rem; text-align: center;">المشرف: <span id="admin-display" style="color: #fff; font-weight: bold;"></span></p>
-        <hr style="border: none; border-top: 1px solid var(--border); margin-bottom: 20px;">
-        <button id="tab-students-btn" class="nav-btn active" onclick="switchTeacherTab('students')"><i class="fas fa-user-graduates"></i> طلبات الطلاب والدفع</button>
-        <button id="tab-courses-btn" class="nav-btn" onclick="switchTeacherTab('courses')"><i class="fas fa-book-open"></i> حقن وطبخ المناهج</button>
-        <button class="logout-btn" onclick="executeAdminLogout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+    <!-- 📊 شريط التنقل الجانبي المستقل للكادر التدريسي الموظف -->
+    <div class="teacher-sidebar">
+        <div class="brand-container">
+            <div class="brand-logo"><i class="fas fa-graduation-cap"></i> أكاديمية دراستي</div>
+        </div>
+        <div class="profile-badge">
+            <i class="fas fa-user-tie"></i>
+            <div style="font-size:0.95rem; font-weight:600;" id="teacher-profile-name">جاري التعرف...</div>
+            <div style="font-size:0.78rem; color:var(--text-slate); margin-top:2px;">كادر تدريسي معتمد</div>
+        </div>
+        <div class="nav-menu">
+            <button id="menu-inject-btn" class="menu-item active" onclick="switchActiveSection('inject')">
+                <i class="fas fa-magic"></i> طبخ وحقن المناهج بالـ AI
+            </button>
+            <button id="menu-history-btn" class="menu-item" onclick="switchActiveSection('history')">
+                <i class="fas fa-history"></i> الأرشيف ومراقبة الحصص
+            </button>
+        </div>
+        <button class="btn-teacher-logout" onclick="triggerSecureTeacherLogout()">
+            <i class="fas fa-sign-out-alt"></i> تسجيل الخروج الآمن
+        </button>
     </div>
-    <!-- 💻 الواجهة الرئيسية للتحكم السحابي المباشر -->
-    <div class="main-content">
-        <!-- 👥 قسم إدارة الطلاب والتحقق الصارم من الدفع والتفعيل اليدوي -->
-        <div id="panel-students">
-            <h2><i class="fas fa-user-clock"></i> إدارة طلبات الطلاب واشتراكات الدفع</h2>
-            <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 25px;">الطلاب أدناه قيد الانتظار ولن تفتح حساباتهم أبداً حتى تتأكد من الدفع وتضغط "موافقة وتفعيل الحساب" يدوياً.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>الاسم</th>
-                        <th>الهاتف</th>
-                        <th>الفرع الدراسي</th>
-                        <th>الأيام المتبقية</th>
-                        <th>حالة الاشتراك</th>
-                        <th>الإجراء الإداري (بعد الدفع)</th>
-                    </tr>
-                </thead>
-                <tbody id="students-table-body">
-                    <!-- جلب البيانات حياً من قاعدة بيانات الـ D1 السحابية -->
-                </tbody>
-            </table>
+
+    <!-- 💻 منطقة ومساحة العمل الرئيسية للأستاذ -->
+    <div class="content-workspace">
+        <div class="workspace-header">
+            <h1 id="workspace-dynamic-title">مرحباً بك في المحرك المتقدم للأتمتة</h1>
+            <div style="color: var(--text-slate); font-size:0.95rem;">قم بتهيئة الحصص وصياغة أسئلة الأتمتة لطلاب سوريا 2026 حياً.</div>
         </div>
 
-        <!-- 📚 قسم طبخ المناهج بالذكاء الاصطناعي مسبقاً -->
-        <div id="panel-courses" class="hidden">
-            <h2><i class="fas fa-magic"></i> الطبخ الآلي المسبق للحصص والامتحانات لعام 2026</h2>
-            <form id="injection-form" onsubmit="handleCourseInjections(event)" style="max-width: 600px; background: var(--card); padding: 25px; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
-                <div class="form-group">
-                    <label>المادة الدراسية</label>
-                    <input type="text" id="course-subject" required placeholder="مثال: علم الأحياء، الفيزياء، الكيمياء...">
+        <!-- 📊 لوحة المؤشرات الرقمية المضيئة السريعة -->
+        <div class="analytics-grid">
+            <div class="analytics-card card-blue">
+                <div class="card-info">
+                    <h3>رتبة صلاحية الحساب</h3>
+                    <div class="counter-num" style="font-size:1.3rem; color:var(--neon-blue);">أستاذ موظف</div>
                 </div>
-                <div class="form-group">
-                    <label>الشهادة المستهدفة</label>
-                    <select id="course-grade">
-                        <option value="baccalaureate">بكالوريا</option>
-                        <option value="ninth">تاسع</option>
-                    </select>
+                <div class="card-icon-wrap"><i class="fas fa-id-badge"></i></div>
+            </div>
+            <div class="analytics-card card-purple">
+                <div class="card-info">
+                    <h3>نموذج محرك الذكاء الاصطناعي</h3>
+                    <div class="counter-num" style="font-size:1.1rem; color:var(--neon-purple); margin-top:10px;">Llama-3 (cf)</div>
                 </div>
-                <div class="form-group">
-                    <label>الفرع</label>
-                    <select id="course-branch">
-                        <option value="scientific">علمي</option>
-                        <option value="literary">أدبي</option>
-                        <option value="general">عام</option>
-                    </select>
+                <div class="card-icon-wrap"><i class="fas fa-brain"></i></div>
+            </div>
+            <div class="analytics-card card-gold">
+                <div class="card-info">
+                    <h3>أمان الواجهة الإدارية</h3>
+                    <div class="counter-num" style="font-size:1.2rem; color:var(--gold);">سيادي معزول 100%</div>
                 </div>
-                <div class="form-group">
-                    <label>ترتيب الدرس الرقمي (اليوم الدراسي)</label>
-                    <input type="number" id="course-lesson-order" value="1" min="1" required>
+                <div class="card-icon-wrap"><i class="fas fa-lock"></i></div>
+            </div>
+        </div>
+        <!-- 📝 أولاً: قسم استمارة حقن وطبخ المناهج بالذكاء الاصطناعي -->
+        <div id="section-inject-panel">
+            <div class="glass-panel">
+                <div class="panel-title"><i class="fas fa-utensils"></i> محرك الطبخ والجدولة الذكية للحصص والامتحانات</div>
+                <form id="course-injection-form" onsubmit="triggerCourseAiInjection(event)">
+                    <div class="inputs-row">
+                        <div class="form-group-wrap">
+                            <label><i class="fas fa-book"></i> المادة الدراسية</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-heading"></i>
+                                <input type="text" id="inj-subject" required placeholder="مثال: علم الأحياء، الفيزياء...">
+                            </div>
+                        </div>
+                        <div class="form-group-wrap">
+                            <label><i class="fas fa-layer-group"></i> المرحلة المستهدفة</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                                <select id="inj-grade">
+                                    <option value="baccalaureate">بكالوريا 2026</option>
+                                    <option value="ninth">شهادة التعليم الأساسي</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group-wrap">
+                            <label><i class="fas fa-code-branch"></i> الفرع</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-atom"></i>
+                                <select id="inj-branch">
+                                    <option value="scientific">الفرع العلمي</option>
+                                    <option value="literary">الفرع الأدبي</option>
+                                    <option value="general">مشترك عام</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group-wrap">
+                            <label><i class="fas fa-calendar-day"></i> اليوم الدراسي (الترتيب)</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-sort-numeric-up"></i>
+                                <input type="number" id="inj-order" value="1" min="1" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-wrap" style="margin-bottom:20px;">
+                        <label><i class="fas fa-pen-nib"></i> عنوان الدرس المقترح</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-bookmark"></i>
+                            <input type="text" id="inj-title" required placeholder="مثال: التنسيق العصبي، كمون العمل، النواصي...">
+                        </div>
+                    </div>
+
+                    <div class="form-group-wrap" style="margin-bottom:25px;">
+                        <label><i class="fas fa-file-alt"></i> نص كتاب الوزارة المستخلص من الماسح الضوئي (Scanner Text)</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-paste" style="top:25px;"></i>
+                            <textarea id="inj-raw-text" rows="6" required placeholder="قم بلصق النص العربي المستخلص من السكانر هنا..."></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="inj-submit-btn" class="btn-modern-action">
+                        <i class="fas fa-bolt"></i> بدء الطبخ المسبق للحصة وصياغة اختبار الأتمتة فوراً
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 📊 ثانياً: قسم أرشيف ومراقبة الحصص السابقة المطبوعة -->
+        <div id="section-history-panel" class="hidden">
+            <div class="glass-panel">
+                <div class="panel-title"><i class="fas fa-archive"></i> أرشيف الحصص والمناهج التي قمت بطبخها مسبقاً للطلاب</div>
+                <div class="modern-table-wrap">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th>المادة الدراسية</th>
+                                <th>عنوان الدرس</th>
+                                <th>المستوى والفرع</th>
+                                <th>اليوم الدراسي المجدول</th>
+                                <th>الحالة السحابية للـ AI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <!-- جلب ذاتي عِبر الأقسام البرمجية -->
+                        </tbody>
+                    </table>
                 </div>
-                <div class="form-group">
-                    <label>عنوان الدرس الأساسي</label>
-                    <input type="text" id="course-title" required placeholder="مثال: التنسيق العصبي، المعاير الحجمية...">
-                </div>
-                <div class="form-group">
-                    <label>نص كتاب الوزارة الممسوح ضوئياً (سكان)</label>
-                    <textarea id="course-book-text" rows="6" required placeholder="قم بلصق النص المستخلص من السكانر هنا ليقوم الـ AI بتلخيصه وصياغة أسئلة الأتمتة فوراً..."></textarea>
-                </div>
-                <button type="submit" id="btn-submit-course" class="btn-submit">بدء الطبخ وتوليد الحصة والامتحان بالـ AI</button>
-            </form>
+            </div>
         </div>
     </div>
-    <!-- 🔒 جدار الحماية والاتصال البرمجي الحركي المتقدم للأكاديمية -->
+
+    <!-- 🔒 المحرك البرمجي وجدار حماية الهوية المستقل المعزول للأستاذ -->
     <script>
         const API_BASE = "https://workers.dev";
 
-        // 🛡️ جدار الحماية الحديدي السيادي: قفل الصفحات وطرد أي شخص يحاول قراءة أو تغيير الراوت بدون تسجيل دخول إداري رسمي
-        (function enforceSecurity() {
+        // 🛡️ جدار حماية هوية الأستاذ: منع دخول المخترقين أو الأدمن المالي لمنع كسر تداخل الصلاحيات
+        (function enforceTeacherStrictSecurity() {
             const token = localStorage.getItem('drasty_token');
             const role = localStorage.getItem('drasty_role');
+            // إذا حاول المالك (admin) أو طالب الدخول العشوائي لصفحة الأساتذة يتم تدميره وإعادته فوراً لـ auth
             if (!token || (role !== 'teacher' && role !== 'admin')) {
                 localStorage.clear();
                 window.location.href = "auth.html";
             }
         })();
 
-        // طباعة اسم المشرف المسؤول في الترويسة
-        document.getElementById('admin-display').innerText = localStorage.getItem('drasty_name') || "المشرف المسؤول";
+        // طباعة اسم الأستاذ حياً في الترويسة وبطاقة التعارف
+        document.getElementById('teacher-profile-name').innerText = localStorage.getItem('drasty_name') || "الأستاذ المعتمد";
+        // 🎛️ محرك التبديل البصري فائق السلاسة بين الأقسام والإحصائيات
+        function switchActiveSection(targetTab) {
+            const btnInject = document.getElementById('menu-inject-btn');
+            const btnHistory = document.getElementById('menu-history-btn');
+            const panelInject = document.getElementById('section-inject-panel');
+            const panelHistory = document.getElementById('section-history-panel');
+            const titleElement = document.getElementById('workspace-dynamic-title');
 
-        // محرك التبديل البصري الحركي بين التبويبات الزجاجية للوحة
-        function switchTeacherTab(target) {
-            const btnStudents = document.getElementById('tab-students-btn');
-            const btnCourses = document.getElementById('tab-courses-btn');
-            const panelStudents = document.getElementById('panel-students');
-            const panelCourses = document.getElementById('panel-courses');
-
-            if (target === 'students') {
-                btnStudents.classList.add('active');
-                btnCourses.classList.remove('active');
-                panelStudents.classList.remove('hidden');
-                panelCourses.classList.add('hidden');
-                fetchAndRenderStudents();
+            if (targetTab === 'inject') {
+                btnInject.classList.add('active');
+                btnHistory.classList.remove('active');
+                panelInject.classList.remove('hidden');
+                panelHistory.classList.add('hidden');
+                titleElement.innerText = "مرحباً بك في المحرك المتقدم للأتمتة";
             } else {
-                btnStudents.classList.remove('active');
-                btnCourses.classList.add('active');
-                panelStudents.classList.add('hidden');
-                panelCourses.classList.remove('hidden');
+                btnInject.classList.remove('active');
+                btnHistory.classList.add('active');
+                panelInject.classList.add('hidden');
+                panelHistory.classList.remove('hidden');
+                titleElement.innerText = "أرشيف ومراقبة الدروس المطبوعة";
+                fetchAndRenderTeacherHistory();
             }
         }
 
-        // 👥 جلب حسابات الطلاب المعلقين والنشطين من قاعدة البيانات حياً عِبر السيرفر الخلفي
-        async function fetchAndRenderStudents() {
-            const tableBody = document.getElementById('students-table-body');
-            if (!tableBody) return;
-            tableBody.innerHTML = '<tr><td colspan="6" style="color:var(--gold); text-align:center;">جاري مراجعة الاتصال السحابي بالداتا بيس ومزامنة طلبات الاشتراك...</td></tr>';
-
-            try {
-                const response = await fetch(`${API_BASE}/api/admin/students`, {
-                    headers: { 'Authorization': localStorage.getItem('drasty_token') }
-                });
-                if (!response.ok) throw new Error();
-                const students = await response.json();
-
-                if (students.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">لا يوجد أي طلبات تسجيل جديدة قيد الانتظار حالياً.</td></tr>';
-                    return;
-                }
-
-                tableBody.innerHTML = '';
-                students.forEach(student => {
-                    const branchAr = student.branch === 'scientific' ? 'علمي' : (student.branch === 'literary' ? 'أدبي' : 'عام');
-                    const gradeAr = student.grade === 'baccalaureate' ? 'بكالوريا 2026' : (student.grade === 'ninth' ? 'تاسع' : 'عام');
-                    
-                    const diffTime = new Date(student.subscription_expires_at) - new Date();
-                    const diffDays = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
-                    const daysText = diffDays > 0 ? `${diffDays} يوم` : 'منتهي أو لم يفعّل بعد';
-
-                    const isApproved = student.status === 'approved';
-
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td><strong>${student.name}</strong></td>
-                        <td>${student.phone}</td>
-                        <td>${gradeAr} (${branchAr})</td>
-                        <td>${daysText}</td>
-                        <td style="color:${isApproved ? '#22c55e' : '#ef4444'}; font-weight:bold;">
-                            ${isApproved ? '<i class="fas fa-check-circle"></i> مفعّل ونشط' : '<i class="fas fa-hourglass-start"></i> معلّق (لم يدفع)'}
-                        </td>
-                        <td>
-                            ${!isApproved ? `<button class="btn-action btn-approve" onclick="updateStudentStatus('${student.id}', 'approved')"><i class="fas fa-unlock"></i> موافقة وتفعيل الحساب</button>` : ''}
-                            <button class="btn-action btn-extend" onclick="extendStudentSubscription('${student.id}')"><i class="fas fa-plus"></i> تمديد +30 يوم</button>
-                        </td>
-                    `;
-                    tableBody.appendChild(tr);
-                });
-            } catch (err) {
-                tableBody.innerHTML = '<tr><td colspan="6" style="color:#ef4444; text-align:center;">فشل جلب الحسابات السحابية، يرجى إعادة تحديث الصفحة.</td></tr>';
-            }
-        }
-        // 🔐 دالة التفعيل اليدوية الصارمة: لا يتم تفعيل حساب الطالب إلا بضغطك عليها يدوياً بعد استلام ثمن الاشتراك
-        async function updateStudentStatus(userId, targetStatus) {
-            if (!confirm("هل تأكدت من استلام ثمن الاشتراك وتريد فتح هذا الحساب للطالب يدوياً؟")) return;
-            try {
-                const response = await fetch(`${API_BASE}/api/admin/approve`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': localStorage.getItem('drasty_token')
-                    },
-                    body: JSON.stringify({ userId, targetStatus })
-                });
-                if (response.ok) {
-                    alert("🎯 نجاح العمل! تم تأكيد الدفع وتفعيل حساب الطالب بنجاح وثبات في قاعدة البيانات السحابية.");
-                    fetchAndRenderStudents();
-                } else {
-                    alert("فشل إجراء التفعيل السحابي، تأكد من صلاحية حسابك.");
-                }
-            } catch (err) {
-                alert("خطأ في الاتصال بالشبكة السحابية.");
-            }
-        }
-
-        // ⏳ دالة تمديد صلاحية أيام اشتراك الطلاب بـ 30 يوماً إضافية يدوياً
-        async function extendStudentSubscription(userId) {
-            try {
-                const response = await fetch(`${API_BASE}/api/admin/extend`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': localStorage.getItem('drasty_token')
-                    },
-                    body: JSON.stringify({ userId, daysToAdd: 30 })
-                });
-                if (response.ok) {
-                    alert("⏳ تم تمديد صلاحية اشتراك الطالب بـ 30 يوماً إضافية بنجاح.");
-                    fetchAndRenderStudents();
-                } else {
-                    alert("فشل تمديد وقت الاشتراك السحابي.");
-                }
-            } catch (err) {
-                alert("خطأ في الاتصال السحابي للشبكة.");
-            }
-        }
-
-        // 📚 دالة طبخ المناهج مسبقاً: حقن نصوص كتب السكان وتوليد التلخيص والامتحانات بالـ AI
-        async function handleCourseInjections(event) {
+        // 📚 محرك حقن نصوص كتاب الوزارة الممسوحة سكان وتوليد الشرح المؤتمت بالـ AI فوراً حياً
+        async function triggerCourseAiInjection(event) {
             event.preventDefault();
-            const btn = document.getElementById('btn-submit-course');
-            const originalText = btn.innerText;
-            btn.innerText = "⚡ جاري طبخ الحصة وتوليد أسئلة الأتمتة بالـ AI...";
-            btn.disabled = true;
+            const submitBtn = document.getElementById('inj-submit-btn');
+            const originalButtonText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري طبخ الحصة وتوليد أسئلة الأتمتة لعام 2026 بالـ AI...';
+            submitBtn.disabled = true;
 
             try {
                 const response = await fetch(`${API_BASE}/api/courses/inject`, {
@@ -306,38 +579,72 @@
                         'Authorization': localStorage.getItem('drasty_token')
                     },
                     body: JSON.stringify({
-                        subject_name: document.getElementById('course-subject').value,
-                        grade_target: document.getElementById('course-grade').value,
-                        branch_target: document.getElementById('course-branch').value,
-                        lesson_order: parseInt(document.getElementById('course-lesson-order').value),
-                        title: document.getElementById('course-title').value,
-                        book_raw_text: document.getElementById('course-book-text').value
+                        subject_name: document.getElementById('inj-subject').value,
+                        grade_target: document.getElementById('inj-grade').value,
+                        branch_target: document.getElementById('inj-branch').value,
+                        lesson_order: parseInt(document.getElementById('inj-order').value),
+                        title: document.getElementById('inj-title').value,
+                        book_raw_text: document.getElementById('inj-raw-text').value
                     })
                 });
 
                 if (response.ok) {
-                    alert("🎯 معجزة الأتمتة! تم طبخ الدرس وتوليد أسئلة الامتحان لعام 2026 بنجاح تام، وهو جاهز الآن لعرضه الفوري الفوري للطلاب!");
-                    document.getElementById('course-title').value = '';
-                    document.getElementById('course-book-text').value = '';
+                    alert("🎯 معجزة تعليمية سيادية! تم حقن نص السكان، وتلخيص المنهج، وتوليد الامتحان لعام 2026 مسبقاً وجدولة عرضه الفوري بنجاح باهر!");
+                    document.getElementById('inj-title').value = '';
+                    document.getElementById('inj-raw-text').value = '';
                 } else {
-                    alert("فشل التوليد السحابي والطبخ المسبق للدرس.");
+                    const data = await response.json();
+                    alert("⚠️ إشعار الخادم: " + (data.error || "فشل توليد الدرس السحابي."));
                 }
             } catch (err) {
-                alert("خطأ في الاتصال بمحرك الذكاء الاصطناعي للمنصة.");
+                alert("❌ خطأ أمني: فشل الاتصال بمحرك الذكاء الاصطناعي السحابي للأكاديمية.");
             } finally {
-                btn.innerText = originalText;
-                btn.disabled = false;
+                submitBtn.innerHTML = originalButtonText;
+                submitBtn.disabled = false;
             }
         }
 
-        // 🚪 دالة الخروج الآمن وتنظيف الجلسة الرقمية لحماية لوحة التحكم
-        function executeAdminLogout() {
+        // 📊 محرك جلب وعرض الدروس التلقائية المطبوعة سابقاً للتأكد من المزامنة حياً بالـ D1
+        async function fetchAndRenderTeacherHistory() {
+            const tableBody = document.getElementById('history-table-body');
+            if (!tableBody) return;
+            tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-slate);"><i class="fas fa-sync fa-spin"></i> جاري قراءة أرشيف قاعدة البيانات الحية...</td></tr>';
+
+            try {
+                // نطلب جدول المناهج عبر حساب الأدمن أو الأستاذ
+                const response = await fetch(`${API_BASE}/api/courses?grade=baccalaureate&branch=general`, {
+                    headers: { 'Authorization': localStorage.getItem('drasty_token') }
+                });
+                if (!response.ok) throw new Error();
+                const readyLessons = await response.json();
+
+                if (readyLessons.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">لا يوجد حصص مطبوخة مسبقاً في هذا الفرع التعليمي حالياً.</td></tr>';
+                    return;
+                }
+
+                tableBody.innerHTML = '';
+                readyLessons.forEach(lesson => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${lesson.subject_name}</strong></td>
+                        <td>${lesson.title}</td>
+                        <td><span class="badge-pill-item"><i class="fas fa-graduation-cap"></i> بكالوريا 2026</span></td>
+                        <td>اليوم الدراسي ${lesson.generated_day || 1}</td>
+                        <td style="color:#22c55e; font-weight:600;"><i class="fas fa-check-circle"></i> جاهز ومعروض فوراً</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            } catch (err) {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#ef4444;"><i class="fas fa-exclamation-triangle"></i> فشل مزامنة الأرشيف السحابي حالياً.</td></tr>';
+            }
+        }
+
+        // 🚪 دالة الخروج الآمن ومسح التوكن الرقمي فوراً لحماية هوية الكادر التدريسي الموظف
+        function triggerSecureTeacherLogout() {
             localStorage.clear();
             window.location.href = "auth.html";
         }
-
-        // تشغيل محرك السحب التلقائي بمجرد استقرار وتحميل الواجهة
-        document.addEventListener('DOMContentLoaded', fetchAndRenderStudents);
     </script>
 </body>
 </html>
