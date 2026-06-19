@@ -3,7 +3,8 @@ export default {
     const url = new URL(request.url);
     const corsHeaders = {
       if (url.pathname === "/") {
-    return Response.redirect("https://drasty-backend.akilhajj00.workers.dev", 301);
+// استبدل السطر القديم بهذا السطر لعمل تحويل تلقائي
+return Response.redirect("https://drasty-backend.akilhajj00.workers.dev", 301);
 }
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
