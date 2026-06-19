@@ -2,6 +2,9 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const corsHeaders = {
+      if (url.pathname === "/") {
+    return Response.redirect("https://drasty-backend.akilhajj00.workers.dev", 301);
+}
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
