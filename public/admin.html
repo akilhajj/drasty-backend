@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الملكية المطلقة والأدمن - أكاديمية دراستي</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        :root { --admin-red: #ef4444; --gold: #d4af37; --bg: #020408; --card: rgba(255,255,255,0.02); --border: rgba(239,68,68,0.15); }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; }
+        .sidebar { position: fixed; right: 0; top: 0; width: 260px; height: 100vh; background: #0b0707; border-left: 1px solid var(--border); padding: 20px; box-sizing: border-box; }
+        .main-content { margin-right: 260px; padding: 40px; box-sizing: border-box; min-height: 100vh; }
+        .nav-btn { display: block; width: 100%; padding: 12px; background: none; border: 1px solid transparent; color: #94a3b8; text-align: right; border-radius: 8px; cursor: pointer; margin-bottom: 10px; font-size: 1rem; transition: all 0.3s; font-family: 'Cairo', sans-serif; }
+        .nav-btn.active, .nav-btn:hover { border-color: var(--admin-red); color: var(--admin-red); background: rgba(239,68,68,0.05); }
+        .logout-btn { position: absolute; bottom: 20px; right: 20px; left: 20px; width: calc(100% - 40px); background: #7f1d1d; color: #fca5a5; border: 1px solid #b91c1c; padding: 10px; border-radius: 8px; cursor: pointer; text-align: center; font-family: 'Cairo', sans-serif; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        th, td { padding: 15px; text-align: right; border-bottom: 1px solid var(--border); }
+        th { background: #140d0d; color: var(--admin-red); }
+        .btn-action { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 5px; font-family: 'Cairo', sans-serif; }
+        .btn-approve { background: #16a34a; color: #fff; }
+        .btn-extend { background: var(--gold); color: #030508; }
+    </style>
+</head>
+<body>
+
+    <!-- 📊 القائمة الجانبية الحصرية للأدمن المالك -->
+    <div class="sidebar">
+        <h3 style="color: var(--admin-red); text-align: center; margin-bottom: 30px;"><i class="fas fa-shield-alt"></i> إشراف الأكاديمية</h3>
+        <p style="color: #64748b; font-size: 0.9rem; text-align: center;">المالك: <span id="admin-display" style="color: #fff; font-weight: bold;"></span></p>
+        <hr style="border: none; border-top: 1px solid var(--border); margin-bottom: 20px;">
+        <button class="nav-btn active"><i class="fas fa-wallet"></i> مراجعة الدفع وتفعيل الطلاب</button>
+        <button class="logout-btn" onclick="executeAdminLogout()"><i class="fas fa-sign-out-alt"></i> خروج آمن</button>
+    </div>
+    <!-- 💻 الواجهة الرئيسية للتحكم المالي المطلق -->
+    <div class="main-content">
+        <div id="panel-admin-core">
+            <h2 style="color: var(--admin-red);"><i class="fas fa-user-shield"></i> لوحة الإشراف المالي وتفعيل الاشتراكات</h2>
+            <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 25px;">
+                خاص بالمالك فقط: الطلاب أدناه لن تفتح حساباتهم أبداً حتى تتأكد من الدفع وتضغط "موافقة وتفعيل الحساب" يدوياً.
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>الهاتف</th>
+                        <th>الفرع الدراسي</th>
+                        <th>الأيام المتبقية</th>
+                        <th>حالة الدفع</th>
+                        <th>الإجراء الإداري الصارم</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-table-body">
+                    <!-- جلب البيانات حياً من قاعدة بيانات الـ D1 السحابية -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 🔒 جدار الحماية والاتصال البرمجي الحصري للأدمن المالك -->
+    <script>
+        const API_BASE = "https://workers.dev";
+
+        // 🛡️ جدار حماية الأدمن: قفل الصفحة وطرد أي أستاذ أو طالب يحاول دخول الرابط يدوياً
+        (function enforceAdminSecurity() {
+            const token = localStorage.getItem('drasty_token');
+            const role = localStorage.getItem('drasty_role');
+            // إذا لم يكن التوكن موجوداً، أو كانت الرتبة ليست admin، يتم تدمير الجلسة وطرد المتصفح فوراً
+            if (!token || role !== 'admin') {
+                localStorage.clear();
+                alert("⚠️ اختراق أمني: هذه اللوحة مخصصة حصرياً للمالك الإداري ولا يمتلك الأساتذة صلاحية دخولها!");
+                window.location.href = "auth.html";
+            }
+        })();
+
+        // طباعة اسم المالك في الأعلى
+        document.getElementById('admin-display').innerText = localStorage.getItem('drasty_name') || "المالك المشرف";
+
+        // 👥 جلب الطلاب المعلقين والنشطين من قاعدة البيانات حياً عِبر السيرفر الخلفي للأدمن
+        async function fetchAdminStudents() {
+            const tableBody = document.getElementById('admin-table-body');
+            if (!tableBody) return;
+            tableBody.innerHTML = '<tr><td colspan="6" style="color:var(--gold); text-align:center;">جاري الاتصال بالسيرفر السحابي ومزامنة مدفوعات الطلاب...</td></tr>';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/students`, {
+                    headers: { 'Authorization': localStorage.getItem('drasty_token') }
+                });
+                if (!response.ok) throw new Error();
+                const students = await response.json();
+
+                if (students.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">لا يوجد أي طلبات تسجيل جديدة قيد الانتظار حالياً.</td></tr>';
+                    return;
+                }
+
+                tableBody.innerHTML = '';
+                students.forEach(student => {
+                    const branchAr = student.branch === 'scientific' ? 'علمي' : (student.branch === 'literary' ? 'أدبي' : 'عام');
+                    const gradeAr = student.grade === 'baccalaureate' ? 'بكالوريا 2026' : (student.grade === 'ninth' ? 'تاسع' : 'عام');
+                    
+                    const diffTime = new Date(student.subscription_expires_at) - new Date();
+                    const diffDays = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+                    const daysText = diffDays > 0 ? `${diffDays} يوم` : 'منتهي أو لم يفعّل بعد';
+
+                    const isApproved = student.status === 'approved';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${student.name}</strong></td>
+                        <td>${student.phone}</td>
+                        <td>${gradeAr} (${branchAr})</td>
+                        <td>${daysText}</td>
+                        <td style="color:${isApproved ? '#22c55e' : '#ef4444'}; font-weight:bold;">
+                            ${isApproved ? '<i class="fas fa-check-circle"></i> مفعّل (تم الدفع)' : '<i class="fas fa-hourglass-start"></i> معلّق (لم يدفع)'}
+                        </td>
+                        <td>
+                            ${!isApproved ? `<button class="btn-action btn-approve" onclick="updateStudentStatus('${student.id}', 'approved')"><i class="fas fa-unlock"></i> موافقة وتفعيل الحساب</button>` : ''}
+                            <button class="btn-action btn-extend" onclick="extendStudentSubscription('${student.id}')"><i class="fas fa-plus"></i> تمديد +30 يوم</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            } catch (err) {
+                tableBody.innerHTML = '<tr><td colspan="6" style="color:#ef4444; text-align:center;">فشل جلب الحسابات السحابية، يرجى إعادة تحديث الصفحة.</td></tr>';
+            }
+        }
+        // 🔐 دالة التفعيل اليدوية القطعية للأدمن: تفعيل دائم ومستقر في الـ D1 بعد استلام ثمن الاشتراك
+        async function updateStudentStatus(userId, targetStatus) {
+            if (!confirm("هل تأكدت من استلام ثمن الاشتراك وتريد فتح هذا الحساب للطالب يدوياً؟")) return;
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/approve`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': localStorage.getItem('drasty_token')
+                    },
+                    body: JSON.stringify({ userId, targetStatus })
+                });
+                if (response.ok) {
+                    alert("🎯 نجاح مشرف! تم تأكيد الدفع وتفعيل حساب الطالب بنجاح وثبات في قاعدة البيانات السحابية.");
+                    fetchAdminStudents();
+                } else {
+                    alert("فشل إجراء التفعيل السحابي، تأكد من أن رتبتك الحالية هي المالك (admin).");
+                }
+            } catch (err) {
+                alert("خطأ في الاتصال بالشبكة السحابية للأكاديمية.");
+            }
+        }
+
+        // ⏳ دالة المالك لتمديد فترة صلاحية اشتراك الطالب بـ 30 يوماً إضافية يدوياً بعد الدفع الدوري
+        async function extendStudentSubscription(userId) {
+            if (!confirm("هل تريد إضافة 30 يوماً إضافية لصلاحية هذا الطالب؟")) return;
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/extend`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': localStorage.getItem('drasty_token')
+                    },
+                    body: JSON.stringify({ userId, daysToAdd: 30 })
+                });
+                if (response.ok) {
+                    alert("⏳ تم تمديد صلاحية اشتراك الطالب بـ 30 يوماً إضافية بنجاح في قاعدة البيانات.");
+                    fetchAdminStudents();
+                } else {
+                    alert("فشل تمديد وقت الاشتراك السحابي.");
+                }
+            } catch (err) {
+                alert("خطأ في الاتصال السحابي لشبكة الإشراف المالي.");
+            }
+        }
+        // 🚪 دالة خروج المالك وتنظيف البيانات الحساسة فوراً من الذاكرة لحماية الحساب
+        function executeAdminLogout() {
+            localStorage.clear();
+            window.location.href = "auth.html";
+        }
+
+        // تشغيل محرك السحب ومزامنة أموال الطلاب فور تحميل واستقرار الشاشة
+        document.addEventListener('DOMContentLoaded', fetchAdminStudents);
+    </script>
+</body>
+</html>
