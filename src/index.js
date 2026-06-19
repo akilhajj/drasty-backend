@@ -9,7 +9,7 @@ export default {
 
     // 🌐 التوجيه التلقائي للموقع الرئيسي ومنع الصفحة البيضاء
     if (url.pathname === "/" || url.pathname === "/index.html") {
-      return Response.redirect("https://drasty.net", 301);
+      return Response.redirect("https://drasty-backend.akilhajj00.workers.dev", 301);
     }
 
     if (request.method === "OPTIONS") {
