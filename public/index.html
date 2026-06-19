@@ -3,79 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية دراستي التعليمية المتقدمة</title>
-    <!-- استدعاء الأيقونات السحابية المضمونة فائق السرعة -->
+    <title>أكاديمية دراستي التعليمية المتقدمة | منصة سوريا 2026</title>
+    <!-- استدعاء الأيقونات السحابية عِبر سيرفر احتياطي مفتوح داخل سوريا -->
     <link rel="stylesheet" href="https://fontawesome.com">
-    <link href="https://googleapis.com" rel="stylesheet">
+    
     <style>
+        /* 🎨 محرك الألوان الزجاجية والمؤثرات النيونية الفاخرة ثلاثية الأبعاد لعام 2026 */
+        :root {
+            --gold: #d4af37;
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            --neon-blue: #0ea5e9;
+            --neon-purple: #a855f7;
+            --bg-dark: #03060f;
+            --glass-card: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(214, 175, 55, 0.15);
+            --text-slate: #94a3b8;
+        }
+
         body {
-            margin: 0; padding: 0; box-sizing: border-box; background: #030508;
-            font-family: 'Cairo', sans-serif; color: #ffffff; display: flex;
-            flex-direction: column; align-items: center; justify-content: center;
-            height: 100vh; overflow: hidden;
-            background-image: radial-gradient(circle at center, #0a1128 0%, #030508 100%);
+            margin: 0;
+            padding: 0;
+            background: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* خط نقي ومستقر يدعم الهواتف دون تحميل خارجي */
+            background-image: radial-gradient(circle at 15% 15%, rgba(14, 165, 233, 0.06) 0%, transparent 50%),
+                              radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
         }
-        .container {
-            text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 20px;
-            backdrop-filter: blur(15px); box-shadow: 0 0 40px rgba(212, 175, 55, 0.05);
-            max-width: 500px; width: 90%;
+
+        /* 🌐 شريط العبور العلوي المطور المتوافق تلقائياً مع الهواتف الذكية (Responsive Navbar) */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 5%;
+            background: rgba(3, 6, 15, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
         }
-        h1 { color: #d4af37; font-size: 2.3rem; margin-bottom: 15px; font-weight: 700; }
-        p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 30px; }
-        .btn-portal {
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            width: 100%; padding: 14px; background: linear-gradient(135deg, #d4af37, #aa8322);
-            color: #030508; text-decoration: none; border-radius: 10px;
-            font-weight: 700; font-size: 1.1rem; transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); box-sizing: border-box;
+
+        .nav-logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            cursor: pointer;
         }
-        .btn-portal:hover {
-            transform: translateY(-2px); box-shadow: 0 6px 25px rgba(212, 175, 55, 0.35);
+
+        .nav-logo i {
+            color: var(--gold);
+            filter: drop-shadow(0 0 10px var(--gold-glow));
         }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div style="font-size: 3.5rem; color: #d4af37; margin-bottom: 15px;"><i class="fas fa-graduation-cap"></i></div>
-        <h1>أكاديمية دراستي</h1>
-        <p>المنصة السيادية المؤتمتة لطلاب البكالوريا والتاسع في سوريا لعام 2026</p>
-        <a href="auth.html" class="btn-portal"><i class="fas fa-shield-keyhole"></i> العبور الموحد للبوابة السحابية</a>
-    </div>
-</body>
-</html>
-        /* 🚀 القسم الرئيسي الفاخر لواجهة الهبوط */
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--text-slate);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+            transform: translateY(-1px);
+        }
+        .btn-nav-auth {
+            padding: 9px 20px;
+            background: rgba(214, 175, 55, 0.05);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.88rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .btn-nav-auth:hover {
+            background: var(--gold);
+            color: #03060f;
+            box-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        /* 🚀 القسم الرئيسي ثلاثي الأبعاد المتجاوب (Hero Section) */
         .hero-section {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 180px 10% 100px 10%;
+            padding: 160px 5% 80px 5%;
             box-sizing: border-box;
+            min-height: 70vh;
         }
 
         .hero-section h1 {
-            font-size: 3.2rem;
-            font-weight: 700;
+            font-size: 2.8rem;
+            font-weight: 800;
             margin: 0 0 20px 0;
-            background: linear-gradient(to left, #ffffff, #94a3b8);
+            line-height: 1.4;
+            background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero-section h1 span {
-            background: linear-gradient(to left, var(--gold), #ffffff);
+            background: linear-gradient(135deg, var(--gold) 0%, #ffffff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.2));
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
         }
 
         .hero-section p {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: var(--text-slate);
-            max-width: 700px;
-            margin: 0 0 40px 0;
+            max-width: 680px;
+            margin: 0 0 35px 0;
             line-height: 1.8;
         }
 
@@ -83,83 +148,277 @@
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            padding: 16px 38px;
+            padding: 15px 35px;
             background: linear-gradient(135deg, var(--gold), #b3922e);
-            color: #02040a;
+            color: #03060f;
             text-decoration: none;
             border-radius: 12px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
-            transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 25px rgba(212, 175, 55, 0.3);
         }
 
         .btn-main-hero:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 8px 35px rgba(212, 175, 55, 0.45);
         }
 
-        /* 📊 قسم صناديق المميزات والأيقونات التعريفية */
+        /* 📱 دعم الهواتف المحمولة الذكية والأجهزة اللوحية عِبر الميديا كويري (Media Queries) */
+        @media (max-width: 768px) {
+            .navbar { padding: 12px 5%; }
+            .nav-links { display: none; } /* إخفاء الروابط النصية على الهواتف لمنع التزاحم البصري */
+            .nav-logo span { font-size: 1.1rem; }
+            .hero-section { padding: 130px 5% 60px 5%; }
+            .hero-section h1 { font-size: 1.9rem; line-height: 1.5; }
+            .hero-section p { font-size: 1rem; line-height: 1.7; margin-bottom: 25px; }
+            .btn-main-hero { width: 100%; justify-content: center; box-sizing: border-box; padding: 14px 20px; font-size: 1rem; }
+        }
+        /* 📊 قسم صناديق المميزات ثلاثية الأبعاد (Features Grid) */
         .features-container {
-            padding: 6px 8% 100px 8%;
+            padding: 20px 5% 80px 5%;
             box-sizing: border-box;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2rem;
-            margin-bottom: 50px;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
             color: var(--gold);
+            font-weight: 700;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
         }
 
         .feature-card {
             background: var(--glass-card);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 35px 25px;
+            border-radius: 16px;
+            padding: 30px 20px;
             text-align: center;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.02);
             border-color: var(--neon-blue);
-            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.05);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.1);
         }
 
         .feature-card i {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
             background: linear-gradient(135deg, var(--gold), var(--neon-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .feature-card h3 {
-            font-size: 1.3rem;
-            margin: 0 0 12px 0;
+            font-size: 1.2rem;
+            margin: 0 0 10px 0;
             font-weight: 600;
+            color: #ffffff;
         }
 
         .feature-card p {
             color: var(--text-slate);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             line-height: 1.6;
             margin: 0;
         }
+
+        /* 📑 تذييل الصفحة الشامل والمتكامل المتجاوب (Footer) */
+        .main-footer {
+            background: #040712;
+            border-top: 1px solid var(--glass-border);
+            padding: 50px 5% 25px 5%;
+            box-sizing: border-box;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 35px;
+        }
+
+        .footer-col h4 {
+            color: var(--gold);
+            font-size: 1.05rem;
+            margin: 0 0 15px 0;
+            font-weight: 700;
+        }
+
+        .footer-col p {
+            color: var(--text-slate);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-slate);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 25px;
+            color: var(--text-slate);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* 🗖 النوافذ المنبثقة التفاعلية ثلاثية الأبعاد لشاشات اللمس (Modals) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(2, 4, 10, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-window {
+            background: #060914;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px;
+            box-sizing: border-box;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-overlay.active .modal-window {
+            transform: scale(1);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-slate);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            background: #ef4444;
+            color: #ffffff;
+        }
+
+        .modal-window h3 {
+            color: var(--gold);
+            margin: 0 0 15px 0;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .modal-window p {
+            color: var(--text-slate);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 0 0 12px 0;
+        }
+
+        .modal-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .modal-form-group label {
+            font-size: 0.85rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .modal-form-group input, .modal-form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(3, 6, 15, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: inherit;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+        }
+
+        .modal-form-group input:focus, .modal-form-group textarea:focus {
+            border-color: var(--neon-blue);
+            outline: none;
+        }
+
+        @media (max-width: 48px0) {
+            .features-grid { grid-template-columns: 1fr; }
+            .modal-window { padding: 20px 15px; }
+        }
+    </style>
+</head>
 <body>
 
-    <!-- 🌐 شريط التنقل العلوي الإمبراطوري (Navbar) -->
+    <!-- 🌐 شريط التنقل العلوي الإمبراطوري المتجاوب مع الهواتف الذكية -->
     <nav class="navbar">
         <a class="nav-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-            <i class="fas fa-graduation-cap"></i> أكاديمية دراستي
+            <i class="fas fa-graduation-cap"></i> <span>أكاديمية دراستي</span>
         </a>
         <div class="nav-links">
             <a onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-home"></i> الرئيسية</a>
@@ -168,24 +427,25 @@
             <a onclick="openModal('privacy')"><i class="fas fa-user-lock"></i> السياسة والخصوصية</a>
         </div>
         <a href="auth.html" class="btn-nav-auth">
-            <i class="fas fa-shield-keyhole"></i> العبور الموحد للبوابة
+            <i class="fas fa-shield-keyhole"></i> <span>العبور الموحد</span>
         </a>
     </nav>
 
-    <!-- 🚀 القسم الرئيسي الترحيبي الفاخر (Hero Section) -->
+    <!-- 🚀 القسم الرئيسي ثلاثي الأبعاد المتجاوب للترحيب والعبور -->
     <section class="hero-section">
         <h1>المنصة التعليمية السيادية الأقوى لطلاب <span>سوريا 2026</span></h1>
         <p>
-            مرحباً بك في إمبراطورية الأتمتة الحديثة. قمنا بتسخير أرقى تقنيات الذكاء الاصطناعي السحابي لتلخيص مناهج البكالوريا والتاسع، وصياغة الاختبارات المؤتمتة الفورية المستندة وصياغتها بدقة متناهية لتناسب نظام الامتحانات السوري الجديد 2026.
+            مرحباً بك في إمبراطورية الأتمتة الحديثة. قمنا بتسخير أرقى تقنيات الذكاء الاصطناعي السحابي لتلخيص مناهج البكالوريا والتاسع، وصياغة الاختبارات المؤتمتة الفورية المستندة مباشرة على نصوص كتب الوزارة بدقة متناهية لتناسب نظام الامتحانات السوري الجديد 2026.
         </p>
         <a href="auth.html" class="btn-main-hero">
             <i class="fas fa-sign-in-alt"></i> ابدأ رحلة التفوق الآن مجاناً <i class="fas fa-arrow-left"></i>
         </a>
     </section>
 
-    <!-- 📊 مرساة التوجيه لقسم المميزات -->
+    <!-- 📊 مرساة التوجيه لقسم المميزات عِبر شاشات اللمس -->
     <div id="features-anchor"></div>
-    <!-- 📊 قسم صناديق المميزات والأيقونات التعريفية الذكية المضيئة بالنيون والذهب -->
+
+    <!-- 📊 قسم صناديق المميزات والأيقونات التعريفية ثلاثية الأبعاد الفاخرة -->
     <section class="features-container">
         <h2 class="section-title"><i class="fas fa-sparkles"></i> لماذا تختار أكاديمية دراستي؟</h2>
         <div class="features-grid">
@@ -207,7 +467,7 @@
         </div>
     </section>
 
-    <!-- 📑 تذييل الصفحة الشامل والمتكامل (Footer) -->
+    <!-- 📑 تذييل الصفحة الشامل والمتكامل المتجاوب (Footer) -->
     <footer class="main-footer">
         <div class="footer-grid">
             <div class="footer-col">
@@ -233,7 +493,7 @@
             <p>&copy; 2026 أكاديمية دراستي الرقمية السيادية. جميع الحقوق محفوظة لوزارة الاتصالات والتقانة السورية عِبر خوادم المالك الموثقة.</p>
         </div>
     </footer>
-    <!-- 🗖 نافذة منبثقة تفاعلية: سياسة الخصوصية والسرية -->
+    <!-- 🗖 نافذة منبثقة تفاعلية: سياسة الخصوصية والسرية المصممة للهواتف اللمسية -->
     <div id="modal-privacy" class="modal-overlay" onclick="closeModal('privacy')">
         <div class="modal-window" onclick="event.stopPropagation()">
             <button class="modal-close-btn" onclick="closeModal('privacy')"><i class="fas fa-times"></i></button>
@@ -246,11 +506,11 @@
         </div>
     </div>
 
-    <!-- 🗖 نافذة منبثقة تفاعلية: نموذج اتصل بنا والمراسلة الفورية -->
+    <!-- 🗖 نافذة منبثقة تفاعلية: نموذج اتصل بنا والمراسلة الفورية المطور للجوال -->
     <div id="modal-contact" class="modal-overlay" onclick="closeModal('contact')">
         <div class="modal-window" onclick="event.stopPropagation()">
             <button class="modal-close-btn" onclick="closeModal('contact')"><i class="fas fa-times"></i></button>
-            <h3><i class="fas fa-paper-plane"></i> فتح تذكرة دعم مراسلة فورية مع المالك</h3>
+            <h3><i class="fas fa-paper-plane"></i> فتح تذكرة دعم مراسلة فورية مع المشرف</h3>
             <p>لديك سؤال أو واجهت مشكلة في الدفع وتفعيل الكود الدراسي؟ أرسل رسالتك الفورية وسيقوم الأدمن بمراجعتها.</p>
             
             <form onsubmit="handleContactSubmission(event)">
@@ -266,14 +526,14 @@
                     <label><i class="fas fa-envelope"></i> نص الرسالة أو الاستفسار</label>
                     <textarea id="contact-message" rows="4" required placeholder="اكتب تفاصيل استفسارك أو مشكلة الدفع هنا بالتفصيل..."></textarea>
                 </div>
-                <button type="submit" class="btn-main-hero" style="width:100%; border:none; padding:12px; font-size:1rem; cursor:pointer;">
+                <button type="submit" class="btn-main-hero" style="width:100%; border:none; padding:12px; font-size:1rem; cursor:pointer; justify-content: center;">
                     <i class="fas fa-share-all"></i> إرسال التذكرة السحابية فوراً
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- ⚙️ المحرك البرمجي الحركي لتشغيل النوافذ المنبثقة التفاعلية -->
+    <!-- ⚙️ المحرك البرمجي الحركي المستقل لتشغيل النوافذ المنبثقة التفاعلية -->
     <script>
         // دالة تفاعلية لفتح النوافذ المنبثقة بحركة انسيابية زجاجية
         function openModal(modalType) {
