@@ -1,15 +1,21 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    
+    // سحب رابط موقعك الحالي ديناميكياً لتفادي الحظر والأخطاء
+    const originHeader = request.headers.get("Origin") || "*";
+    
     const corsHeaders = {
-      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": originHeader,
       "Access-Control-Allow-Methods": "GET, HEAD, POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Allow-Credentials": "true"
     };
 
-    // 🌐 التوجيه التلقائي الذكي لمنع ظهور الصفحة البيضاء وتحويل الزائر للموقع الفعلي
+    // 🌐 التوجيه التلقائي الذكي: إذا طلب شخص النطاق الخلفي المباشر، يتم تحويله حياً لرابط الواجهات المربوط
     if (url.pathname === "/" || url.pathname === "/index.html") {
-      return Response.redirect("https://drasty.net", 301);
+      const originUrl = request.headers.get("Referer") || "https://github.io"; 
+      return Response.redirect(originUrl, 301);
     }
 
     if (request.method === "OPTIONS") {
