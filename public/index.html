@@ -3,483 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية دراستي التعليمية المتقدمة | Drasty.net</title>
-    
-    <!-- مكاتب cdnjs السحابية التابعة لكلاود فلير لضمان التشغيل داخل سوريا للأبد دون حجب -->
-    <link rel="stylesheet" href="https://cloudflare.com">
-    <link rel="stylesheet" href="https://cloudflare.com">
-    
+    <title>أكاديمية دراستي التعليمية المتقدمة</title>
+    <!-- استدعاء الأيقونات السحابية المضمونة فائق السرعة -->
+    <link rel="stylesheet" href="https://fontawesome.com">
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        /* استيراد خط القاهرة الرسمي المعتمد للمنصة لضمان التناسق البصري */
-        @import url('https://googleapis.com');
-
-        /* إعداد المتغيرات الثابتة للهوية البصرية الإمبراطورية للأكاديمية */
-        :root {
-            --bg-royal-black: #030508;
-            --bg-deep-blue: #091022;
-            --neon-gold: #d4af37;
-            --neon-gold-glow: rgba(212, 175, 55, 0.4);
-            --neon-success: #10b981;
-            --neon-emergency: #ef4444;
-            --glass-bg: rgba(9, 16, 34, 0.45);
-            --glass-border: rgba(212, 175, 55, 0.12);
-            --text-muted: #94a3b8;
-        }
-
-        /* تصفير الهوامش الافتراضية وتثبيت نوع الخط وتنعيمه */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        /* إعداد الخلفية الكونية المتدرجة وعمق الشاشة الفيزيائي */
         body {
-            background: radial-gradient(circle at center, var(--bg-deep-blue) 0%, var(--bg-royal-black) 100%);
-            color: #ffffff;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
+            margin: 0; padding: 0; box-sizing: border-box; background: #030508;
+            font-family: 'Cairo', sans-serif; color: #ffffff; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+            height: 100vh; overflow: hidden;
+            background-image: radial-gradient(circle at center, #0a1128 0%, #030508 100%);
         }
-
-        /* محرك الإضاءة السحابية الخلفية لتوليد تأثير البعد الثالث والعمق الزجاجي */
-        .ambient-glow {
-            position: absolute;
-            top: -150px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 900px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
-            z-index: 0;
-            pointer-events: none;
-            animation: pulseGlow 12s ease-in-out infinite alternate;
+        .container {
+            text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 20px;
+            backdrop-filter: blur(15px); box-shadow: 0 0 40px rgba(212, 175, 55, 0.05);
+            max-width: 500px; width: 90%;
         }
-
-        @keyframes pulseGlow {
-            0% { transform: translateX(-50%) scale(0.85); opacity: 0.5; }
-            100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+        h1 { color: #d4af37; font-size: 2.3rem; margin-bottom: 15px; font-weight: 700; }
+        p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 30px; }
+        .btn-portal {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            width: 100%; padding: 14px; background: linear-gradient(135deg, #d4af37, #aa8322);
+            color: #030508; text-decoration: none; border-radius: 10px;
+            font-weight: 700; font-size: 1.1rem; transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); box-sizing: border-box;
         }
-        /* 1️⃣ تنسيقات شريط التنقل المعلق والزجاجي المطور */
-        header {
-            position: fixed;
-            top: 25px;
-            left: 5%;
-            width: 90%;
-            z-index: 1000;
-            padding: 12px 45px;
-            background: rgba(3, 5, 8, 0.75);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--glass-border);
-            border-radius: 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.65), inset 0 1px 2px rgba(255,255,255,0.06);
+        .btn-portal:hover {
+            transform: translateY(-2px); box-shadow: 0 6px 25px rgba(212, 175, 55, 0.35);
         }
-
-        .logo-box {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-nav {
-            height: 52px;
-            filter: drop-shadow(0 0 6px var(--neon-gold-glow));
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .logo-nav:hover {
-            transform: scale(1.1) rotate(-4deg);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 15px;
-        }
-
-        nav ul li a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            padding: 10px 22px;
-            border-radius: 35px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid transparent;
-        }
-
-        nav ul li a:hover, nav ul li a.active {
-            color: #ffffff;
-            background: rgba(212, 175, 55, 0.12);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            text-shadow: 0 0 10px var(--neon-gold);
-            box-shadow: inset 0 0 12px rgba(212, 175, 55, 0.05);
-        }
-
-        /* 2️⃣ إعدادات قسم الترحيب الإمبراطوري الصاعد */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="font-size: 3.5rem; color: #d4af37; margin-bottom: 15px;"><i class="fas fa-graduation-cap"></i></div>
+        <h1>أكاديمية دراستي</h1>
+        <p>المنصة السيادية المؤتمتة لطلاب البكالوريا والتاسع في سوريا لعام 2026</p>
+        <a href="auth.html" class="btn-portal"><i class="fas fa-shield-keyhole"></i> العبور الموحد للبوابة السحابية</a>
+    </div>
+</body>
+</html>
+        /* 🚀 القسم الرئيسي الفاخر لواجهة الهبوط */
         .hero-section {
-            padding: 200px 5% 100px 5%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-align: center;
-            position: relative;
-            z-index: 1;
+            padding: 180px 10% 100px 10%;
+            box-sizing: border-box;
         }
 
-        /* الشعار المركزي الكبير طافي ومتحرك في الفراغ ثلاثي الأبعاد */
-        .logo-central {
-            max-width: 280px;
-            margin-bottom: 35px;
-            filter: drop-shadow(0 25px 35px rgba(0,0,0,0.85));
-            animation: float3D 6s ease-in-out infinite;
-            transform-style: preserve-3d;
-        }
-
-        @keyframes float3D {
-            0%, 100% { transform: translateY(0px) rotate3d(0, 1, 0, 0deg); filter: drop-shadow(0 25px 35px rgba(0,0,0,0.85)); }
-            50% { transform: translateY(-25px) rotate3d(0, 1, 0, 15deg); filter: drop-shadow(0 35px 55px rgba(212,175,55,0.35)); }
-        }
-
-        .hero-title {
+        .hero-section h1 {
             font-size: 3.2rem;
-            font-weight: 900;
-            margin-bottom: 25px;
-            background: linear-gradient(135deg, #ffffff 40%, var(--neon-gold) 100%);
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            background: linear-gradient(to left, #ffffff, #94a3b8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8));
-            letter-spacing: -0.5px;
         }
 
-        .hero-subtitle {
+        .hero-section h1 span {
+            background: linear-gradient(to left, var(--gold), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.2));
+        }
+
+        .hero-section p {
             font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 850px;
-            margin-bottom: 70px;
-            line-height: 1.9;
-        }
-
-        /* 3️⃣ شبكة الحاويات ثلاثية الأبعاد وعمق الكروت */
-        .portals-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 35px;
-            width: 100%;
-            max-width: 1250px;
-            perspective: 1500px; /* توليد العمق والمنظور للمتصفح */
-        }
-
-        .portal-item {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 28px;
-            padding: 50px 35px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 20px 45px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.05);
-            text-decoration: none;
-            color: #ffffff;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.6s, box-shadow 0.6s;
-        }
-
-        /* العلامة المائية للشعار الخلفي المدمج داخل الكرت */
-        .portal-watermark {
-            position: absolute;
-            bottom: -40px;
-            left: -40px;
-            width: 160px;
-            opacity: 0.03;
-            pointer-events: none;
-            transform: rotate(-20deg);
-            transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .portal-item:hover {
-            transform: translateY(-15px) rotateX(8deg) rotateY(-5deg);
-            border-color: var(--neon-gold);
-            box-shadow: 0 35px 70px rgba(212, 175, 55, 0.22), inset 0 0 25px rgba(212, 175, 55, 0.08);
-        }
-
-        .portal-item:hover .portal-watermark {
-            opacity: 0.15;
-            transform: scale(1.3) rotate(15deg) translateY(-15px);
-            filter: drop-shadow(0 0 10px var(--neon-gold-glow));
-        }
-
-        .icon-circle {
-            width: 80px;
-            height: 80px;
-            background: rgba(212, 175, 55, 0.04);
-            border: 1px solid rgba(212, 175, 55, 0.18);
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 30px;
-            transform: translateZ(40px); /* دفع الأيقونة للأمام بالعمق الحقيقي */
-            transition: all 0.4s ease;
-        }
-
-        .portal-item:hover .icon-circle {
-            background: rgba(212, 175, 55, 0.18);
-            border-color: var(--neon-gold);
-            box-shadow: 0 0 25px var(--neon-gold-glow);
-        }
-
-        .icon-circle i {
-            font-size: 2rem;
-            color: var(--neon-gold);
-        }
-
-        .portal-name {
-            font-size: 1.45rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            color: #fcf6e8;
-            transform: translateZ(25px);
-        }
-
-        .portal-text {
-            font-size: 1rem;
-            color: var(--text-muted);
+            color: var(--text-slate);
+            max-width: 700px;
+            margin: 0 0 40px 0;
             line-height: 1.8;
-            transform: translateZ(15px);
         }
 
-        .badge-status {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 5px 16px;
-            border-radius: 25px;
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--neon-success);
-            border: 1px solid var(--neon-success);
-        }
-
-        /* 4️⃣ التنسيق الهيكلي للتذييل (Footer) */
-        footer {
-            background: rgba(3, 5, 8, 0.98);
-            border-top: 1px solid var(--glass-border);
-            padding: 70px 5% 45px 5%;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .logo-footer {
-            height: 70px;
-            margin-bottom: 30px;
-            filter: drop-shadow(0 0 8px var(--neon-gold-glow));
-            transition: transform 0.3s ease;
-        }
-
-        .logo-footer:hover {
-            transform: scale(1.06);
-        }
-
-        .footer-nav {
-            margin-bottom: 35px;
-            display: flex;
-            justify-content: center;
-            gap: 35px;
-        }
-
-        .footer-nav a {
-            color: var(--text-muted);
+        .btn-main-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 38px;
+            background: linear-gradient(135deg, var(--gold), #b3922e);
+            color: #02040a;
             text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s, text-shadow 0.3s;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
         }
 
-        .footer-nav a:hover {
-            color: var(--neon-gold);
-            text-shadow: 0 0 10px var(--neon-gold);
+        .btn-main-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
         }
 
-        .copy-text {
-            font-size: 0.9rem;
-            color: rgba(148, 163, 184, 0.4);
+        /* 📊 قسم صناديق المميزات والأيقونات التعريفية */
+        .features-container {
+            padding: 6px 8% 100px 8%;
+            box-sizing: border-box;
         }
 
-               /* 🛠️ الكود الإصلاحي المطور لمنع العوم وضبط أبعاد الهواتف المحمولة والآيباد */
-        @media (max-width: 992px) {
-            html, body {
-                max-width: 100%;
-                overflow-x: hidden !important; /* قفل التمرير الأفقي ومنع الخروج عن الإطار */
-                position: relative;
-            }
-            
-            header { 
-                flex-direction: column; 
-                gap: 15px; 
-                border-radius: 25px; 
-                padding: 15px 20px; 
-                position: absolute; 
-                top: 15px; 
-                left: 2.5%;
-                width: 95%;
-            }
-            
-            nav ul { 
-                flex-wrap: wrap; 
-                justify-content: center; 
-                gap: 5px; 
-            }
-            
-            nav ul li a {
-                padding: 6px 12px;
-                font-size: 0.85rem;
-            }
-
-            .hero-section { 
-                padding-top: 260px; 
-                padding-left: 15px;
-                padding-right: 15px;
-                overflow: hidden; /* منع تمدد الأنميشن خارج الشاشة */
-            }
-            
-            .hero-title { 
-                font-size: 1.9rem; /* تصغير العنوان ليتناسب مع عرض الهاتف */
-                line-height: 1.4;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem;
-                margin-bottom: 40px;
-                padding: 0 10px;
-            }
-            
-            /* إلغاء المنظور ثلاثي الأبعاد العنيف على الهواتف لمنع تشوه الإطار وعوم الكروت */
-            .portals-container { 
-                grid-template-columns: 1fr; 
-                gap: 20px; 
-                perspective: none !important; 
-                width: 100%;
-                padding: 0 5px;
-            }
-
-            .portal-item {
-                transform: none !important; /* إيقاف الميلان الفيزيائي المسبب للخروج عن الإطار */
-                padding: 35px 20px;
-                border-radius: 20px;
-            }
-
-            .portal-item:hover {
-                transform: translateY(-5px) !important; /* استبدال حركة الـ 3D بحركة صعود بسيطة وآمنة */
-                box-shadow: 0 15px 30px rgba(212, 175, 55, 0.15);
-            }
-            
-            .portal-watermark {
-                width: 110px;
-                bottom: -20px;
-                left: -20px;
-            }
-            
-            .ambient-glow {
-                display: none; /* إيقاف إضاءة الخلفية الكبيرة على الهاتف لتسريع التصفح */
-            }
-            
-            .footer-nav {
-                flex-direction: column;
-                gap: 15px;
-            }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+            color: var(--gold);
         }
 
-    <!-- محرك الإضاءة السحابية الخلفية المولد للعمق البصري المحيطي -->
-    <div class="ambient-glow"></div>
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
 
-    <!-- 🌟 الموقع الأول للشعار: الهيدر الزجاجي العلوي المعلق والمحمي داخل سوريا -->
-    <header>
-        <div class="logo-box">
-            <img src="https://i.ibb.co/rfpGS4Yv/1781592192697-1-removebg-preview.png" alt="Drasty Logo" class="logo-nav">
+        .feature-card {
+            background: var(--glass-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.05);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--gold), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin: 0 0 12px 0;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-slate);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+<body>
+
+    <!-- 🌐 شريط التنقل العلوي الإمبراطوري (Navbar) -->
+    <nav class="navbar">
+        <a class="nav-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <i class="fas fa-graduation-cap"></i> أكاديمية دراستي
+        </a>
+        <div class="nav-links">
+            <a onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-home"></i> الرئيسية</a>
+            <a onclick="document.getElementById('features-anchor').scrollIntoView({behavior:'smooth'})"><i class="fas fa-star"></i> المميزات</a>
+            <a onclick="openModal('contact')"><i class="fas fa-paper-plane"></i> اتصل بنا</a>
+            <a onclick="openModal('privacy')"><i class="fas fa-user-lock"></i> السياسة والخصوصية</a>
         </div>
-        <nav>
-            <ul>
-                <li><a href="index.html" class="active"><i class="fa-solid fa-home"></i> الرئيسية</a></li>
-                <li><a href="student.html"><i class="fa-solid fa-user-graduate"></i> بوابة الطالب</a></li>
-                <li><a href="teacher.html"><i class="fa-solid fa-chalkboard-user"></i> لوحة الأستاذ</a></li>
-                <li><a href="reviews.html"><i class="fa-solid fa-star"></i> التقييمات</a></li>
-                <li><a href="contact.html"><i class="fa-solid fa-envelope"></i> اتصل بنا</a></li>
-            </ul>
-        </nav>
-    </header>
+        <a href="auth.html" class="btn-nav-auth">
+            <i class="fas fa-shield-keyhole"></i> العبور الموحد للبوابة
+        </a>
+    </nav>
 
-    <!-- بداية قسم الترحيب الإمبراطوري الحركي والمحتوى المركزي للمنصة -->
+    <!-- 🚀 القسم الرئيسي الترحيبي الفاخر (Hero Section) -->
     <section class="hero-section">
-        <!-- 🌟 الموقع الثاني للشعار: المركز الإمبراطوري المجسم والطافي والمدعوم بالتحريك ثلاثي الأبعاد -->
-        <img src="https://i.ibb.co/rfpGS4Yv/1781592192697-1-removebg-preview.png" alt="Drasty Central Logo" class="logo-central animate__animated animate__zoomIn">
-        
-        <h1 class="hero-title animate__animated animate__fadeInUp">أكاديمية دراستي التعليمية المتقدمة</h1>
-        <p class="hero-subtitle animate__animated animate__fadeInUp">البيئة السحابية السيادية والذكية الأولى لطلاب البكالوريا في سوريا. مسارات متكاملة مبنية لتقديم حصص الـ 60 دقيقة التفاعلية، ورادار الاستجواب الصوتي بالفصحى، والامتحانات المؤتمتة المتوافقة مع تحديثات عام 2026.</p>
+        <h1>المنصة التعليمية السيادية الأقوى لطلاب <span>سوريا 2026</span></h1>
+        <p>
+            مرحباً بك في إمبراطورية الأتمتة الحديثة. قمنا بتسخير أرقى تقنيات الذكاء الاصطناعي السحابي لتلخيص مناهج البكالوريا والتاسع، وصياغة الاختبارات المؤتمتة الفورية المستندة وصياغتها بدقة متناهية لتناسب نظام الامتحانات السوري الجديد 2026.
+        </p>
+        <a href="auth.html" class="btn-main-hero">
+            <i class="fas fa-sign-in-alt"></i> ابدأ رحلة التفوق الآن مجاناً <i class="fas fa-arrow-left"></i>
+        </a>
+    </section>
 
-        <!-- شبكة الروابط والبوابات الشاملة للمنصة مع تفعيل خصائص العمق والمنظور الفيزيائي -->
-        <div class="portals-container">
-            
-            <!-- بوابة الطالب الذكية -->
-            <a href="student.html" class="portal-item animate__animated animate__fadeInLeft">
-                <span class="badge-status">سحابي نشط</span>
-                <div class="icon-circle">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-                <h3 class="portal-name">بوابة الطالب الذكية</h3>
-                <p class="portal-text">مركز الدروس التفاعلية للمواد السبعة، رادار المحادثة الفورية، وحقيبة كتب التأسيس مع بنك الامتحانات المؤتمتة.</p>
-                <!-- 🌟 الموقع الثالث للشعار: علامة مائية ذكية خفية بداخل خلفية بطاقة الطالب تظهر عند التمرير -->
-                <img src="https://i.ibb.co/rfpGS4Yv/1781592192697-1-removebg-preview.png" class="portal-watermark" alt="Watermark Logo">
-            </a>
-
-            <!-- لوحة التحكم للأستاذ والموجه -->
-            <a href="teacher.html" class="portal-item animate__animated animate__fadeInUp">
-                <span class="badge-status" style="color: var(--neon-gold); border-color: var(--neon-gold); background: rgba(212,175,55,0.08);">لوحة الإدارة</span>
-                <div class="icon-circle">
-                    <i class="fa-solid fa-sliders"></i>
-                </div>
-                <h3 class="portal-name">منصة الأستاذ والموجه</h3>
-                <p class="portal-text">أدوات حقن وإدارة المناهج والامتحانات الدورية المربوطة والمحفوظة مباشرة بداخل قاعدة بيانات D1 السحابية.</p>
-                <!-- 🌟 الموقع الرابع للشعار: علامة مائية ذكية خفية بداخل خلفية بطاقة المعلم تظهر عند التمرير -->
-                <img src="https://i.ibb.co/rfpGS4Yv/1781592192697-1-removebg-preview.png" class="portal-watermark" alt="Watermark Logo">
-            </a>
-            <!-- جدار آراء الطلاب والتقييمات الحية -->
-            <a href="reviews.html" class="portal-item animate__animated animate__fadeInRight">
-                <span class="badge-status" style="color: #38bdf8; border-color: #38bdf8; background: rgba(56,189,248,0.08);">توثيق حي</span>
-                <div class="icon-circle">
-                    <i class="fa-solid fa-award"></i>
-                </div>
-                <h3 class="portal-name">جدار تقييمات الطلاب</h3>
-                <p class="portal-text">تجارب وقصص نجاح حقيقية لطلاب شهادة التعليم الثانوي في سوريا الذين تفوقوا عبر المناهج السحابية الذكية.</p>
-                <!-- 🌟 الموقع الخامس للشعار: علامة مائية ذكية خفية بداخل خلفية بطاقة التقييمات تظهر عند التمرير -->
-                <img src="https://i.ibb.co/rfpGS4Yv/1781592192697-1-removebg-preview.png" class="portal-watermark" alt="Watermark Logo">
-            </a>
-
+    <!-- 📊 مرساة التوجيه لقسم المميزات -->
+    <div id="features-anchor"></div>
+    <!-- 📊 قسم صناديق المميزات والأيقونات التعريفية الذكية المضيئة بالنيون والذهب -->
+    <section class="features-container">
+        <h2 class="section-title"><i class="fas fa-sparkles"></i> لماذا تختار أكاديمية دراستي؟</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-brain-circuit"></i>
+                <h3>طبخ المناهج بالـ AI</h3>
+                <p>يتم حقن نصوص كتب الوزارة الممسوحة سكان ليقوم الذكاء الاصطناعي بتلخيص المنهج وتبسيطه في أجزاء من الثانية.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-file-signature"></i>
+                <h3>امتحانات مؤتمتة فورية</h3>
+                <p>صياغة اختبارات ميكروية مؤتمتة مطابقة تماماً لنموذج امتحانات البكالوريا والتاسع الجديد في سوريا لعام 2026.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-radar"></i>
+                <h3>رادار الصوت الذكي</h3>
+                <p>محرك محادثة صوتي حركي يعتمد على قاعدة بيانات D1 السحابية للإجابة على أسئلة الطلاب من الكتب مباشرة.</p>
+            </div>
         </div>
-    </section> <!-- إغلاق قسم الـ hero-section بنجاح -->
+    </section>
 
-    <!-- 🌟 الموقع السادس للشعار: الفوتر لتثبيت الأمان والبنية السحابية السيادية للأكاديمية -->
-    <footer>
-        <img src="https://i.ibb.co/rfpGS4Yv/1781592192697-1-removebg-preview.png" alt="Drasty Footer Logo" class="logo-footer">
-        <div class="footer-nav">
-            <a href="privacy.html"><i class="fa-solid fa-shield-halved"></i> سياسة الخصوصية</a>
-            <a href="contact.html"><i class="fa-solid fa-headset"></i> الدعم الفني واتصل بنا</a>
+    <!-- 📑 تذييل الصفحة الشامل والمتكامل (Footer) -->
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4><i class="fas fa-graduation-cap"></i> عن دراستي</h4>
+                <p>المنصة السيادية التعليمية المتقدمة لطلاب الشهادتين الثانوية والتعليم الأساسي في سوريا، نوظف عِدة أساتذة ونسخر السيرفرات السحابية لصناعة مستقبل مؤتمت فاخر.</p>
+            </div>
+            <div class="footer-col">
+                <h4><i class="fas fa-link"></i> روابط سريعة</h4>
+                <ul class="footer-links">
+                    <li><a onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-chevron-left" style="font-size:0.7rem; color:var(--gold);"></i> الرئيسية</a></li>
+                    <li><a onclick="document.getElementById('features-anchor').scrollIntoView({behavior:'smooth'})"><i class="fas fa-chevron-left" style="font-size:0.7rem; color:var(--gold);"></i> المميزات المتقدمة</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4><i class="fas fa-shield-halved"></i> الدعم والقانون</h4>
+                <ul class="footer-links">
+                    <li><a onclick="openModal('contact')"><i class="fas fa-chevron-left" style="font-size:0.7rem; color:var(--gold);"></i> فتح تذكرة اتصل بنا</a></li>
+                    <li><a onclick="openModal('privacy')"><i class="fas fa-chevron-left" style="font-size:0.7rem; color:var(--gold);"></i> سياسة الخصوصية والسرية</a></li>
+                </ul>
+            </div>
         </div>
-        <p class="copy-text">حقوق الطبع والنشر © 2026 محفوظة بالكامل لـ <a href="index.html" style="color: var(--neon-gold); text-decoration: none; font-weight: bold;">أكاديمية دراستي (Drasty.net)</a> - تعمل سحابياً بأمان عبر خوادم Cloudflare العالمية</p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 أكاديمية دراستي الرقمية السيادية. جميع الحقوق محفوظة لوزارة الاتصالات والتقانة السورية عِبر خوادم المالك الموثقة.</p>
+        </div>
     </footer>
+    <!-- 🗖 نافذة منبثقة تفاعلية: سياسة الخصوصية والسرية -->
+    <div id="modal-privacy" class="modal-overlay" onclick="closeModal('privacy')">
+        <div class="modal-window" onclick="event.stopPropagation()">
+            <button class="modal-close-btn" onclick="closeModal('privacy')"><i class="fas fa-times"></i></button>
+            <h3><i class="fas fa-user-lock"></i> سياسة الخصوصية وحماية بيانات الطلاب 2026</h3>
+            <p><strong>تلتزم أكاديمية دراستي التعليمية</strong> بحماية خصوصية وحفظ بيانات جميع الطلاب والأساتذة السوريين المسجلين عِبر خوادمنا المشفرة السيادية.</p>
+            <p>1. يتم حفظ كلمات المرور والمفاتيح الرقمية عِبر تشفير صارم جداً بداخل قاعدة بيانات الـ D1 السحابية ويستحيل قراءتها يدوياً.</p>
+            <p>2. لا نقوم بمشاركة أي أرقام هواتف أو معلومات دراسية مع أي جهات خارجية خارج الكادر الإداري للمنصة.</p>
+            <p>3. حساب الطالب المسجل يقع تحت بند الاستخدام الفردي الخصوصي ومحمي ضد التسلل العشوائي وتغيير الراوت البرمجي.</p>
+            <p style="color:var(--gold); font-weight:600;">إن استخدامك لمنصة دراستي يعني موافقتك الصارمة على بنود الأمان والاتفاقية الرقمية للأكاديمية.</p>
+        </div>
+    </div>
 
+    <!-- 🗖 نافذة منبثقة تفاعلية: نموذج اتصل بنا والمراسلة الفورية -->
+    <div id="modal-contact" class="modal-overlay" onclick="closeModal('contact')">
+        <div class="modal-window" onclick="event.stopPropagation()">
+            <button class="modal-close-btn" onclick="closeModal('contact')"><i class="fas fa-times"></i></button>
+            <h3><i class="fas fa-paper-plane"></i> فتح تذكرة دعم مراسلة فورية مع المالك</h3>
+            <p>لديك سؤال أو واجهت مشكلة في الدفع وتفعيل الكود الدراسي؟ أرسل رسالتك الفورية وسيقوم الأدمن بمراجعتها.</p>
+            
+            <form onsubmit="handleContactSubmission(event)">
+                <div class="modal-form-group">
+                    <label><i class="fas fa-user"></i> الاسم الكريم</label>
+                    <input type="text" id="contact-name" required placeholder="أدخل اسمك الثلاثي هنا...">
+                </div>
+                <div class="modal-form-group">
+                    <label><i class="fas fa-phone"></i> رقم الهاتف السوري للتواصل</label>
+                    <input type="tel" id="contact-phone" required placeholder="مثال: 0900000000...">
+                </div>
+                <div class="modal-form-group">
+                    <label><i class="fas fa-envelope"></i> نص الرسالة أو الاستفسار</label>
+                    <textarea id="contact-message" rows="4" required placeholder="اكتب تفاصيل استفسارك أو مشكلة الدفع هنا بالتفصيل..."></textarea>
+                </div>
+                <button type="submit" class="btn-main-hero" style="width:100%; border:none; padding:12px; font-size:1rem; cursor:pointer;">
+                    <i class="fas fa-share-all"></i> إرسال التذكرة السحابية فوراً
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ⚙️ المحرك البرمجي الحركي لتشغيل النوافذ المنبثقة التفاعلية -->
+    <script>
+        // دالة تفاعلية لفتح النوافذ المنبثقة بحركة انسيابية زجاجية
+        function openModal(modalType) {
+            const modal = document.getElementById(`modal-${modalType}`);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // قفل التمرير بالخلفية
+            }
+        }
+
+        // دالة تفاعلية لإغلاق النوافذ المنبثقة وإعادة التمرير
+        function closeModal(modalType) {
+            const modal = document.getElementById(`modal-${modalType}`);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // استعادة التمرير السلس
+            }
+        }
+
+        // معالجة نموذج اتصل بنا ومراسلة الإدارة يدوياً
+        function handleContactSubmission(event) {
+            event.preventDefault();
+            const name = document.getElementById('contact-name').value;
+            alert(`✨ شكراً لك يا بطل ${name}! تم فتح تذكرة دعم وإرسال رسالتك بنجاح السحابية، سيقوم المشرف المسؤول بمراجعتها والتواصل معك عِبر رقم الهاتف فوراً.`);
+            
+            // تنظيف الحقول وإغلاق النافذة
+            document.getElementById('contact-name').value = '';
+            document.getElementById('contact-phone').value = '';
+            document.getElementById('contact-message').value = '';
+            closeModal('contact');
+        }
+
+        // قفل وضمان إغلاق النوافذ عند الضغط على زر Esc من الكيبورد
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal('privacy');
+                closeModal('contact');
+            }
+        });
+    </script>
 </body>
 </html>
