@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>drasty.net - لوحة الإدارة العليا السيادية</title>
-    <!-- استدعاء خطوط وأيقونات كخط دفاعي برمجى عامل داخل سوريا للأبد عبر كلاود فلير -->
+    <title>drasty.net - لوحة الإدارة العليا السيادية المتقدمة</title>
+    <!-- الأيقونات والخطوط المعتمدة عبر سيرفرات cdnjs لضمان عملها داخل سوريا للأبد دون حجب -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         :root {
@@ -30,7 +30,7 @@
             overflow-x: hidden;
         }
 
-        /* 3D Neon Geometric Icons Created Entirely by CSS & Keyframes */
+        /* الأيقونات النيونية البرمجية ثلاثية الأبعاد */
         .neon-icon-css {
             display: inline-flex;
             align-items: center;
@@ -61,7 +61,7 @@
         .glow-gold { color: var(--neon-gold) !important; text-shadow: 0 0 8px var(--neon-gold); }
         .glow-red { color: var(--neon-red) !important; text-shadow: 0 0 8px var(--neon-red); }
         .glow-blue { color: var(--neon-blue) !important; text-shadow: 0 0 8px var(--neon-blue); }
-        /* 3D Glassmorphism Panel UI */
+
         .glass-panel {
             background: var(--bg-card);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -78,47 +78,16 @@
         }
         .logo-box { display: flex; align-items: center; gap: 15px; }
         
-        /* زر الجوال المحمي لفتح واغلاق خيارات السايدبار */
         .menu-toggle-btn {
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid var(--neon-gold);
-            color: var(--neon-gold);
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: bold;
-            display: none;
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-            transition: 0.3s;
+            background: rgba(212, 175, 55, 0.1); border: 1px solid var(--neon-gold); color: var(--neon-gold);
+            padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold;
+            display: none; box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); transition: 0.3s;
         }
         .menu-toggle-btn:hover { background: var(--neon-gold); color: #000; }
 
-        /* تقسيم بيئة العمل الرئيسية */
-        .main-workspace {
-            display: flex;
-            flex: 1;
-            position: relative;
-        }
-
-        /* القسم 1: الشريط الجانبي المستقل للخيارات وإعدادات الهوية والتعديل */
-        .options-sidebar {
-            width: var(--sidebar-width);
-            padding: 25px 15px;
-            border-left: 1px solid rgba(212, 175, 55, 0.15);
-            background: rgba(4, 8, 15, 0.95);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 99;
-        }
-
-        /* شبكة عرض بقية الأقسام الأربعة في مساحة المحتوى */
-        .content-body {
-            flex: 1;
-            padding: 25px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
+        .main-workspace { display: flex; flex: 1; position: relative; }
+        .options-sidebar { width: var(--sidebar-width); padding: 25px 15px; border-left: 1px solid rgba(212, 175, 55, 0.15); background: rgba(4, 8, 15, 0.95); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 99; }
+        .content-body { flex: 1; padding: 25px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 
         h2 { color: var(--neon-gold); font-size: 16px; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
         label { display: block; margin-bottom: 6px; font-size: 12px; color: #a0aec0; }
@@ -132,64 +101,47 @@
 
         .btn-gold { background: linear-gradient(135deg, #b38f2d, var(--neon-gold)); color: #000; border: none; padding: 11px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; font-size: 13px; }
         .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
-        
-        /* زر إضافة كتاب مكرر بلس مدمج ومحمي هندسياً */
         .btn-plus { background: var(--neon-blue); color: #000; width: 35px; height: 35px; border-radius: 50%; border: none; font-size: 18px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; float: left; margin-top: -46px; position: relative; z-index: 5; }
 
-        /* جداول وقوائم رادار الأعضاء */
         .live-table { width: 100%; border-collapse: collapse; }
         .live-table th, .live-table td { padding: 10px; text-align: right; border-bottom: 1px solid rgba(212, 175, 55, 0.1); font-size: 13px; }
         .live-table th { color: var(--neon-gold); background: rgba(0,0,0,0.2); }
         .badge-pending { color: var(--neon-gold); background: rgba(212,175,55,0.1); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--neon-gold); font-size: 11px; }
         
+        .action-input-small { width: 70px; padding: 4px; background: #000; border: 1px solid var(--neon-gold); color: #fff; border-radius: 4px; font-size: 12px; text-align: center; margin-left: 5px; display: inline-block; }
         .action-btn { padding: 4px 8px; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; font-size: 11px; margin-left: 3px; }
         .btn-approve { background: var(--neon-green); color: #000; }
         .btn-reject { background: var(--neon-red); color: #fff; }
 
         .msg-card { background: rgba(255,255,255,0.02); border-right: 3px solid var(--neon-gold); padding: 12px; border-radius: 6px; margin-bottom: 10px; }
 
-        /* ========================================================
-           تصحيح وتهيئة شاشات الجوال بالكامل (Responsive UI Core)
-           ======================================================== */
-        @media (max-width: 1024px) {
-            .content-body { grid-template-columns: 1fr; }
-        }
-
+        @media (max-width: 1024px) { .content-body { grid-template-columns: 1fr; } }
         @media (max-width: 768px) {
             .menu-toggle-btn { display: block; }
-            
-            .options-sidebar {
-                position: absolute;
-                right: 0; top: 0; bottom: 0;
-                transform: translateX(100%);
-                box-shadow: -10px 0 30px rgba(0,0,0,0.8);
-                width: 295px;
-                background: #060c16;
-            }
+            .options-sidebar { position: absolute; right: 0; top: 0; bottom: 0; transform: translateX(100%); box-shadow: -10px 0 30px rgba(0,0,0,0.8); width: 295px; background: #060c16; }
             .options-sidebar.active { transform: translateX(0); }
-            header { padding: 12px 15px; }
-            .content-body { padding: 15px; }
+            header { padding: 12px 15px; } .content-body { padding: 15px; }
         }
     </style>
 </head>
 <body>
-
-    <!-- الهيدر السيادي والتحقق من الهوية الرقمية للمدير العام للأكاديمية -->
+    <!-- الهيدر والتحقق من الهوية الرقمية للمدير العام للأكاديمية -->
     <header>
         <div class="logo-box">
             <div class="neon-icon-css glow-gold anim-spin" id="logoIconContainer"><i class="fa-solid fa-crown"></i></div>
             <div>
                 <h1 id="currentName" style="font-size: 17px; text-shadow: 0 0 8px var(--neon-gold);">أكاديمية drasty.net التعليمية</h1>
-                <p style="font-size: 11px; color: #a0aec0;">نظام الإدارة العليا الخمسة أقسام الموزعة سحابياً</p>
+                <p style="font-size: 11px; color: #a0aec0;">نظام الإدارة العليا الخمسة أقسام الموزعة سحابياً لعام 2026</p>
             </div>
         </div>
-        <!-- خيار زر فتح واغلاق الخيارات للهواتف الجوالة -->
+        <!-- زر فتح واغلاق الخيارات للهواتف الجوالة -->
         <button class="menu-toggle-btn" id="menuToggleBtn" onclick="toggleSidebarMenu()">
             <i class="fa-solid fa-bars" id="toggleIcon"></i> الخيارات
         </button>
     </header>
 
     <div class="main-workspace">
+        
         <!-- القسم 1: شريط الخيارات الجانبي وإدارة وتعديل صفحات الموقع وشعاراته حياً -->
         <aside class="options-sidebar" id="sidebarMenu">
             <div class="glass-panel" style="margin-bottom: 0; height: 100%;">
@@ -223,14 +175,14 @@
             </div>
         </aside>
 
-        <!-- لوحة عرض الأقسام الأربعة المتبقية المتجاوبة والمربوطة بالـ D1 -->
+        <!-- لوحة عرض الأقسام الأربعة المتبقية المتجاوبة والمربوطة بالـ D1 حياً (تم إقصاء عمر الحمصي الوهمي) -->
         <main class="content-body">
             
-            <!-- القسم 2: رادار تفعيل الاشتراكات والموافقة على الطلاب والأساتذة الجدد -->
+            <!-- القسم 2: رادار تفعيل الاشتراكات والموافقة على الأعضاء مع حقل الأيام المحدد -->
             <section class="glass-panel">
                 <h2>
                     <div class="neon-icon-css glow-green anim-pulse"><i class="fa-solid fa-users-gear"></i></div>
-                    2. رادار تفعيل وقبول اشتراكات الأعضاء
+                    2. رادار تفعيل وقبول اشتراكات الأعضاء الحية
                 </h2>
                 <div style="overflow-x: auto;">
                     <table class="live-table">
@@ -238,24 +190,17 @@
                             <tr>
                                 <th>الاسم</th>
                                 <th>الدور المطلوب</th>
-                                <th>الحالة في D1</th>
-                                <th>القرار الإداري</th>
+                                <th>صلاحية الأيام</th>
+                                <th>القرار الإداري في D1</th>
                             </tr>
                         </thead>
                         <tbody id="usersApprovalTable">
-                            <tr>
-                                <td>عمر الحمصي</td>
-                                <td>طالب (بكالوريا)</td>
-                                <td><span class="badge-pending">بانتظار التفعيل</span></td>
-                                <td>
-                                    <button class="action-btn btn-approve" onclick="updateUserStatus(1, 'approved')">تفعيل</button>
-                                    <button class="action-btn btn-reject" onclick="updateUserStatus(1, 'rejected')">حظر</button>
-                                </td>
-                            </tr>
+                            <!-- يتم جلب البيانات حياً بالكامل من السيرفر بدون سطور وهمية ثابتة -->
                         </tbody>
                     </table>
                 </div>
             </section>
+
             <!-- القسم 3: مصنع المناهج وحقن الكتب والملفات السحابية المتعددة لكل مادة (+) -->
             <section class="glass-panel">
                 <h2>
@@ -292,11 +237,11 @@
                 </form>
             </section>
 
-            <!-- القسم 4: معمارية الحصص اليومية المؤتمتة (نظام قاعات المعهد بدون رفع فيديوهات) -->
+            <!-- القسم 4: معمارية الحصص اليومية المؤتمتة (نظام قاعات المعهد مع زر رفع ملف للذكاء الاصطناعي) -->
             <section class="glass-panel">
                 <h2>
                     <div class="neon-icon-css glow-blue anim-pulse"><i class="fa-solid fa-chalkboard-user"></i></div>
-                    4. جدول المعهد للحصص اليومية التفاعلية
+                    4. جدول المعهد للحصص وزر رفع ملف الـ AI
                 </h2>
                 <form id="lessonSchedulerForm">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -315,33 +260,34 @@
                         </div>
                     </div>
                     <input type="text" id="lessonTitle" placeholder="عنوان الحصة والمواضيع المشروحة بالتفصيل" required>
-                    <textarea id="lessonScenario" rows="3" placeholder="اكتب السيناريو النصي والمفاهيم العلمية هنا... سيقوم نبض الذكاء الاصطناعي صوتياً ونصياً بمناقشة واستجواب الطالب فيها تلقائياً..." required></textarea>
                     
-                    <button type="submit" class="btn-gold"><i class="fa-solid fa-calendar-plus"></i> توزيع ونشر الحصة اليومية للفئة</button>
+                    <!-- حقل و زر رفع ملف الدرس الحقيقي الموجه لقراءة محرك الـ AI مباشرة -->
+                    <label><i class="fa-solid fa-file-arrow-up"></i> رفع مستند الدرس المنهجي ليدرسه ويقرأه الذكاء الاصطناعي:</label>
+                    <input type="file" id="lessonFile" accept=".txt,.pdf,.doc,.docx" required style="padding: 6px;">
+
+                    <textarea id="lessonScenario" rows="2" placeholder="ملاحظات أو سيناريو إضافي مكمل للملف ليتتبعه الذكاء الاصطناعي صوتياً ونصوصاً..."></textarea>
+                    
+                    <button type="submit" class="btn-gold"><i class="fa-solid fa-calendar-plus"></i> توزيع ونشر ملف الحصة للـ AI</button>
                 </form>
             </section>
 
             <!-- القسم 5: رادار استقبال رسائل الدعم الفني والمقترحات القادمة من فورم contact.html -->
-            <section class="glass-panel">
+            <section class="glass-panel" style="grid-column: span 2;">
                 <h2>
                     <div class="neon-icon-css glow-red anim-pulse"><i class="fa-solid fa-envelope-open-text"></i></div>
-                    5. صندوق رادار رسائل فورم اتصل بنا
+                    5. صندوق رادار رسائل فورم اتصل بنا الحية
                 </h2>
-                <div id="messagesWrapper" style="max-height: 230px; overflow-y: auto;">
-                    <div class="msg-card">
-                        <div style="display: flex; justify-content: space-between; font-size: 11px; color: #a0aec0; margin-bottom: 4px;">
-                            <span><i class="fa-solid fa-user"></i> الطالب محمد زين</span>
-                            <span><i class="fa-solid fa-clock"></i> نشط حياً</span>
-                        </div>
-                        <p style="font-size: 13px; line-height: 1.4;">مرحباً كادر دراستي، قمت بتحويل الرسوم وبانتظار موافقة الإدارة الكريمة للانضمام لحصص الـ 60 دقيقة للفرع العلمي.</p>
-                    </div>
+                <div id="messagesWrapper" style="max-height: 250px; overflow-y: auto;">
+                    <!-- الرسائل يتم سحبها حياً من الـ Worker مباشرة -->
                 </div>
             </section>
 
         </main>
     </div>
     <script>
-        // دالة تفعيل عمل السايدبار ودرج الخيارات (فتح وإغلاق) على الجوال والأجهزة الذكية
+        const WORKER_URL = "https://workers.dev"; // النطاق السحابي الفعلي لكلاود فلير وركر
+
+        // 1. دالة تفعيل عمل السايدبار ودرج الخيارات (فتح وإغلاق) على الجوال
         function toggleSidebarMenu() {
             const sidebar = document.getElementById('sidebarMenu');
             const icon = document.getElementById('toggleIcon');
@@ -355,95 +301,165 @@
             }
         }
 
-        // تحويل وتغيير أيقونة الشعار الحية عبر النيون البرمجي ومكتبة الأيقونات
+        // 2. تغيير أيقونة الشعار الحية عبر النيون البرمجي ومكتبة الأيقونات
         function changeIconPreview(iconClass) {
             const logoContainer = document.getElementById('logoIconContainer');
             logoContainer.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
         }
 
-        // معالجة تحديث هوية المنصة وحفظ الاسم وتعميمه فورياً وسحابياً
+        // 3. معالجة تحديث هوية المنصة وحفظ الاسم وتعميمه فورياً وسحابياً
         document.getElementById('identityForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const newName = document.getElementById('siteNameInput').value;
             document.getElementById('currentName').innerText = newName;
             alert("تم حقن وحفظ الهوية الجديدة واسم المنصة على سحابة كلاود فلير بنجاح!");
             
-            // إغلاق قائمة الخيارات تلقائياً بعد الحفظ على الجوال
             document.getElementById('sidebarMenu').classList.remove('active');
             document.getElementById('toggleIcon').className = "fa-solid fa-bars";
         });
 
-        // تشغيل نظام إضافة الحقول اللانهائية للكتب للمادة الواحدة (+)
+        // 4. ميزة الزر بلس (+) لإضافة كتب مكملة للمادة
         function triggerPlusBookField() {
             alert("ميزة الزر بلس (+) نشطة: تم إضافة وفتح مسار حركي لحقن كتاب مكمل إضافي للمادة الحالية بنجاح.");
         }
 
-        // إدارة رادار الموافقة واتخاذ القرار السيادي للأعضاء والاشتراكات
-        async function updateUserStatus(id, action) {
-            alert(`القرار السيادي: تم مزامنة وتعديل حالة اشتراك الطالب في D1 إلى [${action}] بنجاح.`);
+        // 5. جلب الطلاب المعلقين حياً من قاعدة بيانات D1 السحابية وتوليد مدخلات الأيام
+        async function loadLivePendingUsers() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            const tableBody = document.getElementById('usersApprovalTable');
+
+            try {
+                const response = await fetch(`${WORKER_URL}/api/get-pending-users?token=${token}`);
+                const data = await response.json();
+                
+                if (data.users && data.users.length > 0) {
+                    tableBody.innerHTML = ''; 
+                    data.users.forEach(user => {
+                        tableBody.innerHTML += `
+                            <tr id="user-row-${user.id}">
+                                <td>${user.name}</td>
+                                <td>${user.role === 'student' ? 'طالب (' + user.grade + ')' : 'أستاذ موظف'}</td>
+                                <td>
+                                    <!-- حقل مخصص لتحديد أيام الاشتراك قبل الضغط على تفعيل -->
+                                    <input type="number" id="days-for-${user.id}" value="30" min="1" max="365" class="action-input-small"> يوم
+                                </td>
+                                <td>
+                                    <button class="action-btn btn-approve" onclick="executeSovereignDecision('${user.id}', 'approved')">تفعيل</button>
+                                    <button class="action-btn btn-reject" onclick="executeSovereignDecision('${user.id}', 'rejected')">حظر</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#a0aec0; padding:20px;">لا يوجد أي طلبات اشتراك معلقة حالياً.</td></tr>';
+                }
+            } catch (err) {
+                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#ff3333; padding:20px;">خطأ أثناء مزامنة رادار الأعضاء مع D1.</td></tr>';
+            }
         }
-        // تابع جلب الطلاب والأساتذة المعلقين حياً من قاعدة بيانات D1 السحابية
-async function loadPendingUsers() {
-    const WORKER_URL = "https://workers.dev"; // النطاق الفعلي الخاص بك
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
 
-    try {
-        const response = await fetch(`${WORKER_URL}/api/get-pending-users?token=${token}`);
-        const data = await response.json();
-        const tableBody = document.getElementById('usersApprovalTable');
-        
-        if (data.users && data.users.length > 0) {
-            tableBody.innerHTML = ''; // تنظيف الجدول من الأسماء الافتراضية
-            data.users.forEach(user => {
-                tableBody.innerHTML += `
-                    <tr id="user-row-${user.id}">
-                        <td>${user.name}</td>
-                        <td>${user.role === 'student' ? 'طالب (' + user.grade + ')' : 'أستاذ موظف'}</td>
-                        <td><span class="badge-pending">بانتظار التفعيل</span></td>
-                        <td>
-                            <button class="action-btn btn-approve" onclick="executeSovereignDecision('${user.id}', 'approved')">تفعيل</button>
-                            <button class="action-btn btn-reject" onclick="executeSovereignDecision('${user.id}', 'rejected')">حظر</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        } else {
-            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#a0aec0;">لا يوجد أي طلبات اشتراك معلقة حالياً.</td></tr>';
+        // 6. إرسال القرار السيادي (تفعيل/حظر) مع تمرير قيمة الأيام المدخلة للسيرفر
+        async function executeSovereignDecision(userId, action) {
+            const token = new URLSearchParams(window.location.search).get('token');
+            const allowedDays = document.getElementById(`days-for-${userId}`) ? document.getElementById(`days-for-${userId}`).value : 30;
+
+            try {
+                const response = await fetch(`${WORKER_URL}/api/update-user-status`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token, userId, status: action, allowed_days: parseInt(allowedDays) })
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(`القرار الإداري: تم تحديث ومزامنة حالة العضو، وحذف السطر حياً من اللوحة.`);
+                    document.getElementById(`user-row-${userId}`).remove();
+                } else {
+                    alert("فشلت العملية: " + result.message);
+                }
+            } catch (err) {
+                alert("خطأ في الاتصال بالخادم السحابي.");
+            }
         }
-    } catch (err) {
-        console.error("خطأ أثناء استدعاء رادار الطلاب المعلقين:", err);
-    }
-}
 
-// تابع إرسال القرار السيادي (تفعيل/حظر) وتحديث السيرفر وحذف السطر فوراً
-async function executeSovereignDecision(userId, action) {
-    const WORKER_URL = "https://workers.dev";
-    const token = new URLSearchParams(window.location.search).get('token');
+        // 7. جلب واستعراض الرسائل الحية من فورم صفحة اتصل بنا
+        async function loadLiveContactMessages() {
+            const token = new URLSearchParams(window.location.search).get('token');
+            const wrapper = document.getElementById('messagesWrapper');
 
-    try {
-        const response = await fetch(`${WORKER_URL}/api/update-user-status`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token, userId, status: action })
+            try {
+                const response = await fetch(`${WORKER_URL}/api/get-contact-messages?token=${token}`);
+                const data = await response.json();
+                
+                if (data.messages && data.messages.length > 0) {
+                    wrapper.innerHTML = '';
+                    data.messages.forEach(msg => {
+                        wrapper.innerHTML += `
+                            <div class="msg-card">
+                                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #a0aec0; margin-bottom: 4px;">
+                                    <span><i class="fa-solid fa-user"></i> ${msg.sender_name} (${msg.sender_phone})</span>
+                                    <span><i class="fa-solid fa-clock"></i> ${new Date(msg.created_at).toLocaleDateString('ar-SY')}</span>
+                                </div>
+                                <div style="font-size:11px; color:#d4af37; margin-bottom:4px;"><i class="fa-solid fa-envelope"></i> ${msg.sender_email}</div>
+                                <p style="font-size: 13px; line-height: 1.4;">${msg.message_text}</p>
+                            </div>
+                        `;
+                    });
+                } else {
+                    wrapper.innerHTML = '<p style="color: #a0aec0; text-align: center; padding: 20px; font-size:13px;">صندوق الوارد فارغ، لا يوجد رسائل واردة حالياً.</p>';
+                }
+            } catch (err) {
+                wrapper.innerHTML = '<p style="color: #ff3333; text-align: center; padding: 20px; font-size:13px;">خطأ في تحميل رسائل الدعم السحابية.</p>';
+            }
+        }
+
+        // 8. معالجة رفع ملف الدرس المنهجي وتحويله لنص ليقرأه الذكاء الاصطناعي
+        document.getElementById('lessonSchedulerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('lessonFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert("يرجى اختيار ملف المنهج أولاً!");
+                return;
+            }
+
+            // لقراءة الملفات النصية محلياً في المتصفح وإرسال محتواها الصافي لـ D1 ليحللها الـ AI
+            const reader = new FileReader();
+            reader.onload = async function(event) {
+                const fileContentText = event.target.result;
+                const payload = {
+                    duration: document.getElementById('lessonDuration').value,
+                    target_group: document.getElementById('lessonTarget').value,
+                    lesson_title: document.getElementById('lessonTitle').value,
+                    lesson_file_content: fileContentText, // المحتوى النصي المرفوع الموجه للـ AI
+                    lesson_scenario: document.getElementById('lessonScenario').value
+                };
+
+                try {
+                    const response = await fetch(`${WORKER_URL}/api/schedule-daily-lesson`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const res = await response.json();
+                    if (res.success) {
+                        alert("تم رفع وتلقي مستند المنهج بنجاح، وهو متاح الآن ليقرأه ويستجوب الطلاب بناءً عليه محرك الـ AI!");
+                        document.getElementById('lessonSchedulerForm').reset();
+                    }
+                } catch (err) {
+                    alert("خطأ أثناء معالجة وحقن ملف المنهج سحابياً.");
+                }
+            };
+            reader.readAsText(file); // قراءة مستند الدرس كملف نصي صافي
         });
-        const result = await response.json();
 
-        if (result.success) {
-            alert(`القرار السيادي: تم بنجاح [${action === 'approved' ? 'تفعيل' : 'حظر'}] الحساب ومزامنة D1.`);
-            // حذف سطر الطالب من الواجهة أمامك مباشرة لتوفير الوقت
-            document.getElementById(`user-row-${userId}`).remove();
-        } else {
-            alert("فشلت العملية: " + result.message);
-        }
-    } catch (err) {
-        alert("خطأ في الاتصال بالخادم السحابي.");
-    }
-}
-
-// تشغيل جلب البيانات تلقائياً بمجرد فتح لوحة الأدمن
-window.addEventListener('DOMContentLoaded', loadPendingUsers);
-
+        // تشغيل الرادارات الحية بمجرد تحميل الصفحة بالكامل
+        window.addEventListener('DOMContentLoaded', () => {
+            loadLivePendingUsers();
+            loadLiveContactMessages();
+        });
     </script>
 </body>
 </html>
