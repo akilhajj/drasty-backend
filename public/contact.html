@@ -3,42 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اتصل بنا | drasty.net</title>
-    <link rel="stylesheet" href="https://googleapis.com">
+    <title>drasty.net - اتصل بنا</title>
+    <!-- الأيقونات والخطوط المعتمدة عبر سيرفرات cdnjs لضمان تخطي الحجب داخل سوريا للابد -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        :root { --primary: #d4af37; --dark-bg: #050811; --card-glass: rgba(15, 23, 42, 0.6); }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--dark-bg); color: #f8fafc; padding: 40px 20px; display: flex; justify-content: center; overflow-y: auto; }
-        .contact-box { max-width: 600px; width: 100%; background: var(--card-glass); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 35px; box-shadow: 0 12px 30px rgba(0,0,0,0.6); }
-        h1 { color: var(--primary); margin-bottom: 10px; font-weight: 700; }
-        .input-field { width: 100%; padding: 12px; background: #111827; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; color: #fff; font-family: inherit; margin-bottom: 15px; }
-        .btn-submit { background-color: var(--primary); color: #000; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit; }
-        .btn-submit:hover { background-color: #b8942a; }
+        :root {
+            --bg-dark: #050a12;
+            --bg-card: rgba(8, 16, 32, 0.65);
+            --neon-gold: #d4af37;
+            --neon-green: #00ff66;
+            --text-light: #f5f6f8;
+            --glass-border: rgba(212, 175, 55, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        body {
+            background: radial-gradient(circle at top, #0f233c 0%, var(--bg-dark) 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* واجهة زجاجية مجسمة ثلاثية الأبعاد */
+        .contact-container {
+            width: 100%;
+            max-width: 550px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(212, 175, 55, 0.03);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .logo-area { margin-bottom: 20px; }
+        .logo-area i { font-size: 40px; color: var(--neon-gold); text-shadow: 0 0 12px var(--neon-gold); }
+
+        h1 { color: #fff; font-size: 22px; margin-bottom: 8px; text-shadow: 0 0 8px rgba(255,255,255,0.2); }
+        p { color: #a0aec0; font-size: 13px; margin-bottom: 25px; }
+
+        form { text-align: right; }
+        label { display: block; margin-bottom: 6px; font-size: 12px; color: #a0aec0; }
+        
+        .input-group { position: relative; margin-bottom: 15px; }
+        .input-group i { position: absolute; right: 12px; top: 13px; color: var(--neon-gold); font-size: 14px; }
+        
+        input, textarea {
+            width: 100%; padding: 11px 38px 11px 12px; background: rgba(3, 6, 12, 0.9);
+            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px;
+            color: #fff; outline: none; transition: 0.3s; font-size: 13px;
+        }
+        input:focus, textarea:focus { border-color: var(--neon-gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+        textarea { height: 100px; resize: none; }
+
+        .btn-send {
+            background: linear-gradient(135deg, #b38f2d, var(--neon-gold));
+            color: #000; border: none; padding: 12px; border-radius: 8px;
+            cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s;
+            font-size: 14px; display: flex; justify-content: center; align-items: center; gap: 8px;
+        }
+        .btn-send:hover { transform: translateY(-1px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+        
+        .status-msg { margin-top: 15px; font-size: 13px; display: none; font-weight: bold; }
+        .success { color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green); }
     </style>
 </head>
 <body>
-    <div class="contact-box">
-        <h1><i class="fa-solid fa-headset"></i> الدعم الفني والإداري الموحد</h1>
-        <p style="color:#64748b; font-size:12px; margin-bottom:25px;">هل تواجه مشكلة؟ أرسل استفسارك وسيقوم فريق الدعم بالرد عليك فوراً</p>
-        
-        <input type="text" id="contact-name" class="input-field" placeholder="الاسم الكامل">
-        <input type="email" id="contact-email" class="input-field" placeholder="البريد الإلكتروني">
-        <textarea id="contact-msg" class="input-field" rows="5" placeholder="اكتب رسالتك أو استفسارك هنا..."></textarea>
-        
-        <button class="btn-submit" onclick="submitContact()"><i class="fa-solid fa-paper-plane"></i> إرسال نبضة الاستفسار حياً</button>
-        <a href="/" style="color:#64748b; font-size:12px; display:block; text-align:center; margin-top:20px; text-decoration:none;">العودة للرئيسية</a>
+
+    <div class="contact-container">
+        <div class="logo-area">
+            <i class="fa-solid fa-paper-plane"></i>
+        </div>
+        <h1>بوابة التواصل المباشر مع إدارة drasty.net</h1>
+        <p>لديك استفسار أو واجهت مشكلة في التفعيل؟ أرسل رسالتك فوراً وسيتلقاها رادار الأدمن.</p>
+
+        <form id="contactForm">
+            <label>الاسم الكامل للطالب أو الأستاذ:</label>
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="senderName" placeholder="مثال: محمد أحمد" required>
+            </div>
+
+            <label>رقم المحمول (الواتساب المتاح في سوريا):</label>
+            <div class="input-group">
+                <i class="fa-solid fa-phone"></i>
+                <input type="tel" id="senderPhone" placeholder="مثال: 0933XXXXXX" required>
+            </div>
+
+            <label>البريد الإلكتروني:</label>
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="senderEmail" placeholder="name@drasty.net" required>
+            </div>
+
+            <label>تفاصيل الرسالة أو المشكلة التقنية:</label>
+            <div class="input-group">
+                <i class="fa-solid fa-comment-dots" style="top: 13px;"></i>
+                <textarea id="messageText" placeholder="اكتب استفسارك بالتفصيل باللغة العربية الفصيحة..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-send">
+                <i class="fa-solid fa-share-from-square"></i> إرسال الرسالة السحابية فوراً
+            </button>
+            
+            <div id="statusResult" class="status-msg success">تم إرسال رسالتك بنجاح! تتبع لوحة الأدمن لتفعيل حسابك.</div>
+        </form>
     </div>
 
     <script>
-        function submitContact() {
-            const name = document.getElementById('contact-name').value;
-            const email = document.getElementById('contact-email').value;
-            const msg = document.getElementById('contact-msg').value;
-            if(!name || !email || !msg) { alert("⚠️ يرجى ملء كافة الحقول قبل الإرسال!"); return; }
-            alert("🎉 تم قذف وإرسال رسالتك حياً إلى قاعدة بيانات السيرفر، وسيتم مراجعتها من قبل الإدارة فوراً!");
-            window.location.href = '/';
-        }
+        const WORKER_URL = "https://workers.dev"; // النطاق الفعلي الخاص بك
+
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('.btn-send');
+            const statusResult = document.getElementById('statusResult');
+            
+            // قفل الزر لتجنب التكرار
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> جاري الحقن السحابي...`;
+
+            const payload = {
+                sender_name: document.getElementById('senderName').value,
+                sender_phone: document.getElementById('senderPhone').value,
+                sender_email: document.getElementById('senderEmail').value,
+                message_text: document.getElementById('messageText').value
+            };
+
+            try {
+                const response = await fetch(`${WORKER_URL}/api/send-contact-message`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusResult.style.display = "block";
+                    document.getElementById('contactForm').reset();
+                } else {
+                    alert("فشل الإرسال: " + result.message);
+                }
+            } catch (err) {
+                alert("خطأ في الاتصال بالسيرفر، يرجى المحاولة لاحقاً.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="fa-solid fa-share-from-square"></i> إرسال الرسالة السحابية فوراً`;
+            }
+        });
     </script>
 </body>
 </html>
