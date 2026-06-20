@@ -382,6 +382,68 @@
         async function updateUserStatus(id, action) {
             alert(`القرار السيادي: تم مزامنة وتعديل حالة اشتراك الطالب في D1 إلى [${action}] بنجاح.`);
         }
+        // تابع جلب الطلاب والأساتذة المعلقين حياً من قاعدة بيانات D1 السحابية
+async function loadPendingUsers() {
+    const WORKER_URL = "https://workers.dev"; // النطاق الفعلي الخاص بك
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    try {
+        const response = await fetch(`${WORKER_URL}/api/get-pending-users?token=${token}`);
+        const data = await response.json();
+        const tableBody = document.getElementById('usersApprovalTable');
+        
+        if (data.users && data.users.length > 0) {
+            tableBody.innerHTML = ''; // تنظيف الجدول من الأسماء الافتراضية
+            data.users.forEach(user => {
+                tableBody.innerHTML += `
+                    <tr id="user-row-${user.id}">
+                        <td>${user.name}</td>
+                        <td>${user.role === 'student' ? 'طالب (' + user.grade + ')' : 'أستاذ موظف'}</td>
+                        <td><span class="badge-pending">بانتظار التفعيل</span></td>
+                        <td>
+                            <button class="action-btn btn-approve" onclick="executeSovereignDecision('${user.id}', 'approved')">تفعيل</button>
+                            <button class="action-btn btn-reject" onclick="executeSovereignDecision('${user.id}', 'rejected')">حظر</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        } else {
+            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#a0aec0;">لا يوجد أي طلبات اشتراك معلقة حالياً.</td></tr>';
+        }
+    } catch (err) {
+        console.error("خطأ أثناء استدعاء رادار الطلاب المعلقين:", err);
+    }
+}
+
+// تابع إرسال القرار السيادي (تفعيل/حظر) وتحديث السيرفر وحذف السطر فوراً
+async function executeSovereignDecision(userId, action) {
+    const WORKER_URL = "https://workers.dev";
+    const token = new URLSearchParams(window.location.search).get('token');
+
+    try {
+        const response = await fetch(`${WORKER_URL}/api/update-user-status`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token, userId, status: action })
+        });
+        const result = await response.json();
+
+        if (result.success) {
+            alert(`القرار السيادي: تم بنجاح [${action === 'approved' ? 'تفعيل' : 'حظر'}] الحساب ومزامنة D1.`);
+            // حذف سطر الطالب من الواجهة أمامك مباشرة لتوفير الوقت
+            document.getElementById(`user-row-${userId}`).remove();
+        } else {
+            alert("فشلت العملية: " + result.message);
+        }
+    } catch (err) {
+        alert("خطأ في الاتصال بالخادم السحابي.");
+    }
+}
+
+// تشغيل جلب البيانات تلقائياً بمجرد فتح لوحة الأدمن
+window.addEventListener('DOMContentLoaded', loadPendingUsers);
+
     </script>
 </body>
 </html>
